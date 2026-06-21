@@ -1,0 +1,109 @@
+---
+import AmnAsterisk from './AmnAsterisk.astro';
+
+const hubItems = [
+  'Global Portfolio Expertise',
+  'Entire Marketing Performance Discipline',
+  'Centralized Coordination',
+];
+
+const networkItems = [
+  'On-Demand Diversity',
+  'Agile Execution Speed',
+  'Multi-cultural Independent Talents',
+];
+---
+
+<section id="how-we-work" class="section-cream py-6 sm:py-8 md:py-10">
+  <div class="mx-auto max-w-7xl px-6 md:px-8">
+    <div class="how-panel bento-grid">
+      <div class="how-image-box bento-image">
+        <img
+          src="/images/how-we-work-yoga.jpeg"
+          alt="Team practicing yoga at sunset overlooking the ocean"
+          class="aspect-[16/9] w-full object-cover object-[center_46%] sm:aspect-[18/10] md:aspect-[21/9]"
+          loading="lazy"
+        />
+      </div>
+
+      <div class="how-content">
+        <div class="how-top mb-7 max-w-3xl md:mb-8">
+          <div class="flex items-start gap-4 md:gap-5">
+            <AmnAsterisk class="how-asterisk mt-1 h-8 w-8 shrink-0 text-amn-dark md:h-9 md:w-9 lg:h-10 lg:w-10" />
+            <div>
+              <h2 class="how-headline font-headline text-[1.75rem] font-light leading-[1.32] tracking-tight text-amn-dark sm:text-[2rem] md:text-[2.25rem] lg:text-[2.5rem] xl:text-[2.75rem]">
+                Centralized expertise,<br />
+                <span class="headline-italic">flexible execution</span>
+              </h2>
+              <p class="how-subheadline mt-4 max-w-xl font-body-secondary text-base leading-relaxed text-amn-brown/75 sm:text-lg md:mt-5 md:text-xl lg:text-[1.35rem]">
+                Synchronizing centralized portfolio expertise with a flexible, cross-cultural execution network.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="how-boxes-row bento-grid grid-cols-1 items-start sm:grid-cols-2">
+          <div class="how-col-header bento-solid bento-p-sm flex flex-col">
+            <h3 class="how-col-title font-headline-bold text-lg font-bold uppercase leading-tight tracking-[0.12em] text-amn-dark md:text-xl lg:text-2xl">
+              THE CORE HUB, HO CHI MINH
+            </h3>
+            <p class="how-col-desc mt-2 font-body-secondary text-sm leading-snug text-amn-brown/70 md:text-[0.8125rem] lg:whitespace-nowrap lg:text-[0.875rem] xl:text-[0.9375rem]">
+              Ensuring daily continuity driven by authentic portfolio expertise
+            </p>
+          </div>
+
+          <div class="how-col-header bento-solid bento-p-sm flex flex-col">
+            <h3 class="how-col-title font-headline-bold text-lg font-bold uppercase leading-tight tracking-[0.12em] text-amn-dark md:text-xl lg:text-2xl">
+              CROSS-CULTURAL EXPERT NETWORK
+            </h3>
+            <p class="how-col-desc mt-2 font-body-secondary text-sm leading-snug text-amn-brown/70 md:text-[0.8125rem] lg:whitespace-nowrap lg:text-[0.875rem] xl:text-[0.9375rem]">
+              Plugging specialized capability extensions directly into brand's core workflow.
+            </p>
+          </div>
+
+          <div class="how-hub-box how-list-box bento-solid bento-p-sm">
+            <ul class="how-list divide-y divide-amn-brown/10">
+              {hubItems.map((item) => (
+                <li class="how-list-item py-2.5">
+                  <span class="how-list-text block text-right font-body-secondary text-sm leading-snug text-amn-brown md:text-base lg:text-lg">
+                    {item}
+                  </span>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div class="how-network-box how-list-box bento-solid bento-p-sm">
+            <ul class="how-list divide-y divide-amn-brown/10">
+              {networkItems.map((item) => (
+                <li class="how-list-item py-2.5">
+                  <span class="how-list-text block text-left font-body-secondary text-sm leading-snug text-amn-brown md:text-base lg:text-lg">
+                    {item}
+                  </span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  @media (min-width: 640px) {
+    .how-boxes-row {
+      grid-template-rows: auto auto;
+    }
+
+    .how-col-header {
+      min-height: 7.25rem;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .how-col-header {
+      min-height: 7.75rem;
+    }
+  }
+</style>

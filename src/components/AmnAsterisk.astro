@@ -1,0 +1,18 @@
+---
+interface Props {
+  class?: string;
+}
+
+const { class: className = 'h-7 w-7 text-amn-dark' } = Astro.props;
+---
+
+<svg
+  class:list={['amn-asterisk shrink-0', className]}
+  viewBox="0 0 24 24"
+  fill="currentColor"
+  aria-hidden="true"
+>
+  <path
+    d="M17.694 0.8 13.882 9.976 23.106 6.165 24 8.141 14.729 11.953 24 15.765 23.106 17.694 13.882 13.882 17.694 23.106 15.765 24 11.953 14.729 8.141 24 6.212 23.106 9.976 13.882 0.8 17.694 0 15.765 9.176 11.953 0 8.141 0.8 6.212 9.976 9.976 6.212 0.8 8.141 0 11.953 9.176 15.765 0 17.694 0.8Z"
+  ></path>
+</svg>

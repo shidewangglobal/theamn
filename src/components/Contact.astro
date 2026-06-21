@@ -1,0 +1,242 @@
+---
+const timezones = [
+  { value: 'Asia/Ho_Chi_Minh', label: 'Ho Chi Minh (GMT+7)' },
+  { value: 'Asia/Singapore', label: 'Singapore (GMT+8)' },
+  { value: 'Asia/Bangkok', label: 'Bangkok (GMT+7)' },
+  { value: 'Asia/Hong_Kong', label: 'Hong Kong (GMT+8)' },
+  { value: 'Asia/Tokyo', label: 'Tokyo (GMT+9)' },
+  { value: 'Asia/Dubai', label: 'Dubai (GMT+4)' },
+  { value: 'Europe/London', label: 'London (GMT/BST)' },
+  { value: 'Europe/Paris', label: 'Paris (CET)' },
+  { value: 'America/New_York', label: 'New York (ET)' },
+  { value: 'America/Los_Angeles', label: 'Los Angeles (PT)' },
+  { value: 'Australia/Sydney', label: 'Sydney (AEST)' },
+  { value: 'UTC', label: 'UTC' },
+];
+---
+
+<section id="contact" class="tubik-section-dark relative">
+  <div class="grain-overlay absolute inset-0"></div>
+
+  <div class="relative tubik-shell">
+    <div class="contact-pair tubik-pair items-start">
+      <div class="contact-info">
+        <p class="reveal section-label mb-2.5 !text-white">Connect</p>
+        <h2 class="contact-headline reveal font-headline-bold mb-3 text-xl md:mb-4 md:text-2xl lg:text-3xl">
+          Let's elevate your brand
+        </h2>
+        <p class="reveal mb-5 font-body-secondary text-sm leading-relaxed text-white md:mb-6 md:text-[0.9375rem]">
+          For more in-depth conversations about how THE AMN can elevate your premium hospitality brand,
+          reach out to our team. We'd love to explore how authentic storytelling, agile operations,
+          and accelerated performance can transform your digital presence.
+        </p>
+
+        <dl class="reveal contact-details grid gap-x-5 gap-y-3 font-body-secondary text-sm sm:grid-cols-2">
+          <div>
+            <dt class="font-caption text-[10px] uppercase tracking-wider text-white/55">Email</dt>
+            <dd>
+              <a href="mailto:dat.vuong@theamn.network" class="text-white/90 transition hover:text-amn-blue">
+                dat.vuong@theamn.network
+              </a>
+            </dd>
+          </div>
+          <div>
+            <dt class="font-caption text-[10px] uppercase tracking-wider text-white/55">Phone</dt>
+            <dd>
+              <a href="tel:+84905930309" class="text-white/90 transition hover:text-amn-blue">+84 905 930 309</a>
+            </dd>
+          </div>
+          <div class="sm:col-span-2">
+            <dt class="font-caption text-[10px] uppercase tracking-wider text-white/55">Core Hub</dt>
+            <dd class="text-white">Ho Chi Minh City, Vietnam · theamn.network</dd>
+          </div>
+        </dl>
+      </div>
+
+      <div class="contact-form-wrap reveal">
+        <form class="contact-form space-y-2.5" action="https://formspree.io/f/placeholder" method="POST">
+          <div class="contact-form-row grid gap-2.5 sm:grid-cols-2">
+            <div>
+              <label for="name" class="font-caption mb-1 block text-[10px] uppercase tracking-wider text-white/55">Name</label>
+              <input type="text" id="name" name="name" required class="contact-form-input" placeholder="Your name" />
+            </div>
+            <div>
+              <label for="email" class="font-caption mb-1 block text-[10px] uppercase tracking-wider text-white/55">Email</label>
+              <input type="email" id="email" name="email" required class="contact-form-input" placeholder="you@company.com" />
+            </div>
+          </div>
+
+          <div>
+            <label for="mobile" class="font-caption mb-1 block text-[10px] uppercase tracking-wider text-white/55">
+              Mobile / WhatsApp
+            </label>
+            <input
+              type="tel"
+              id="mobile"
+              name="mobile"
+              required
+              class="contact-form-input"
+              placeholder="+84 900 000 000"
+              autocomplete="tel"
+            />
+          </div>
+
+          <fieldset class="contact-schedule">
+            <legend class="font-caption mb-2 block text-[10px] uppercase tracking-wider text-white/55">
+              Best time to reach you
+            </legend>
+            <div class="contact-schedule-grid grid gap-2.5 sm:grid-cols-3">
+              <div>
+                <label for="call-date" class="sr-only">Date</label>
+                <input type="date" id="call-date" name="call_date" required class="contact-form-input contact-form-input--date" />
+              </div>
+              <div>
+                <label for="call-time" class="sr-only">Time</label>
+                <input type="time" id="call-time" name="call_time" required class="contact-form-input contact-form-input--time" />
+              </div>
+              <div>
+                <label for="call-timezone" class="sr-only">Timezone</label>
+                <select id="call-timezone" name="call_timezone" required class="contact-form-input contact-form-input--select">
+                  {timezones.map((tz) => (
+                    <option value={tz.value}>{tz.label}</option>
+                  ))}
+                </select>
+              </div>
+            </div>
+          </fieldset>
+
+          <div>
+            <label for="message" class="font-caption mb-1 block text-[10px] uppercase tracking-wider text-white/55">
+              Message <span class="normal-case tracking-normal text-white/35">(optional)</span>
+            </label>
+            <textarea
+              id="message"
+              name="message"
+              rows="3"
+              class="contact-form-input resize-none"
+              placeholder="Your property, brand, or project..."
+            ></textarea>
+          </div>
+
+          <button type="submit" class="btn-primary w-full max-w-full py-3 text-sm">
+            Lock in my call
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  const tzSelect = document.getElementById('call-timezone') as HTMLSelectElement | null;
+  const dateInput = document.getElementById('call-date') as HTMLInputElement | null;
+
+  if (tzSelect) {
+    try {
+      const detected = Intl.DateTimeFormat().resolvedOptions().timeZone;
+      const match = Array.from(tzSelect.options).find((opt) => opt.value === detected);
+      if (match) tzSelect.value = detected;
+    } catch {
+      /* keep default */
+    }
+  }
+
+  if (dateInput) {
+    const today = new Date();
+    const yyyy = today.getFullYear();
+    const mm = String(today.getMonth() + 1).padStart(2, '0');
+    const dd = String(today.getDate()).padStart(2, '0');
+    dateInput.min = `${yyyy}-${mm}-${dd}`;
+  }
+</script>
+
+<style>
+  .contact-headline {
+    color: #00a0f0 !important;
+  }
+
+  .contact-pair {
+    width: 100%;
+    max-width: 100%;
+    padding-top: 0.375rem;
+  }
+
+  @media (min-width: 768px) {
+    .contact-pair {
+      padding-top: 0.5rem;
+    }
+  }
+
+  .contact-info,
+  .contact-form-wrap,
+  .contact-form {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+  }
+
+  .contact-schedule {
+    margin: 0;
+    padding: 0;
+    border: none;
+  }
+
+  .contact-form-input {
+    width: 100%;
+    max-width: 100%;
+    border-radius: 1rem;
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    background: rgba(255, 255, 255, 0.05);
+    padding: 0.625rem 0.875rem;
+    font-family: 'Helvetica Now Display', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-size: 0.875rem;
+    color: #fff;
+    transition: all var(--motion-duration-fast) var(--motion-ease);
+  }
+
+  .contact-form-input--select {
+    appearance: none;
+    padding-right: 2rem;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='rgba(255,255,255,0.45)' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 0.75rem center;
+    cursor: pointer;
+  }
+
+  .contact-form-input--date,
+  .contact-form-input--time {
+    color-scheme: dark;
+  }
+
+  .contact-form-input option {
+    background: #1a1a1a;
+    color: #fff;
+  }
+
+  .contact-form-input::placeholder {
+    color: rgba(255, 255, 255, 0.34);
+  }
+
+  .contact-form-input:focus {
+    border-color: rgba(0, 160, 240, 0.55);
+    background: rgba(255, 255, 255, 0.08);
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(0, 160, 240, 0.18);
+  }
+
+  .contact-details dt {
+    margin-bottom: 0.125rem;
+  }
+
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+</style>

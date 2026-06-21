@@ -1,0 +1,47 @@
+---
+const partnerLogos = Array.from({ length: 20 }, (_, i) => {
+  const num = String(i + 1).padStart(2, '0');
+  const ext = i === 3 || i === 4 ? 'jpeg' : 'png';
+  return {
+    src: `/images/partners/partner-${num}.${ext}`,
+    alt: `Partner logo ${num}`,
+  };
+});
+
+const allLogos = [...partnerLogos, ...partnerLogos];
+---
+
+<section id="collective" class="tubik-section-alt overflow-hidden">
+  <div class="tubik-shell">
+    <div class="bento-solid bento-p-md mb-2.5 text-center md:mb-3">
+      <p class="reveal section-label mb-2.5">Our Collective</p>
+      <h2 class="reveal font-headline-bold mx-auto text-[1.35rem] whitespace-nowrap text-amn-dark sm:text-2xl md:text-3xl lg:text-4xl">
+        Trusted by <span class="headline-italic">iconic brands</span> across continents
+      </h2>
+      <p class="reveal mx-auto mt-3 max-w-xl font-body-secondary text-amn-brown/65 md:mt-4">
+        A network of premium hospitality leaders. Our strong portfolio of iconic brands spans continents.
+      </p>
+    </div>
+
+    <div class="reveal relative overflow-hidden py-2">
+      <div class="pointer-events-none absolute left-0 top-0 z-10 h-full w-16 bg-gradient-to-r from-[#E0DACE] to-transparent md:w-20"></div>
+      <div class="pointer-events-none absolute right-0 top-0 z-10 h-full w-16 bg-gradient-to-l from-[#E0DACE] to-transparent md:w-20"></div>
+
+      <div class="marquee-track animate-marquee-reverse gap-2.5">
+        {allLogos.map((logo, i) => (
+          <div class="marquee-item">
+            <img
+              src={logo.src}
+              alt={logo.alt}
+              class="collective-logo max-h-10 w-full object-contain opacity-80 transition duration-[600ms] ease-[cubic-bezier(0.22,1,0.36,1)] hover:opacity-100"
+              loading="lazy"
+              width="120"
+              height="40"
+              data-logo-index={i % 20}
+            />
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>

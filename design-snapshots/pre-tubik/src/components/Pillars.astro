@@ -1,0 +1,107 @@
+---
+import AmnAsterisk from './AmnAsterisk.astro';
+
+const pillars = [
+  {
+    key: 'AGILE',
+    subtitle: 'Operational Elasticity',
+    description:
+      'Seamless execution by harmonizing stable retainer operations with an on-demand luxury-taste talent network.',
+    accent: 'border-amn-blue',
+  },
+  {
+    key: 'AUTHENTIC',
+    subtitle: 'Positioning',
+    description:
+      'Upgrade and elevate every digital touchpoint to continuously redefine premium positioning.',
+    accent: 'border-amn-olive',
+  },
+  {
+    key: 'ACCELERATED',
+    subtitle: 'Performance',
+    description:
+      'Automated workflows that capture global intent instantly across time zones.',
+    accent: 'border-amn-blue',
+  },
+];
+---
+
+<section id="pillars" class="section-cream py-20 md:py-28">
+  <div class="mx-auto max-w-7xl px-6 md:px-8">
+    <!--
+      Slide 3 proportions (EMU): left ~20%, center ~20%, cards ~42%
+      Tower top aligns with headline; tower bottom aligns with square bottom.
+    -->
+    <div class="pillars-credential grid gap-8 lg:grid-cols-12 lg:items-stretch lg:gap-x-6 xl:gap-x-8">
+      <div class="pillars-col-left flex flex-col lg:col-span-3 lg:col-start-1">
+        <div>
+          <h2 class="pillar-headline font-headline grid max-w-[13rem] grid-cols-[auto_1fr] items-center gap-x-3 gap-y-0 text-[1.5rem] font-light leading-[1.4] tracking-tight text-amn-dark sm:max-w-[14rem] sm:text-[1.65rem] md:text-[1.85rem] lg:max-w-[15rem] lg:text-[2rem] lg:leading-[1.38] xl:text-[2.125rem]">
+            <AmnAsterisk class="pillar-asterisk col-start-1 row-start-1 h-8 w-8 self-center lg:h-9 lg:w-9" />
+            <span class="col-start-2 row-start-1">Transforming</span>
+            <span class="col-start-2 row-start-2">boundaries</span>
+            <span class="col-start-2 row-start-3">into brand</span>
+            <span class="col-start-2 row-start-4">possibilities</span>
+          </h2>
+        </div>
+        <div class="pillar-image-left-wrap bento-image mt-6 lg:mt-auto">
+          <img
+            src="/images/pillars-resort-square.jpg"
+            alt="Tropical overwater resort villas connected by wooden walkways"
+            class="pillar-image-left block aspect-square w-full object-cover object-center"
+            loading="lazy"
+          />
+        </div>
+      </div>
+
+      <div class="pillars-col-center lg:col-span-3 lg:col-start-4">
+        <div class="pillar-image-center-wrap bento-image h-full min-h-[14rem] sm:min-h-[18rem] lg:min-h-0">
+          <img
+            src="/images/pillars-tower-vertical.jpg"
+            alt="Zipline adventure tower rising through lush forest canopy"
+            class="pillar-image-center h-full w-full object-cover object-center"
+            loading="lazy"
+          />
+        </div>
+      </div>
+
+      <div class="pillars-col-cards flex flex-col gap-5 lg:col-span-6 lg:col-start-7 lg:h-full lg:justify-between lg:gap-5 xl:gap-6">
+        {pillars.map((pillar) => (
+          <article
+            class="pillar-card bento-solid bento-p-md group"
+            data-accent={pillar.accent}
+          >
+            <div class="pillar-card-inner grid gap-5 sm:grid-cols-[minmax(11.5rem,38%)_minmax(0,1fr)] sm:items-center sm:gap-8 lg:gap-10">
+              <div class="pillar-card-title min-w-0">
+                <p class="font-headline-bold text-lg tracking-wide text-amn-dark md:text-xl lg:text-[1.35rem]">{pillar.key}</p>
+                <p class="pillar-card-subtitle mt-1.5 font-headline-bold text-base text-accent-italic text-amn-olive md:text-lg lg:text-[1.1rem]">
+                  {pillar.subtitle}
+                </p>
+              </div>
+              <p class="pillar-card-copy font-body-secondary text-sm leading-relaxed text-amn-brown/70 md:text-base lg:leading-relaxed">
+                {pillar.description}
+              </p>
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  @media (min-width: 1024px) {
+    .pillars-col-left,
+    .pillars-col-center,
+    .pillars-col-cards {
+      min-height: 100%;
+    }
+
+    .pillar-image-center-wrap {
+      height: 100%;
+    }
+  }
+
+  .pillar-card-subtitle {
+    white-space: nowrap;
+  }
+</style>

@@ -1,0 +1,137 @@
+---
+import AmnAsterisk from './AmnAsterisk.astro';
+
+const hubItems = [
+  'Global Portfolio Expertise',
+  'Entire Marketing Performance Discipline',
+  'Centralized Coordination',
+];
+
+const networkItems = [
+  'On-Demand Diversity',
+  'Agile Execution Speed',
+  'Multi-cultural Independent Talents',
+];
+---
+
+<section id="how-we-work" class="tubik-section">
+  <div class="tubik-shell">
+    <div class="how-panel tubik-pair how-viewport-row">
+      <div class="how-image-box bento-image">
+        <img
+          src="/images/how-we-work-yoga.jpeg"
+          alt="Team practicing yoga at sunset overlooking the ocean"
+          class="h-full w-full object-cover object-[center_46%]"
+          loading="lazy"
+        />
+      </div>
+
+      <div class="how-content flex flex-col gap-2.5">
+        <div class="how-top bento-solid bento-p-sm md:bento-p-md">
+          <div class="flex items-start gap-3 md:gap-4">
+            <AmnAsterisk class="how-asterisk mt-1 h-8 w-8 shrink-0 text-amn-dark md:h-9 md:w-9" />
+            <div>
+              <h2 class="how-headline font-headline text-[1.5rem] font-light leading-[1.32] tracking-tight text-amn-dark sm:text-[1.75rem] md:text-[2rem] lg:text-[2.25rem]">
+                Centralized expertise,<br />
+                <span class="headline-italic">flexible execution</span>
+              </h2>
+              <p class="how-subheadline mt-3 font-body-secondary text-sm leading-relaxed text-amn-brown/75 sm:text-base md:mt-4 md:text-lg">
+                Synchronizing centralized portfolio expertise with a flexible, cross-cultural execution network.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="how-boxes-row bento-grid grid-cols-1 items-stretch sm:grid-cols-2">
+          <div class="how-col-header bento-solid bento-p-sm flex flex-col justify-center">
+            <h3 class="how-col-title font-headline-bold text-sm font-bold uppercase leading-tight tracking-[0.12em] text-amn-dark md:text-base lg:text-lg">
+              THE CORE HUB,<br />HO CHI MINH
+            </h3>
+            <p class="how-col-desc mt-2 font-body-secondary text-xs leading-snug text-amn-brown/70 md:text-sm lg:whitespace-nowrap">
+              Ensuring daily continuity driven by authentic portfolio expertise
+            </p>
+          </div>
+
+          <div class="how-col-header bento-solid bento-p-sm flex flex-col justify-center">
+            <h3 class="how-col-title font-headline-bold text-sm font-bold uppercase leading-tight tracking-[0.12em] text-amn-dark md:text-base lg:text-lg">
+              CROSS-CULTURAL EXPERT NETWORK
+            </h3>
+            <p class="how-col-desc mt-2 font-body-secondary text-xs leading-snug text-amn-brown/70 md:text-sm lg:whitespace-nowrap">
+              Plugging specialized capability extensions directly into brand's core workflow.
+            </p>
+          </div>
+
+          <div class="how-lists-sync sm:col-span-2">
+            <div class="how-hub-box how-list-column-shell bento-solid" aria-hidden="true"></div>
+            <div class="how-network-box how-list-column-shell bento-solid" aria-hidden="true"></div>
+
+            <div class="how-lists-grid grid grid-cols-2 gap-2.5">
+              {hubItems.map((hubItem, index) => (
+                <>
+                  <div
+                    class:list={[
+                      'how-list-row how-list-row-hub relative z-[1] flex min-h-[3.25rem] items-center justify-end px-4 py-2.5 md:min-h-[3.5rem] md:px-5',
+                      index < hubItems.length - 1 && 'border-b border-amn-brown/10',
+                    ]}
+                  >
+                    <span class="how-list-text text-right font-body-secondary text-sm leading-snug text-amn-brown md:text-base">
+                      {hubItem}
+                    </span>
+                  </div>
+                  <div
+                    class:list={[
+                      'how-list-row how-list-row-network relative z-[1] flex min-h-[3.25rem] items-center px-4 py-2.5 md:min-h-[3.5rem] md:px-5',
+                      index < hubItems.length - 1 && 'border-b border-amn-brown/10',
+                    ]}
+                  >
+                    <span class="how-list-text text-left font-body-secondary text-sm leading-snug text-amn-brown md:text-base">
+                      {networkItems[index]}
+                    </span>
+                  </div>
+                </>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .how-lists-sync {
+    position: relative;
+  }
+
+  .how-list-column-shell {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: calc(50% - 0.3125rem);
+    pointer-events: none;
+  }
+
+  .how-hub-box.how-list-column-shell {
+    left: 0;
+  }
+
+  .how-network-box.how-list-column-shell {
+    right: 0;
+  }
+
+  @media (min-width: 1024px) {
+    .how-viewport-row {
+      max-height: min(88vh, 760px);
+    }
+
+    .how-image-box {
+      min-height: 0;
+      max-height: min(88vh, 760px);
+    }
+
+    .how-image-box img {
+      min-height: 100%;
+      max-height: min(88vh, 760px);
+    }
+  }
+</style>

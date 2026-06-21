@@ -1,0 +1,88 @@
+---
+const serviceGroups = [
+  {
+    title: "Curating Your Brand's Aesthetic",
+    subtitle: 'Brand Storytelling & Content',
+    description:
+      'Revamping luxury content playbooks and standardizing social media layouts for authentic, highly engaging brand storytelling across premium hospitality properties. Every touchpoint elevated to redefine premium positioning.',
+    items: [
+      'Luxury content playbooks',
+      'Social media layout systems & standardized templates',
+      'Brand aesthetic guidelines across properties',
+      'Multi-property content sync & editorial calendars',
+      'Persona-driven storytelling & curated editorial trips',
+    ],
+    image: '/images/luxury-content-hero.png',
+  },
+  {
+    title: 'Advanced Performance Solutions',
+    subtitle: 'Conversion, Automation & AI B2C',
+    description:
+      'Streamlining the entire conversion loop, from highly targeted awareness ads and sleek landing pages to elite, personalized guest portals. AI-empowered B2C solutions with 24/7 support across the guest journey.',
+    items: [
+      'Targeted awareness campaigns (Meta, Google, organic)',
+      'Conversion-optimized landing pages & traffic design',
+      'Digital Sales Concierge: 24/7 guest inquiry & qualification',
+      'Guest portal: one system, one screen, everything in sync',
+      'Email automation & conversational flow design',
+      'Lead scoring, nurture sequences & sales escalation',
+    ],
+    image: '/images/ai-solution-vertical.jpeg',
+  },
+];
+---
+
+<section id="services" class="section-cream py-24 md:py-32">
+  <div class="mx-auto max-w-7xl px-6 md:px-8">
+    <div class="mb-16 flex flex-col items-start justify-between gap-6 md:flex-row md:items-end">
+      <div>
+        <p class="reveal section-label mb-4 text-accent-italic">What We Do</p>
+        <h2 class="reveal font-headline-bold max-w-xl text-3xl text-amn-dark md:text-4xl lg:text-5xl">Our Services</h2>
+      </div>
+      <p class="reveal max-w-md font-body-secondary text-amn-brown/65">
+        From strategy to execution, leveraging tech-driven workflows and deep portfolio expertise
+        to accelerate daily marketing delivery.
+      </p>
+    </div>
+
+    <div class="services-grid space-y-5 md:space-y-6">
+      {serviceGroups.map((group, i) => (
+        <div class="service-row bento-grid lg:grid-cols-2 lg:items-stretch">
+          <div class:list={['service-image-box bento-image', i % 2 === 1 && 'lg:order-2']}>
+            <img
+              src={group.image}
+              alt={group.title}
+              class="aspect-[4/3] h-full w-full object-cover lg:aspect-auto lg:min-h-[420px]"
+              loading="lazy"
+            />
+          </div>
+
+          <article class:list={['service-card bento-solid bento-p-md flex flex-col justify-center md:!p-10 lg:!p-12', i % 2 === 1 && 'lg:order-1']}>
+            <p class="font-caption mb-2 text-xs tracking-[0.2em] text-amn-blue text-accent-italic">{group.subtitle}</p>
+            <h3 class="font-headline-bold mb-4 text-2xl text-amn-dark md:text-3xl">{group.title}</h3>
+            <p class="font-body-secondary mb-8 leading-relaxed text-amn-brown/70">{group.description}</p>
+            <ul class="space-y-3">
+              {group.items.map((item) => (
+                <li class="flex items-center gap-3 font-body-secondary text-sm text-amn-brown/80">
+                  <span class="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-amn-lime/30">
+                    <svg class="h-3 w-3 text-amn-olive" fill="currentColor" viewBox="0 0 20 20">
+                      <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                    </svg>
+                  </span>
+                  {item}
+                </li>
+              ))}
+            </ul>
+          </article>
+        </div>
+      ))}
+    </div>
+
+    <div class="reveal mt-12 text-center">
+      <p class="font-body-secondary mb-4 text-amn-brown/60">
+        Case studies and detailed portfolio coming in Phase 2.
+      </p>
+      <a href="#contact" class="pill-nav-link btn-dark">Request a Consultation</a>
+    </div>
+  </div>
+</section>

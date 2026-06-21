@@ -1,0 +1,20 @@
+# Render Blueprint — Static Site (free tier, no cold start)
+# Dashboard: New → Blueprint → connect this repo
+# Or: New → Static Site → use settings below manually
+
+services:
+  - type: web
+    name: theamn-website
+    runtime: static
+    buildCommand: npm ci && npm run build
+    staticPublishPath: ./dist
+    headers:
+      - path: /videos/*
+        name: Cache-Control
+        value: public, max-age=604800
+      - path: /images/*
+        name: Cache-Control
+        value: public, max-age=604800
+      - path: /assets/*
+        name: Cache-Control
+        value: public, max-age=604800

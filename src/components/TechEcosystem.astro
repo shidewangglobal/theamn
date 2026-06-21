@@ -1,0 +1,337 @@
+---
+const techCards = [
+  {
+    label: 'Advant Labs',
+    title: 'Central Intelligence & Technology',
+    description:
+      'The central intelligence and technology within the luxury hospitality ecosystem, developing advanced proprietary AI engines, automated workflows, and operating systems that deploy next-gen intelligence to maximize analytical and tactical speed.',
+    hoverImage: '/images/tech-ecosystem.jpeg',
+    hoverAlt: 'Advant Labs technology ecosystem',
+    partner: 'advant',
+  },
+  {
+    label: 'THE AMN',
+    title: 'Strategic Marketing Network',
+    description:
+      'The strategic marketing professionals network handling full brand marketing from strategy to execution, utilizing AI-empowered solutions to scale up marketing campaigns while automation drives operational acceleration and deep portfolio expertise verifies accurate, business-aligned results.',
+    idleLogo: '/assets/amn-logo-header-dark.png',
+    idleAlt: 'THE AMN logo on white background',
+    hoverImage: '/images/brand-transform-visual.png',
+    hoverAlt: 'THE AMN integrated operational stack',
+    partner: 'amn',
+  },
+];
+---
+
+<section id="tech" class="tubik-section-dark relative overflow-hidden">
+  <div class="grain-overlay absolute inset-0"></div>
+
+  <div class="relative tubik-shell">
+    <div class="tech-intro tubik-intro items-end">
+      <div class="tech-intro-left">
+        <p class="reveal section-label mb-2.5 !text-amn-lime">Technology Ecosystem</p>
+        <p class="reveal max-w-md font-body-secondary text-sm leading-relaxed text-white/60 md:text-[0.9375rem]">
+          THE AMN is proudly a strategic partner of Advant Labs, the central intelligence and technology
+          within the luxury hospitality ecosystem.
+        </p>
+      </div>
+      <h2 class="reveal tech-powered-title font-headline-bold text-right text-[1.35rem] leading-[1.25] text-white sm:text-[1.45rem] md:text-[1.55rem] lg:text-[1.65rem]">
+        <span class="block sm:inline">Powered by </span>
+        <span class="headline-italic block sm:inline">Advant Labs</span>
+      </h2>
+    </div>
+
+    <div class="reveal-stagger tech-cards-stage">
+      <div class="tech-cards-expand">
+        {techCards.map((card) => (
+          <article
+            class="tech-expand-card tech-hover-card bento-box group relative min-w-0 overflow-hidden"
+            tabindex="0"
+          >
+            <div class="tech-idle-surface absolute inset-0 z-[2] flex items-center justify-center px-4 transition duration-[600ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:opacity-0 group-hover:pointer-events-none group-focus-within:opacity-0 sm:px-5">
+              {card.partner === 'advant' ? (
+                <div class="tech-idle-cluster tech-idle-cluster--advant inline-flex w-full max-w-full items-center">
+                  <p class="tech-advant-wordmark shrink-0 text-[1.75rem] leading-none text-amn-dark sm:text-[2rem] md:text-[2.35rem]">
+                    <span class="font-headline-bold tracking-[-0.02em]">advant</span>
+                    <span class="font-headline font-light tracking-[-0.02em]">labs</span>
+                  </p>
+                  <span class="tech-bridge-dot"></span>
+                  <span class="tech-bridge-arm tech-bridge-arm--grow"></span>
+                  <span class="tech-bridge-word">artificial</span>
+                </div>
+              ) : (
+                <div class="tech-idle-cluster tech-idle-cluster--amn inline-flex w-full max-w-full items-center">
+                  <span class="tech-bridge-word tech-bridge-word--italic">intelligence</span>
+                  <span class="tech-bridge-arm tech-bridge-arm--grow"></span>
+                  <span class="tech-bridge-dot"></span>
+                  <img
+                    src={card.idleLogo}
+                    alt={card.idleAlt}
+                    class="tech-amn-idle-logo h-12 w-auto shrink-0 sm:h-14 md:h-16"
+                    loading="lazy"
+                  />
+                </div>
+              )}
+            </div>
+
+            <div class="tech-reveal-layer absolute inset-0">
+              <img
+                src={card.hoverImage}
+                alt={card.hoverAlt}
+                class="h-full w-full object-cover transition duration-[600ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.04] group-focus-within:scale-[1.04]"
+                loading="lazy"
+              />
+              <div class="tech-hover-overlay absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-black/20 opacity-0 transition duration-[350ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:opacity-100 group-focus-within:opacity-100"></div>
+              <div class="tech-hover-content absolute inset-x-0 bottom-0 translate-y-4 p-4 opacity-0 transition duration-[350ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:translate-y-0 group-hover:opacity-100 group-focus-within:translate-y-0 group-focus-within:opacity-100 sm:p-5 md:p-6">
+                <p class="font-caption mb-1.5 text-[10px] tracking-[0.2em] text-amn-blue sm:text-xs">{card.label}</p>
+                <h3 class="font-headline-bold mb-2 text-base leading-tight text-white sm:text-lg md:text-xl">{card.title}</h3>
+                <p class="font-body-secondary text-xs leading-relaxed text-white/82 sm:text-sm md:text-[0.9375rem]">
+                  {card.description}
+                </p>
+              </div>
+            </div>
+
+            <div class="tech-hover-hint pointer-events-none absolute left-4 top-4 z-[3] rounded-full border border-black/8 bg-white/90 px-3 py-1 font-caption text-[10px] uppercase tracking-wider text-amn-brown/50 backdrop-blur-sm transition duration-[350ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:opacity-0 group-focus-within:opacity-0 sm:left-5 sm:top-5">
+              Hover to explore
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .tech-intro-left {
+    max-width: 28rem;
+  }
+
+  .tech-powered-title .headline-italic {
+    font-weight: 400;
+  }
+
+  .tech-cards-stage {
+    container-type: inline-size;
+    width: 100%;
+  }
+
+  .tech-cards-expand {
+    position: relative;
+    display: flex;
+    gap: 0.625rem;
+    width: 100%;
+    height: min(calc((100cqi - 0.625rem) / 2), 28rem);
+    transition: height 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .tech-expand-card {
+    flex: 1 1 0;
+    height: 100%;
+    cursor: pointer;
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    box-shadow: 0 10px 36px rgba(0, 0, 0, 0.28);
+    transition:
+      flex 0.6s cubic-bezier(0.22, 1, 0.36, 1),
+      opacity 0.4s ease,
+      box-shadow 0.4s ease;
+  }
+
+  .tech-idle-surface {
+    background: #ffffff;
+    box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.05);
+  }
+
+  .tech-idle-surface::before {
+    display: none;
+  }
+
+  .tech-idle-cluster,
+  .tech-bridge-word {
+    position: relative;
+    z-index: 1;
+  }
+
+  .tech-idle-cluster {
+    gap: 0.7rem;
+  }
+
+  .tech-idle-cluster--advant {
+    padding-left: 0.5rem;
+    padding-right: 0.35rem;
+  }
+
+  .tech-idle-cluster--amn {
+    justify-content: flex-end;
+    padding-left: 0.35rem;
+    padding-right: 0.5rem;
+  }
+
+  @media (min-width: 640px) {
+    .tech-idle-cluster {
+      gap: 0.85rem;
+    }
+
+    .tech-idle-cluster--advant {
+      padding-left: 0.75rem;
+      padding-right: 0.5rem;
+    }
+
+    .tech-idle-cluster--amn {
+      padding-left: 0.5rem;
+      padding-right: 0.75rem;
+    }
+  }
+
+  .tech-bridge-dot {
+    flex: 0 0 auto;
+    width: 0.7rem;
+    height: 0.7rem;
+    border-radius: 9999px;
+    background: #0a0a0a;
+  }
+
+  @media (min-width: 640px) {
+    .tech-bridge-dot {
+      width: 0.8rem;
+      height: 0.8rem;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .tech-bridge-dot {
+      width: 0.875rem;
+      height: 0.875rem;
+    }
+  }
+
+  .tech-bridge-arm {
+    flex: 0 0 auto;
+    height: 2px;
+    background: #0a0a0a;
+  }
+
+  .tech-bridge-arm--grow {
+    flex: 1 1 auto;
+    min-width: 2rem;
+  }
+
+  @media (min-width: 640px) {
+    .tech-bridge-arm--grow {
+      min-width: 2.75rem;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .tech-bridge-arm {
+      height: 2.5px;
+    }
+
+    .tech-bridge-arm--grow {
+      min-width: 3.5rem;
+    }
+  }
+
+  .tech-bridge-word {
+    flex: 0 0 auto;
+    font-family: 'Helvetica Now Display', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-size: 0.85rem;
+    font-weight: 400;
+    letter-spacing: 0.03em;
+    color: #0a0a0a;
+    white-space: nowrap;
+  }
+
+  @media (min-width: 640px) {
+    .tech-bridge-word {
+      font-size: 0.95rem;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .tech-bridge-word {
+      font-size: 1.05rem;
+    }
+  }
+
+  .tech-bridge-word--italic {
+    font-style: italic;
+    letter-spacing: 0.02em;
+  }
+
+  .tech-advant-wordmark,
+  .tech-amn-idle-logo {
+    flex: 0 0 auto;
+  }
+
+  .tech-cards-expand:has(> .tech-expand-card:nth-child(1):hover) > .tech-expand-card:nth-child(1),
+  .tech-cards-expand:has(> .tech-expand-card:nth-child(1):focus-within) > .tech-expand-card:nth-child(1),
+  .tech-cards-expand:has(> .tech-expand-card:nth-child(2):hover) > .tech-expand-card:nth-child(2),
+  .tech-cards-expand:has(> .tech-expand-card:nth-child(2):focus-within) > .tech-expand-card:nth-child(2) {
+    flex: 3 1 0;
+  }
+
+  .tech-cards-expand:has(> .tech-expand-card:nth-child(1):hover) > .tech-expand-card:nth-child(2),
+  .tech-cards-expand:has(> .tech-expand-card:nth-child(1):focus-within) > .tech-expand-card:nth-child(2),
+  .tech-cards-expand:has(> .tech-expand-card:nth-child(2):hover) > .tech-expand-card:nth-child(1),
+  .tech-cards-expand:has(> .tech-expand-card:nth-child(2):focus-within) > .tech-expand-card:nth-child(1) {
+    flex: 1 1 0;
+    opacity: 0.82;
+  }
+
+  @media (max-width: 639px) {
+    .tech-cards-expand {
+      flex-direction: column;
+      height: auto;
+    }
+
+    .tech-expand-card {
+      flex: none !important;
+      aspect-ratio: 1;
+      max-height: 18rem;
+      opacity: 1 !important;
+    }
+
+    .tech-cards-expand:has(> .tech-expand-card:nth-child(1):hover) > .tech-expand-card:nth-child(2),
+    .tech-cards-expand:has(> .tech-expand-card:nth-child(1):focus-within) > .tech-expand-card:nth-child(2),
+    .tech-cards-expand:has(> .tech-expand-card:nth-child(2):hover) > .tech-expand-card:nth-child(1),
+    .tech-cards-expand:has(> .tech-expand-card:nth-child(2):focus-within) > .tech-expand-card:nth-child(1) {
+      max-height: 8rem;
+      aspect-ratio: auto;
+      transition:
+        flex 0.6s cubic-bezier(0.22, 1, 0.36, 1),
+        max-height 0.6s cubic-bezier(0.22, 1, 0.36, 1),
+        opacity 0.4s ease;
+    }
+
+    .tech-cards-expand:has(> .tech-expand-card:nth-child(1):hover) > .tech-expand-card:nth-child(1),
+    .tech-cards-expand:has(> .tech-expand-card:nth-child(1):focus-within) > .tech-expand-card:nth-child(1),
+    .tech-cards-expand:has(> .tech-expand-card:nth-child(2):hover) > .tech-expand-card:nth-child(2),
+    .tech-cards-expand:has(> .tech-expand-card:nth-child(2):focus-within) > .tech-expand-card:nth-child(2) {
+      flex: none !important;
+      max-height: 22rem;
+      aspect-ratio: 16 / 11;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .tech-expand-card,
+    .tech-cards-expand,
+    .tech-idle-surface {
+      transition: none !important;
+    }
+
+    .tech-idle-surface {
+      opacity: 0 !important;
+    }
+
+    .tech-hover-overlay,
+    .tech-hover-content {
+      opacity: 1 !important;
+      transform: none !important;
+    }
+
+    .tech-hover-hint {
+      display: none;
+    }
+  }
+</style>

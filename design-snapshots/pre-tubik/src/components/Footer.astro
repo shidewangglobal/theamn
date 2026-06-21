@@ -1,0 +1,28 @@
+---
+const year = new Date().getFullYear();
+---
+
+<footer class="section-dark border-t border-white/10">
+  <div class="mx-auto max-w-7xl px-6 py-12 md:px-8 md:py-16">
+    <div class="flex flex-col items-center justify-between gap-8 md:flex-row">
+      <a href="#">
+        <img src="/assets/amn-logo-header-light.png" alt="the amn" class="h-8 w-auto opacity-90" width="160" height="48" />
+      </a>
+
+      <p class="font-headline-bold text-center text-sm tracking-wide text-amn-lime md:text-base">
+        Authentic. Agile. Accelerated.
+      </p>
+
+      <nav class="flex flex-wrap justify-center gap-6" aria-label="Footer navigation">
+        <a href="#about" class="pill-nav-link font-caption text-xs uppercase tracking-wider text-white/50 transition hover:text-white">About</a>
+        <a href="#services" class="pill-nav-link font-caption text-xs uppercase tracking-wider text-white/50 transition hover:text-white">Services</a>
+        <a href="#contact" class="pill-nav-link font-caption text-xs uppercase tracking-wider text-white/50 transition hover:text-white">Contact</a>
+      </nav>
+    </div>
+
+    <div class="mt-10 flex flex-col items-center justify-between gap-4 border-t border-white/10 pt-8 md:flex-row">
+      <p class="font-caption text-xs text-white/40">&copy; {year} The AMN Limited. All rights reserved.</p>
+      <a href="https://theamn.network" class="font-caption text-xs text-white/40 transition hover:text-amn-blue">theamn.network</a>
+    </div>
+  </div>
+</footer>

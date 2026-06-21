@@ -1,0 +1,81 @@
+---
+import AmnAsterisk from './AmnAsterisk.astro';
+
+const pillars = [
+  {
+    key: 'AGILE',
+    subtitle: 'Operational Elasticity',
+    description:
+      'Seamless execution by harmonizing stable retainer operations with an on-demand luxury-taste talent network.',
+  },
+  {
+    key: 'AUTHENTIC',
+    subtitle: 'Positioning',
+    description:
+      'Upgrade and elevate every digital touchpoint to continuously redefine premium positioning.',
+  },
+  {
+    key: 'ACCELERATED',
+    subtitle: 'Performance',
+    description:
+      'Automated workflows that capture global intent instantly across time zones.',
+  },
+];
+---
+
+<section id="pillars" class="tubik-section">
+  <div class="tubik-shell">
+    <div class="pillars-credential grid items-stretch gap-2.5 lg:grid-cols-12">
+      <div class="pillars-col-left flex flex-col gap-2.5 lg:col-span-3">
+        <div class="bento-solid bento-p-sm md:p-8">
+          <h2 class="pillar-headline font-headline grid max-w-[13rem] grid-cols-[auto_1fr] items-center gap-x-3 gap-y-0 text-[1.5rem] font-light leading-[1.4] tracking-tight text-amn-dark sm:text-[1.65rem] md:text-[1.85rem] lg:text-[2rem]">
+            <AmnAsterisk class="pillar-asterisk col-start-1 row-start-1 h-8 w-8 self-center lg:h-9 lg:w-9" />
+            <span class="col-start-2 row-start-1">Transforming</span>
+            <span class="col-start-2 row-start-2">boundaries</span>
+            <span class="col-start-2 row-start-3">into brand</span>
+            <span class="col-start-2 row-start-4">possibilities</span>
+          </h2>
+        </div>
+        <div class="pillar-image-left-wrap bento-image mt-auto min-h-[10rem] flex-1 lg:min-h-0">
+          <img
+            src="/images/pillars-resort-square.jpg"
+            alt="Tropical overwater resort villas connected by wooden walkways"
+            class="pillar-image-left h-full min-h-[inherit] w-full object-cover"
+            loading="lazy"
+          />
+        </div>
+      </div>
+
+      <div class="pillars-col-center lg:col-span-3">
+        <div class="pillar-image-center-wrap bento-image h-full min-h-[14rem] lg:min-h-[28rem]">
+          <img
+            src="/images/pillars-tower-vertical.jpg"
+            alt="Zipline adventure tower rising through lush forest canopy"
+            class="pillar-image-center h-full min-h-[inherit] w-full object-cover"
+            loading="lazy"
+          />
+        </div>
+      </div>
+
+      <div class="pillars-col-cards bento-grid lg:col-span-6">
+        {pillars.map((pillar) => (
+          <article class="pillar-card bento-solid bento-p-sm flex flex-col justify-center md:p-8">
+            <p class="font-headline-bold text-base tracking-wide text-amn-dark md:text-lg">{pillar.key}</p>
+            <p class="pillar-card-subtitle mt-1 font-headline-bold text-sm text-accent-italic text-amn-olive md:text-base">
+              {pillar.subtitle}
+            </p>
+            <p class="pillar-card-copy mt-2 font-body-secondary text-sm leading-relaxed text-amn-brown/70 md:mt-3 md:text-base">
+              {pillar.description}
+            </p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .pillar-card-subtitle {
+    white-space: nowrap;
+  }
+</style>

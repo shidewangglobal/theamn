@@ -1,0 +1,47 @@
+---
+const partnerLogos = Array.from({ length: 20 }, (_, i) => {
+  const num = String(i + 1).padStart(2, '0');
+  const ext = i === 3 || i === 4 ? 'jpeg' : 'png';
+  return {
+    src: `/images/partners/partner-${num}.${ext}`,
+    alt: `Partner logo ${num}`,
+  };
+});
+
+const allLogos = [...partnerLogos, ...partnerLogos];
+---
+
+<section id="collective" class="section-cream-alt overflow-hidden py-24 md:py-32">
+  <div class="mx-auto max-w-7xl px-6 md:px-8">
+    <div class="mb-16 text-center">
+      <p class="reveal section-label mb-4">Our Collective</p>
+      <h2 class="reveal font-headline-bold mx-auto max-w-2xl text-3xl text-amn-dark md:text-4xl lg:text-5xl">
+        Trusted by <span class="headline-italic">iconic brands</span> across continents
+      </h2>
+      <p class="reveal mx-auto mt-6 max-w-xl font-body-secondary text-amn-brown/65">
+        A network of premium hospitality leaders. Our strong portfolio of iconic brands spans continents.
+      </p>
+    </div>
+
+    <div class="reveal relative overflow-hidden py-4">
+      <div class="pointer-events-none absolute left-0 top-0 z-10 h-full w-24 bg-gradient-to-r from-[#E0DACE] to-transparent"></div>
+      <div class="pointer-events-none absolute right-0 top-0 z-10 h-full w-24 bg-gradient-to-l from-[#E0DACE] to-transparent"></div>
+
+      <div class="marquee-track animate-marquee-reverse">
+        {allLogos.map((logo, i) => (
+          <div class="marquee-item">
+            <img
+              src={logo.src}
+              alt={logo.alt}
+              class="max-h-10 w-full object-contain opacity-50 brightness-0 transition duration-500 hover:opacity-100 hover:brightness-100"
+              loading="lazy"
+              width="120"
+              height="40"
+              data-logo-index={i % 20}
+            />
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,55 @@
+{
+  "source": "AMN Credential _2026.pptx",
+  "fontFamilies": {
+    "headline": {
+      "primary": "HelveticaNeue 3",
+      "sizes": ["50pt", "40pt"],
+      "usage": "Large display headlines (31 uses)"
+    },
+    "headlineSecondary": {
+      "primary": "HelveticaNeue 1",
+      "sizes": ["76pt", "60pt", "40pt", "30pt", "22pt"],
+      "usage": "Cover titles and section headers (55 uses)"
+    },
+    "headlineAccent": {
+      "primary": "Helvetica Now Display Bold",
+      "sizes": ["65pt", "25pt", "18pt"],
+      "usage": "Bold accent headlines (18 uses)"
+    },
+    "body": {
+      "primary": "HelveticaNeue 2",
+      "sizes": ["40pt", "34pt", "30pt", "26pt", "23pt", "18pt", "16pt"],
+      "usage": "Primary body and subhead text (223 uses)"
+    },
+    "bodySecondary": {
+      "primary": "Helvetica Now Display",
+      "sizes": ["30pt", "25pt", "18pt", "17pt", "16pt"],
+      "usage": "Secondary body text (26 uses)"
+    },
+    "caption": {
+      "primary": "Open Sauce",
+      "sizes": ["16pt"],
+      "usage": "Captions and labels (31 uses)"
+    },
+    "accent": {
+      "primary": "Montserrat Bold",
+      "sizes": ["39pt"],
+      "usage": "Single accent use"
+    }
+  },
+  "embeddedFonts": [
+    { "family": "Open Sauce Bold", "file": "Open-Sauce-Bold.otf", "extractable": true },
+    { "family": "Open Sauce", "file": "Open-Sauce-Regular.otf", "extractable": true },
+    { "family": "HelveticaNeue 1", "file": "HelveticaNeue-1.ttf", "extractable": true, "note": "Subset embedded; generic name in PPTX" },
+    { "family": "HelveticaNeue 2", "file": "HelveticaNeue-2.ttf", "extractable": true, "note": "Subset embedded; generic name in PPTX" },
+    { "family": "HelveticaNeue 3", "file": "HelveticaNeue-3.ttf", "extractable": true, "note": "Subset embedded; generic name in PPTX" },
+    { "family": "Helvetica Now Display Bold", "file": "Helvetica-Now-Display-Bold.otf", "extractable": true },
+    { "family": "Helvetica Now Display", "file": "Helvetica-Now-Display-Regular.otf", "extractable": true },
+    { "family": "Montserrat Bold", "file": "Montserrat-Bold.ttf", "extractable": true }
+  ],
+  "colors": {
+    "darkBrown": "#4A4233",
+    "cream": "#F0EEEB",
+    "teal": "#1C4653"
+  }
+}

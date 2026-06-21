@@ -1,0 +1,215 @@
+/**
+ * Preview theme: Apple-style gray + white (minimal / luxury test)
+ * Scoped to `.theme-preview` — does not affect the live site at `/`
+ *
+ * Ref: apple.com — #F5F5F7 page gray, #FFFFFF cards, #1D1D1F text
+ */
+
+.theme-preview {
+  --preview-gray: #f5f5f7;
+  --preview-white: #ffffff;
+  --preview-text: #1d1d1f;
+  --preview-text-secondary: #6e6e73;
+  --preview-text-tertiary: #86868b;
+  --preview-border: rgba(0, 0, 0, 0.06);
+  --preview-accent: #0066cc;
+  --preview-accent-hover: #0077ed;
+}
+
+.theme-preview,
+.theme-preview body {
+  background-color: var(--preview-gray) !important;
+  color: var(--preview-text-secondary);
+}
+
+/* Light sections → cool gray canvas (white boxes float in bento gaps) */
+.theme-preview .tubik-section,
+.theme-preview .section-cream,
+.theme-preview .tubik-section-alt,
+.theme-preview .section-cream-alt,
+.theme-preview .section-cream-warm {
+  background-color: var(--preview-gray) !important;
+  color: var(--preview-text-secondary);
+}
+
+/* Cards → pure white, flat / Apple-minimal shadow */
+.theme-preview .bento-solid,
+.theme-preview .bento-solid-cream {
+  background: var(--preview-white) !important;
+  border: 1px solid var(--preview-border) !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04) !important;
+}
+
+.theme-preview .bento-solid:hover,
+.theme-preview .bento-solid-cream:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06) !important;
+}
+
+/* Typography on light sections only */
+.theme-preview .tubik-section .font-headline-bold,
+.theme-preview .tubik-section-alt .font-headline-bold {
+  color: var(--preview-text) !important;
+}
+
+.theme-preview .text-amn-brown {
+  color: var(--preview-text-secondary) !important;
+}
+
+.theme-preview .tubik-section .text-amn-dark,
+.theme-preview .tubik-section-alt .text-amn-dark {
+  color: var(--preview-text) !important;
+}
+
+.theme-preview .text-amn-brown\/80 {
+  color: var(--preview-text-secondary) !important;
+}
+
+.theme-preview .text-amn-brown\/75,
+.theme-preview .text-amn-brown\/70,
+.theme-preview .text-amn-brown\/65 {
+  color: var(--preview-text-tertiary) !important;
+}
+
+.theme-preview .text-amn-brown\/60,
+.theme-preview .text-amn-brown\/55 {
+  color: #aeaeb2 !important;
+}
+
+/* Images — clean, slight polish (Apple product shots) */
+.theme-preview .bento-image img,
+.theme-preview .about-resort-img {
+  filter: saturate(0.95) contrast(1.02);
+}
+
+.theme-preview .bento-image {
+  background: var(--preview-white);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+/* Accent: Apple blue on light UI */
+.theme-preview .tubik-section .section-label,
+.theme-preview .tubik-section-alt .section-label,
+.theme-preview .tubik-section .text-amn-blue,
+.theme-preview .tubik-section-alt .text-amn-blue {
+  color: var(--preview-accent) !important;
+}
+
+.theme-preview .tubik-section-dark .text-amn-blue,
+.theme-preview .tubik-section-dark .contact-headline {
+  color: var(--preview-accent) !important;
+}
+
+.theme-preview .tubik-section .text-amn-olive,
+.theme-preview .tubik-section-alt .text-amn-olive,
+.theme-preview .text-amn-olive {
+  color: var(--preview-accent) !important;
+}
+
+.theme-preview .bg-amn-lime\/30 {
+  background-color: rgba(0, 102, 204, 0.08) !important;
+}
+
+.theme-preview .btn-primary {
+  background-color: var(--preview-accent) !important;
+  box-shadow: none !important;
+}
+
+.theme-preview .btn-primary:hover {
+  background-color: var(--preview-accent-hover) !important;
+  box-shadow: none !important;
+  transform: none;
+}
+
+.theme-preview .btn-dark {
+  background-color: var(--preview-text) !important;
+}
+
+.theme-preview .btn-outline {
+  border-color: rgba(255, 255, 255, 0.35) !important;
+}
+
+/* Nav — frosted white bar */
+.theme-preview .pill-nav--light {
+  background: rgba(255, 255, 255, 0.72) !important;
+  border-color: var(--preview-border) !important;
+  backdrop-filter: saturate(180%) blur(20px);
+  -webkit-backdrop-filter: saturate(180%) blur(20px);
+}
+
+.theme-preview .pill-nav--light .pill-nav-link {
+  color: var(--preview-text-secondary) !important;
+}
+
+.theme-preview .pill-nav--light .pill-nav-link:hover,
+.theme-preview .pill-nav--light .pill-nav-link.is-active {
+  background: rgba(0, 0, 0, 0.05) !important;
+  color: var(--preview-text) !important;
+}
+
+.theme-preview #mobile-menu {
+  background: rgba(255, 255, 255, 0.92) !important;
+  border-color: var(--preview-border) !important;
+}
+
+.theme-preview #mobile-menu a {
+  color: var(--preview-text-secondary) !important;
+}
+
+.theme-preview #mobile-menu a:hover {
+  background-color: var(--preview-gray) !important;
+}
+
+/* Collective marquee fades → gray canvas */
+.theme-preview #collective .pointer-events-none.absolute.left-0 {
+  background: linear-gradient(to right, var(--preview-gray), transparent) !important;
+}
+
+.theme-preview #collective .pointer-events-none.absolute.right-0 {
+  background: linear-gradient(to left, var(--preview-gray), transparent) !important;
+}
+
+/* Tech partnership idle — keep white cards on dark (unchanged) */
+
+/* Preview chrome */
+.preview-banner {
+  position: fixed;
+  bottom: 1rem;
+  left: 50%;
+  z-index: 100;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem 1rem;
+  max-width: calc(100% - 2rem);
+  padding: 0.625rem 1rem;
+  border-radius: 9999px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(29, 29, 31, 0.88);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.35);
+  transform: translateX(-50%);
+  font-family: 'Open Sauce', system-ui, sans-serif;
+  font-size: 0.6875rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.75);
+}
+
+.preview-banner a {
+  color: #fff;
+  text-decoration: none;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.35);
+  transition: opacity 0.2s ease;
+}
+
+.preview-banner a:hover {
+  opacity: 0.85;
+}
+
+.preview-banner strong {
+  color: #2997ff;
+  font-weight: 600;
+}

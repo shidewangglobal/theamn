@@ -8,11 +8,12 @@ interface Props {
 }
 
 const {
-  title = 'Preview — Minimal theme | The AMN',
-  description = 'Design preview: warm white surfaces, dark anchors, lean minimal layout.',
+  title = 'The AMN | Authentic. Agile. Accelerated.',
+  description = 'THE AMN elevates multi-market revenue and direct bookings for premium hotels and resorts through AI-driven digital marketing operations.',
 } = Astro.props;
 
 const siteName = 'the amn';
+const siteUrl = 'https://theamn.network';
 const fullTitle = title.includes(siteName) ? title : `${title} | ${siteName}`;
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 
@@ -33,15 +34,28 @@ const navLinks = [
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="generator" content={Astro.generator} />
-    <meta name="robots" content="noindex, nofollow" />
 
     <title>{fullTitle}</title>
     <meta name="description" content={description} />
+    <link rel="canonical" href={canonicalURL} />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:site_name" content={siteName} />
+    <meta property="og:image" content={`${siteUrl}/images/hero-cover.jpeg`} />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={fullTitle} />
+    <meta name="twitter:description" content={description} />
 
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
     <link rel="icon" type="image/png" sizes="512x512" href="/favicon.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
   </head>
-  <body class="theme-preview min-h-screen overflow-x-hidden pb-20 text-amn-brown">
+  <body class="theme-preview min-h-screen overflow-x-hidden text-amn-brown">
     <header id="site-header" class="site-header is-scrolled fixed left-0 right-0 top-0 z-50 px-4 pt-3 transition-all duration-[600ms] ease-[cubic-bezier(0.22,1,0.36,1)] md:px-6">
       <div class="mx-auto flex max-w-7xl items-center justify-between gap-4">
         <a href="#hero" class="shrink-0">
@@ -93,11 +107,6 @@ const navLinks = [
     <main>
       <slot />
     </main>
-
-    <aside class="preview-banner" aria-label="Preview mode">
-      <span><strong>Preview</strong> · Apple gray / white</span>
-      <a href="/">Live site →</a>
-    </aside>
 
     <script>
       import { initAnimations } from '../scripts/animations';

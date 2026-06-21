@@ -9,5 +9,7 @@ export default defineConfig({
     '/about': '/#about',
     '/services': '/#services',
     '/contact': '/#contact',
+    '/preview': '/',
+    '/preview/': '/',
   },
 });

@@ -26,6 +26,7 @@ function initSmoothScroll(): Lenis | null {
     duration: 0.95,
     easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
     smoothWheel: true,
+    syncTouch: false,
   });
 
   lenis.on('scroll', ScrollTrigger.update);
@@ -177,7 +178,7 @@ function initHeroEntrance() {
   const tl = gsap.timeline({ defaults: { ease: MOTION_EASE } });
 
   tl.fromTo('.hero-headline-static', { opacity: 0, y: 18 }, { opacity: 1, y: 0, duration: MOTION_DURATION_SHORT, stagger: 0.06 })
-    .fromTo('.hero-a-word', { opacity: 0, y: 24, filter: 'blur(10px)' }, { opacity: 1, y: 0, filter: 'blur(0px)', duration: MOTION_DURATION, ease: MOTION_EASE }, '-=0.32')
+    .fromTo('.hero-a-word', { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: MOTION_DURATION, ease: MOTION_EASE }, '-=0.32')
     .fromTo('.hero-tagline', { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: MOTION_DURATION_SHORT }, '-=0.32')
     .fromTo('.hero-cta', { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: MOTION_DURATION_SHORT }, '-=0.28')
     .fromTo('.hero-scroll', { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: MOTION_DURATION_SHORT }, '-=0.2');
@@ -185,42 +186,118 @@ function initHeroEntrance() {
 
 const HERO_VIDEO_HOLD_MS = 9000;
 
-function initHeroVideoRotator() {
-  if (prefersReducedMotion()) return;
-
-  const videos = Array.from(document.querySelectorAll<HTMLVideoElement>('.hero-video-bg'));
-  if (!videos.length) return;
-
-  if (videos.length === 1) {
-    videos[0].play().catch(() => {});
-    return;
+function waitForVideoReady(video: HTMLVideoElement, timeoutMs = 15000): Promise<void> {
+  if (video.readyState >= HTMLMediaElement.HAVE_FUTURE_DATA) {
+    return Promise.resolve();
   }
 
-  let active = 0;
+  return new Promise((resolve, reject) => {
+    const timeout = window.setTimeout(() => {
+      cleanup();
+      reject(new Error('Video load timeout'));
+    }, timeoutMs);
+
+    const onReady = () => {
+      cleanup();
+      resolve();
+    };
+
+    const onError = () => {
+      cleanup();
+      reject(new Error('Video load error'));
+    };
+
+    const cleanup = () => {
+      window.clearTimeout(timeout);
+      video.removeEventListener('canplay', onReady);
+      video.removeEventListener('error', onError);
+    };
+
+    video.addEventListener('canplay', onReady, { once: true });
+    video.addEventListener('error', onError, { once: true });
+
+    if (video.networkState === HTMLMediaElement.NETWORK_EMPTY) {
+      video.load();
+    }
+  });
+}
+
+async function playHeroVideo(video: HTMLVideoElement): Promise<boolean> {
+  video.muted = true;
+  video.defaultMuted = true;
+  video.playsInline = true;
+
+  try {
+    await waitForVideoReady(video);
+    await video.play();
+    return true;
+  } catch {
+    return false;
+  }
+}
+
+function initHeroVideoRotator() {
+  const videos = Array.from(document.querySelectorAll<HTMLVideoElement>('.hero-video-bg'));
+  const heroFallback = document.querySelector<HTMLImageElement>('.hero-fallback-img');
+  if (!videos.length) return;
+
+  const showFallback = () => {
+    videos.forEach((video) => {
+      video.classList.remove('is-active');
+      video.classList.add('is-hidden');
+      video.pause();
+    });
+    heroFallback?.classList.add('is-visible');
+  };
+
+  if (prefersReducedMotion()) {
+    showFallback();
+    return;
+  }
 
   videos.forEach((video, i) => {
     if (i === 0) {
       video.classList.add('is-active');
-      video.play().catch(() => {});
     } else {
       video.classList.remove('is-active');
+      video.preload = 'none';
     }
   });
 
-  const switchVideo = () => {
-    const next = (active + 1) % videos.length;
-    const current = videos[active];
-    const incoming = videos[next];
+  void playHeroVideo(videos[0]).then((started) => {
+    if (!started) {
+      showFallback();
+      return;
+    }
 
-    incoming.currentTime = 0;
-    incoming.play().catch(() => {});
-    incoming.classList.add('is-active');
-    current.classList.remove('is-active');
-    current.pause();
-    active = next;
-  };
+    if (videos.length === 1) return;
 
-  window.setInterval(switchVideo, HERO_VIDEO_HOLD_MS);
+    let active = 0;
+
+    const switchVideo = async () => {
+      const next = (active + 1) % videos.length;
+      const current = videos[active];
+      const incoming = videos[next];
+
+      if (incoming.preload === 'none') {
+        incoming.preload = 'auto';
+        incoming.load();
+      }
+
+      const ready = await playHeroVideo(incoming);
+      if (!ready) return;
+
+      incoming.currentTime = 0;
+      incoming.classList.add('is-active');
+      current.classList.remove('is-active');
+      current.pause();
+      active = next;
+    };
+
+    window.setInterval(() => {
+      void switchVideo();
+    }, HERO_VIDEO_HOLD_MS);
+  });
 }
 
 function initHeroWordRotator() {
@@ -246,7 +323,6 @@ function initHeroWordRotator() {
     gsap.to(wordEl, {
       y: -36,
       opacity: 0,
-      filter: 'blur(10px)',
       duration: HERO_A_TRANSITION,
       ease: 'power2.in',
       onComplete: () => {
@@ -254,11 +330,10 @@ function initHeroWordRotator() {
         wordEl.textContent = words[index];
         gsap.fromTo(
           wordEl,
-          { y: 36, opacity: 0, filter: 'blur(10px)' },
+          { y: 36, opacity: 0 },
           {
             y: 0,
             opacity: 1,
-            filter: 'blur(0px)',
             duration: HERO_A_TRANSITION,
             ease: MOTION_EASE,
             onComplete: () => {

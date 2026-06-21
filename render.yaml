@@ -1,6 +1,5 @@
 # Render Blueprint — Static Site (free tier, no cold start)
 # Dashboard: New → Blueprint → connect this repo
-# Or: New → Static Site → use settings below manually
 
 services:
   - type: web
@@ -8,6 +7,9 @@ services:
     runtime: static
     buildCommand: npm ci && npm run build
     staticPublishPath: ./dist
+    envVars:
+      - key: PUBLIC_FORMSPREE_URL
+        sync: false
     headers:
       - path: /videos/*
         name: Cache-Control

@@ -1,4 +1,8 @@
 ---
+const formAction = import.meta.env.PUBLIC_FORMSPREE_URL || 'https://formspree.io/f/mqevznok';
+const successReturnUrl = `${Astro.url.origin}${Astro.url.pathname}?sent=1#contact`;
+const isSubmitted = Astro.url.searchParams.get('sent') === '1';
+
 const timezones = [
   { value: 'Asia/Ho_Chi_Minh', label: 'Ho Chi Minh (GMT+7)' },
   { value: 'Asia/Singapore', label: 'Singapore (GMT+8)' },
@@ -54,82 +58,171 @@ const timezones = [
       </div>
 
       <div class="contact-form-wrap reveal">
-        <form class="contact-form space-y-2.5" action="https://formspree.io/f/placeholder" method="POST">
-          <div class="contact-form-row grid gap-2.5 sm:grid-cols-2">
+        <div id="contact-form-panel" class:list={{ 'contact-panel-hidden': isSubmitted }}>
+          <form
+            class="contact-form space-y-2.5"
+            id="contact-form"
+            action={formAction}
+            method="POST"
+            novalidate
+          >
+            <input type="hidden" name="_next" value={successReturnUrl} />
+            <input type="hidden" name="_subject" value="New call request — The AMN website" />
+            <div class="contact-form-row grid gap-2.5 sm:grid-cols-2">
+              <div>
+                <label for="name" class="font-caption mb-1 block text-[10px] uppercase tracking-wider text-white/55">Name</label>
+                <input type="text" id="name" name="name" required class="contact-form-input" placeholder="Your name" />
+              </div>
+              <div>
+                <label for="email" class="font-caption mb-1 block text-[10px] uppercase tracking-wider text-white/55">Email</label>
+                <input type="email" id="email" name="email" required class="contact-form-input" placeholder="you@company.com" />
+              </div>
+            </div>
+
             <div>
-              <label for="name" class="font-caption mb-1 block text-[10px] uppercase tracking-wider text-white/55">Name</label>
-              <input type="text" id="name" name="name" required class="contact-form-input" placeholder="Your name" />
+              <label for="mobile" class="font-caption mb-1 block text-[10px] uppercase tracking-wider text-white/55">
+                Mobile / WhatsApp
+              </label>
+              <input
+                type="tel"
+                id="mobile"
+                name="mobile"
+                required
+                class="contact-form-input"
+                placeholder="+84 900 000 000"
+                autocomplete="tel"
+              />
             </div>
+
+            <fieldset class="contact-schedule">
+              <legend class="font-caption mb-2 block text-[10px] uppercase tracking-wider text-white/55">
+                Best time to reach you
+              </legend>
+              <div class="contact-schedule-grid grid gap-2.5 sm:grid-cols-3">
+                <div>
+                  <label for="call-date" class="sr-only">Date</label>
+                  <input type="date" id="call-date" name="call_date" required class="contact-form-input contact-form-input--date" />
+                </div>
+                <div>
+                  <label for="call-time" class="sr-only">Time</label>
+                  <input type="time" id="call-time" name="call_time" required class="contact-form-input contact-form-input--time" />
+                </div>
+                <div>
+                  <label for="call-timezone" class="sr-only">Timezone</label>
+                  <select id="call-timezone" name="call_timezone" required class="contact-form-input contact-form-input--select">
+                    {timezones.map((tz) => (
+                      <option value={tz.value}>{tz.label}</option>
+                    ))}
+                  </select>
+                </div>
+              </div>
+            </fieldset>
+
             <div>
-              <label for="email" class="font-caption mb-1 block text-[10px] uppercase tracking-wider text-white/55">Email</label>
-              <input type="email" id="email" name="email" required class="contact-form-input" placeholder="you@company.com" />
+              <label for="message" class="font-caption mb-1 block text-[10px] uppercase tracking-wider text-white/55">
+                Message <span class="normal-case tracking-normal text-white/35">(optional)</span>
+              </label>
+              <textarea
+                id="message"
+                name="message"
+                rows="3"
+                class="contact-form-input resize-none"
+                placeholder="Your property, brand, or project..."
+              ></textarea>
             </div>
-          </div>
 
-          <div>
-            <label for="mobile" class="font-caption mb-1 block text-[10px] uppercase tracking-wider text-white/55">
-              Mobile / WhatsApp
-            </label>
-            <input
-              type="tel"
-              id="mobile"
-              name="mobile"
-              required
-              class="contact-form-input"
-              placeholder="+84 900 000 000"
-              autocomplete="tel"
-            />
-          </div>
+            <button type="submit" class="btn-primary w-full max-w-full py-3 text-sm" id="contact-submit">
+              Lock in my call
+            </button>
 
-          <fieldset class="contact-schedule">
-            <legend class="font-caption mb-2 block text-[10px] uppercase tracking-wider text-white/55">
-              Best time to reach you
-            </legend>
-            <div class="contact-schedule-grid grid gap-2.5 sm:grid-cols-3">
-              <div>
-                <label for="call-date" class="sr-only">Date</label>
-                <input type="date" id="call-date" name="call_date" required class="contact-form-input contact-form-input--date" />
-              </div>
-              <div>
-                <label for="call-time" class="sr-only">Time</label>
-                <input type="time" id="call-time" name="call_time" required class="contact-form-input contact-form-input--time" />
-              </div>
-              <div>
-                <label for="call-timezone" class="sr-only">Timezone</label>
-                <select id="call-timezone" name="call_timezone" required class="contact-form-input contact-form-input--select">
-                  {timezones.map((tz) => (
-                    <option value={tz.value}>{tz.label}</option>
-                  ))}
-                </select>
-              </div>
-            </div>
-          </fieldset>
+            <p
+              id="contact-form-status"
+              class="contact-form-status font-body-secondary text-sm"
+              role="status"
+              aria-live="polite"
+              hidden
+            ></p>
+          </form>
+        </div>
 
-          <div>
-            <label for="message" class="font-caption mb-1 block text-[10px] uppercase tracking-wider text-white/55">
-              Message <span class="normal-case tracking-normal text-white/35">(optional)</span>
-            </label>
-            <textarea
-              id="message"
-              name="message"
-              rows="3"
-              class="contact-form-input resize-none"
-              placeholder="Your property, brand, or project..."
-            ></textarea>
-          </div>
-
-          <button type="submit" class="btn-primary w-full max-w-full py-3 text-sm">
-            Lock in my call
+        <div
+          id="contact-thank-you"
+          class:list={['contact-thank-you', { 'contact-panel-hidden': !isSubmitted }]}
+        >
+          <div class="contact-thank-you-icon" aria-hidden="true">✓</div>
+          <h3 class="contact-thank-you-title font-headline-bold">You're locked in</h3>
+          <p class="contact-thank-you-text font-body-secondary">
+            Thanks for reaching out. We've received your details and will be in touch shortly to confirm your call.
+          </p>
+          <button type="button" class="btn-primary w-full py-3 text-sm" id="contact-send-another">
+            Send another request
           </button>
-        </form>
+        </div>
       </div>
     </div>
   </div>
 </section>
 
-<script>
-  const tzSelect = document.getElementById('call-timezone') as HTMLSelectElement | null;
-  const dateInput = document.getElementById('call-date') as HTMLInputElement | null;
+<script define:vars={{ formAction }}>
+  const tzSelect = document.getElementById('call-timezone');
+  const dateInput = document.getElementById('call-date');
+  const contactForm = document.getElementById('contact-form');
+  const contactFormPanel = document.getElementById('contact-form-panel');
+  const contactThankYou = document.getElementById('contact-thank-you');
+  const contactSendAnother = document.getElementById('contact-send-another');
+  const contactSubmit = document.getElementById('contact-submit');
+  const contactStatus = document.getElementById('contact-form-status');
+
+  const setStatus = (message, type) => {
+    if (!contactStatus) return;
+    contactStatus.textContent = message;
+    contactStatus.dataset.state = type;
+    contactStatus.hidden = !message;
+  };
+
+  const showThankYou = () => {
+    contactFormPanel?.classList.add('contact-panel-hidden');
+    contactThankYou?.classList.remove('contact-panel-hidden');
+  };
+
+  const showForm = () => {
+    contactFormPanel?.classList.remove('contact-panel-hidden');
+    contactThankYou?.classList.add('contact-panel-hidden');
+    setStatus('', 'success');
+  };
+
+  const resetFormDefaults = () => {
+    if (!contactForm) return;
+    contactForm.reset();
+    if (dateInput) {
+      const today = new Date();
+      const yyyy = today.getFullYear();
+      const mm = String(today.getMonth() + 1).padStart(2, '0');
+      const dd = String(today.getDate()).padStart(2, '0');
+      dateInput.min = `${yyyy}-${mm}-${dd}`;
+    }
+    if (tzSelect) {
+      try {
+        const detected = Intl.DateTimeFormat().resolvedOptions().timeZone;
+        const match = Array.from(tzSelect.options).find((opt) => opt.value === detected);
+        if (match) tzSelect.value = detected;
+      } catch {
+        /* keep default */
+      }
+    }
+  };
+
+  if (new URLSearchParams(window.location.search).get('sent') === '1') {
+    showThankYou();
+    history.replaceState(null, '', `${window.location.pathname}#contact`);
+  }
+
+  if (contactSendAnother) {
+    contactSendAnother.addEventListener('click', () => {
+      resetFormDefaults();
+      showForm();
+    });
+  }
 
   if (tzSelect) {
     try {
@@ -147,6 +240,41 @@ const timezones = [
     const mm = String(today.getMonth() + 1).padStart(2, '0');
     const dd = String(today.getDate()).padStart(2, '0');
     dateInput.min = `${yyyy}-${mm}-${dd}`;
+  }
+
+  if (contactForm && contactSubmit && contactStatus) {
+    const defaultSubmitLabel = contactSubmit.textContent || 'Lock in my call';
+
+    contactForm.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      setStatus('', 'success');
+
+      contactSubmit.disabled = true;
+      contactSubmit.textContent = 'Sending...';
+
+      try {
+        const response = await fetch(formAction, {
+          method: 'POST',
+          headers: { Accept: 'application/json' },
+          body: new FormData(contactForm),
+        });
+
+        const payload = await response.json().catch(() => null);
+
+        if (!response.ok) {
+          throw new Error(payload?.error || 'Unable to submit your request right now.');
+        }
+
+        showThankYou();
+      } catch (error) {
+        const message =
+          error instanceof Error ? error.message : 'Unable to submit your request right now.';
+        setStatus(message, 'error');
+      } finally {
+        contactSubmit.disabled = false;
+        contactSubmit.textContent = defaultSubmitLabel;
+      }
+    });
   }
 </script>
 
@@ -226,6 +354,59 @@ const timezones = [
 
   .contact-details dt {
     margin-bottom: 0.125rem;
+  }
+
+  .contact-form-status[data-state='success'] {
+    color: rgba(0, 160, 240, 0.95);
+  }
+
+  .contact-form-status[data-state='error'] {
+    color: #ffb4b4;
+  }
+
+  .contact-panel-hidden {
+    display: none !important;
+  }
+
+  .contact-thank-you {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 20rem;
+    padding: 2rem 1.5rem;
+    border-radius: 1.25rem;
+    border: 1px solid rgba(0, 160, 240, 0.35);
+    background: rgba(0, 160, 240, 0.08);
+    text-align: center;
+  }
+
+  .contact-thank-you-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 3rem;
+    height: 3rem;
+    margin-bottom: 1rem;
+    border-radius: 9999px;
+    background: rgba(0, 160, 240, 0.2);
+    color: #00a0f0;
+    font-size: 1.25rem;
+    font-weight: 700;
+  }
+
+  .contact-thank-you-title {
+    margin-bottom: 0.75rem;
+    font-size: 1.25rem;
+    color: #fff;
+  }
+
+  .contact-thank-you-text {
+    margin-bottom: 1.5rem;
+    max-width: 22rem;
+    font-size: 0.9375rem;
+    line-height: 1.6;
+    color: rgba(255, 255, 255, 0.78);
   }
 
   .sr-only {

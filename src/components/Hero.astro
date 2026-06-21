@@ -27,17 +27,16 @@ const heroVideos = [
         {heroVideos.map((video, i) => (
           <video
             class:list={['hero-video-bg', i === 0 ? 'hero-video-a is-active' : 'hero-video-b']}
+            src={video.src}
             autoplay={i === 0}
             muted
             loop
             playsinline
-            preload="auto"
+            preload={i === 0 ? 'auto' : 'none'}
             poster="/images/hero-cover.jpeg"
             data-hero-video-index={i}
-          >
-            <source src={video.src} type="video/mp4" />
-            <source src={video.src} type="video/quicktime" />
-          </video>
+            aria-label={video.label}
+          />
         ))}
         <img
           src="/images/hero-cover.jpeg"
@@ -105,24 +104,6 @@ const heroVideos = [
     </div>
   </div>
 </section>
-
-<script>
-  const videos = document.querySelectorAll<HTMLVideoElement>('.hero-video-bg');
-  const heroFallback = document.querySelector<HTMLImageElement>('.hero-fallback-img');
-  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-  const showFallback = () => {
-    videos.forEach((v) => v.classList.add('is-hidden'));
-    heroFallback?.classList.add('is-visible');
-  };
-
-  if (reducedMotion) {
-    showFallback();
-  } else if (videos.length) {
-    videos[0]?.play().catch(showFallback);
-    videos.forEach((v) => v.addEventListener('error', showFallback));
-  }
-</script>
 
 <style>
   .hero-media-layer {

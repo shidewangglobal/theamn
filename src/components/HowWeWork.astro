@@ -12,6 +12,18 @@ const networkItems = [
   'Agile Execution Speed',
   'Multi-cultural Independent Talents',
 ];
+
+const hubGroup = {
+  titleLines: ['THE CORE HUB,', 'HO CHI MINH'],
+  description: 'Ensuring daily continuity driven by authentic portfolio expertise',
+  items: hubItems,
+};
+
+const networkGroup = {
+  titleLines: ['CROSS-CULTURAL', 'EXPERT NETWORK'],
+  description: "Plugging specialized capability extensions directly into brand's core workflow.",
+  items: networkItems,
+};
 ---
 
 <section id="how-we-work" class="tubik-section">
@@ -42,13 +54,46 @@ const networkItems = [
           </div>
         </div>
 
-        <div class="how-boxes-row bento-grid grid-cols-1 items-stretch sm:grid-cols-2">
+        {/* Mobile — title then its detail items, grouped */}
+        <div class="how-mobile-stack flex flex-col gap-2.5 sm:hidden">
+          {[hubGroup, networkGroup].map((group) => (
+            <article class="how-mobile-group flex flex-col gap-2.5">
+              <div class="how-col-header bento-solid bento-p-sm flex flex-col justify-center">
+                <h3 class="how-col-title font-headline-bold text-sm font-bold uppercase leading-tight tracking-[0.12em] text-amn-dark">
+                  {group.titleLines.map((line) => (
+                    <span class="block">{line}</span>
+                  ))}
+                </h3>
+                <p class="how-col-desc mt-2 font-body-secondary text-xs leading-snug text-amn-brown/70">
+                  {group.description}
+                </p>
+              </div>
+              <div class="how-mobile-list bento-solid overflow-hidden">
+                {group.items.map((item, index) => (
+                  <div
+                    class:list={[
+                      'how-list-row how-list-row-item flex min-h-[3.25rem] items-center px-4 py-2.5',
+                      index < group.items.length - 1 && 'border-b border-amn-brown/10',
+                    ]}
+                  >
+                    <span class="how-list-text font-body-secondary text-sm leading-snug text-amn-brown">
+                      {item}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            </article>
+          ))}
+        </div>
+
+        {/* Desktop — two columns side by side */}
+        <div class="how-boxes-row bento-grid hidden grid-cols-2 items-stretch sm:grid">
           <div class="how-col-header bento-solid bento-p-sm flex flex-col justify-center">
             <h3 class="how-col-title font-headline-bold text-sm font-bold uppercase leading-tight tracking-[0.12em] text-amn-dark md:text-base lg:text-lg">
               THE CORE HUB,<br />HO CHI MINH
             </h3>
             <p class="how-col-desc mt-2 font-body-secondary text-xs leading-snug text-amn-brown/70 md:text-sm lg:whitespace-nowrap">
-              Ensuring daily continuity driven by authentic portfolio expertise
+              {hubGroup.description}
             </p>
           </div>
 
@@ -57,11 +102,11 @@ const networkItems = [
               CROSS-CULTURAL EXPERT NETWORK
             </h3>
             <p class="how-col-desc mt-2 font-body-secondary text-xs leading-snug text-amn-brown/70 md:text-sm lg:whitespace-nowrap">
-              Plugging specialized capability extensions directly into brand's core workflow.
+              {networkGroup.description}
             </p>
           </div>
 
-          <div class="how-lists-sync sm:col-span-2">
+          <div class="how-lists-sync col-span-2">
             <div class="how-hub-box how-list-column-shell bento-solid" aria-hidden="true"></div>
             <div class="how-network-box how-list-column-shell bento-solid" aria-hidden="true"></div>
 

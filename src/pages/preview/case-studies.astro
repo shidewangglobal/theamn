@@ -1,0 +1,312 @@
+---
+import LabLayout from '../../layouts/LabLayout.astro';
+import ProofImagePanel from '../../components/lab/ProofImagePanel.astro';
+import ProofStoryPanel from '../../components/lab/ProofStoryPanel.astro';
+import { caseStudiesPreview, curatingService } from '../../data/case-studies-preview';
+
+const variants = [
+  {
+    id: 'variant-a',
+    label: 'A',
+    title: 'Proof row below Curating',
+    note: 'Giữ nguyên service row như site hiện tại. Thêm 1 bento row riêng cho before/after — không phá box service, nhưng section dài hơn.',
+  },
+  {
+    id: 'variant-b',
+    label: 'B',
+    title: 'Proof inside Curating group',
+    note: 'Gom service + proof trong một cụm. Divider “In practice” — bento grid vẫn đều, cảm giác một pillar hoàn chỉnh.',
+  },
+  {
+    id: 'variant-c',
+    label: 'C',
+    title: 'Single row — bỏ hero resort',
+    note: 'Gọn nhất: mô tả service + proof cùng một row. Ảnh resort generic biến mất, thay bằng screenshot social.',
+  },
+];
+---
+
+<LabLayout title="Case Study Layout Lab | the amn">
+  <Fragment slot="lab-title">Case Study Layout Lab</Fragment>
+  <Fragment slot="lab-nav">
+    <a href="#variant-a" class="lab-nav-pill">A</a>
+    <a href="#variant-b" class="lab-nav-pill">B</a>
+    <a href="#variant-c" class="lab-nav-pill">C</a>
+    <a href="/preview/archetypes" class="lab-nav-pill">Archetypes</a>
+  </Fragment>
+  <div class="tubik-shell py-8 sm:py-10 md:py-12">
+    <div class="mb-10 max-w-2xl">
+      <p class="section-label mb-2">Preview only · not live</p>
+      <h1 class="font-headline-bold mb-3 text-2xl text-amn-dark md:text-3xl">
+        Before/After × Bento Box
+      </h1>
+      <p class="font-body-secondary text-sm leading-relaxed text-amn-brown/70 md:text-base">
+        Ba cách gắn proof từ credential vào <strong class="font-medium text-amn-dark">Curating Your Brand's Aesthetic</strong>.
+        Ảnh before/after trích từ deck. Toggle <em>Before | After</em> trên desktop; cuối trang có mobile stack mẫu.
+      </p>
+    </div>
+
+    {
+      variants.map((variant) => (
+        <section id={variant.id} class="lab-variant mb-14 scroll-mt-20 md:mb-20">
+          <div class="mb-3 flex flex-wrap items-baseline gap-x-3 gap-y-1">
+            <span class="lab-variant-badge">{variant.label}</span>
+            <h2 class="font-headline-bold text-xl text-amn-dark md:text-2xl">{variant.title}</h2>
+          </div>
+          <p class="mb-4 max-w-3xl font-body-secondary text-sm leading-relaxed text-amn-brown/65">
+            {variant.note}
+          </p>
+
+          <div class="lab-frame rounded-[1.35rem] border border-amn-brown/10 bg-[#ebe8e1] p-2.5 sm:p-3">
+            <p class="mb-2.5 px-1 font-caption text-[10px] uppercase tracking-[0.2em] text-amn-brown/45">
+              Our Services — excerpt
+            </p>
+
+            {variant.id === 'variant-a' && (
+              <div class="bento-grid gap-2.5">
+                <div class="tubik-pair items-stretch">
+                  <article class="service-card bento-solid bento-p-md flex flex-col justify-start">
+                    <p class="font-caption mb-2 text-xs tracking-[0.2em] text-amn-blue text-accent-italic">
+                      {curatingService.subtitle}
+                    </p>
+                    <h3 class="font-headline-bold mb-3 text-xl text-amn-dark md:text-2xl">{curatingService.title}</h3>
+                    <p class="font-body-secondary mb-5 text-sm leading-relaxed text-amn-brown/70">
+                      {curatingService.description}
+                    </p>
+                    <ul class="space-y-2">
+                      {curatingService.items.map((item) => (
+                        <li class="flex items-center gap-2 font-body-secondary text-sm text-amn-brown/80">
+                          <span class="h-1.5 w-1.5 shrink-0 rounded-full bg-amn-blue/70" />
+                          {item}
+                        </li>
+                      ))}
+                    </ul>
+                  </article>
+                  <div class="service-image-box bento-image min-h-[14rem] lg:min-h-0">
+                    <img
+                      src={curatingService.heroImage}
+                      alt=""
+                      class="h-full min-h-[14rem] w-full object-cover lg:absolute lg:inset-0 lg:min-h-0"
+                      loading="lazy"
+                    />
+                  </div>
+                </div>
+
+                <div class="tubik-pair items-stretch">
+                  <div class="bento-solid bento-p-md flex flex-col justify-center">
+                    <p class="font-caption mb-2 text-[10px] uppercase tracking-[0.2em] text-amn-brown/45">
+                      In practice
+                    </p>
+                    <ProofStoryPanel cases={caseStudiesPreview} groupId="a" />
+                  </div>
+                  <ProofImagePanel cases={caseStudiesPreview} groupId="a" />
+                </div>
+              </div>
+            )}
+
+            {variant.id === 'variant-b' && (
+              <div class="bento-grid gap-2.5">
+                <div class="lab-curating-group bento-grid gap-2.5 rounded-[1.1rem] border border-amn-brown/10 bg-white/40 p-2.5">
+                  <div class="tubik-pair items-stretch">
+                    <article class="service-card bento-solid bento-p-md flex flex-col justify-start">
+                      <p class="font-caption mb-2 text-xs tracking-[0.2em] text-amn-blue text-accent-italic">
+                        {curatingService.subtitle}
+                      </p>
+                      <h3 class="font-headline-bold mb-3 text-xl text-amn-dark md:text-2xl">{curatingService.title}</h3>
+                      <p class="font-body-secondary mb-5 text-sm leading-relaxed text-amn-brown/70">
+                        {curatingService.description}
+                      </p>
+                      <ul class="space-y-2">
+                        {curatingService.items.map((item) => (
+                          <li class="flex items-center gap-2 font-body-secondary text-sm text-amn-brown/80">
+                            <span class="h-1.5 w-1.5 shrink-0 rounded-full bg-amn-blue/70" />
+                            {item}
+                          </li>
+                        ))}
+                      </ul>
+                    </article>
+                    <div class="service-image-box bento-image min-h-[12rem]">
+                      <img
+                        src={curatingService.heroImage}
+                        alt=""
+                        class="h-full min-h-[12rem] w-full object-cover"
+                        loading="lazy"
+                      />
+                    </div>
+                  </div>
+
+                  <div class="lab-divider flex items-center gap-3 px-1 py-0.5">
+                    <span class="h-px flex-1 bg-amn-brown/10" />
+                    <span class="font-caption text-[10px] uppercase tracking-[0.22em] text-amn-brown/40">In practice</span>
+                    <span class="h-px flex-1 bg-amn-brown/10" />
+                  </div>
+
+                  <div class="tubik-pair items-stretch">
+                    <div class="bento-solid bento-p-md flex flex-col justify-center">
+                      <ProofStoryPanel cases={caseStudiesPreview} groupId="b" />
+                    </div>
+                    <ProofImagePanel cases={caseStudiesPreview} groupId="b" />
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {variant.id === 'variant-c' && (
+              <div class="bento-grid gap-2.5">
+                <div class="tubik-pair items-stretch">
+                  <article class="service-card bento-solid bento-p-md flex flex-col justify-start">
+                    <p class="font-caption mb-2 text-xs tracking-[0.2em] text-amn-blue text-accent-italic">
+                      {curatingService.subtitle}
+                    </p>
+                    <h3 class="font-headline-bold mb-3 text-xl text-amn-dark md:text-2xl">{curatingService.title}</h3>
+                    <p class="font-body-secondary mb-4 text-sm leading-relaxed text-amn-brown/70">
+                      {curatingService.description}
+                    </p>
+                    <ul class="mb-5 space-y-2">
+                      {curatingService.items.slice(0, 2).map((item) => (
+                        <li class="flex items-center gap-2 font-body-secondary text-sm text-amn-brown/80">
+                          <span class="h-1.5 w-1.5 shrink-0 rounded-full bg-amn-blue/70" />
+                          {item}
+                        </li>
+                      ))}
+                    </ul>
+                    <ProofStoryPanel cases={caseStudiesPreview} groupId="c" compact />
+                  </article>
+                  <ProofImagePanel cases={caseStudiesPreview} groupId="c" />
+                </div>
+              </div>
+            )}
+
+            <p class="mt-2.5 px-1 font-caption text-[10px] uppercase tracking-wider text-amn-brown/35">
+              … Performance row unchanged …
+            </p>
+          </div>
+        </section>
+      ))
+    }
+
+    <section id="mobile-note" class="scroll-mt-20 border-t border-amn-brown/10 pt-10">
+      <h2 class="font-headline-bold mb-2 text-xl text-amn-dark">Mobile — stack thay vì toggle</h2>
+      <p class="mb-4 max-w-2xl font-body-secondary text-sm text-amn-brown/65">
+        Trên điện thoại, before và after xếp dọc (không toggle). Mẫu dưới dùng case Khao Yai.
+      </p>
+      <div class="mx-auto max-w-sm">
+        <ProofImagePanel cases={caseStudiesPreview.slice(0, 1)} groupId="mobile" showMobileStack />
+      </div>
+    </section>
+  </div>
+</LabLayout>
+
+<script>
+  type ProofGroup = {
+    groupId: string;
+    activeCase: string;
+    activeMode: 'before' | 'after';
+  };
+
+  const groups = new Map<string, ProofGroup>();
+
+  document.querySelectorAll<HTMLElement>('[data-proof-image]').forEach((panel) => {
+    const groupId = panel.dataset.proofImage!;
+    const firstCase =
+      panel.querySelector<HTMLElement>('[data-proof-slide]')?.dataset.caseId ?? 'khao-yai';
+    groups.set(groupId, { groupId, activeCase: firstCase, activeMode: 'after' });
+  });
+
+  const syncGroup = (groupId: string) => {
+    const state = groups.get(groupId);
+    if (!state) return;
+
+    document.querySelectorAll<HTMLElement>(`[data-proof-slide="${groupId}"]`).forEach((slide) => {
+      slide.classList.toggle('hidden', slide.dataset.caseId !== state.activeCase);
+    });
+
+    document.querySelectorAll<HTMLElement>(`[data-proof-copy="${groupId}"]`).forEach((copy) => {
+      copy.classList.toggle('hidden', copy.dataset.caseId !== state.activeCase);
+    });
+
+    document.querySelectorAll<HTMLButtonElement>(`[data-proof-tab="${groupId}"]`).forEach((tab) => {
+      const isActive = tab.dataset.caseId === state.activeCase;
+      tab.classList.toggle('is-active', isActive);
+      tab.setAttribute('aria-selected', String(isActive));
+    });
+
+    const activeSlide = document.querySelector<HTMLElement>(
+      `[data-proof-slide="${groupId}"][data-case-id="${state.activeCase}"]`,
+    );
+    activeSlide?.querySelectorAll<HTMLImageElement>('.proof-img--before').forEach((img) => {
+      img.classList.toggle('opacity-100', state.activeMode === 'before');
+      img.classList.toggle('opacity-0', state.activeMode !== 'before');
+    });
+    activeSlide?.querySelectorAll<HTMLImageElement>('.proof-img--after').forEach((img) => {
+      img.classList.toggle('opacity-100', state.activeMode === 'after');
+      img.classList.toggle('opacity-0', state.activeMode !== 'after');
+    });
+
+    document.querySelectorAll<HTMLButtonElement>(`[data-proof-mode="${groupId}"]`).forEach((btn) => {
+      btn.classList.toggle('is-active', btn.dataset.mode === state.activeMode);
+    });
+
+    const activeCase = caseMeta(state.activeCase);
+    panelCaption(groupId, activeCase?.client ?? '');
+  };
+
+  const caseMeta = (id: string) => {
+    const map: Record<string, string> = {
+      'khao-yai': 'InterContinental Khao Yai',
+      'six-senses': 'Six Senses Shaharut',
+      'shinta-mani': 'Shinta Mani Wild',
+    };
+    return { client: map[id] };
+  };
+
+  const panelCaption = (groupId: string, text: string) => {
+    document
+      .querySelectorAll<HTMLElement>(`[data-proof-image="${groupId}"] .proof-caption`)
+      .forEach((el) => {
+        el.textContent = text;
+      });
+  };
+
+  document.querySelectorAll<HTMLButtonElement>('[data-proof-tab]').forEach((tab) => {
+    tab.addEventListener('click', () => {
+      const groupId = tab.dataset.proofTab!;
+      const state = groups.get(groupId);
+      if (!state || !tab.dataset.caseId) return;
+      state.activeCase = tab.dataset.caseId;
+      syncGroup(groupId);
+    });
+  });
+
+  document.querySelectorAll<HTMLButtonElement>('[data-proof-mode]').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const groupId = btn.dataset.proofMode!;
+      const state = groups.get(groupId);
+      if (!state || !btn.dataset.mode) return;
+      state.activeMode = btn.dataset.mode as 'before' | 'after';
+      syncGroup(groupId);
+    });
+  });
+
+  groups.forEach((_, groupId) => syncGroup(groupId));
+</script>
+
+<style>
+  .lab-variant-badge {
+    @apply inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-amn-dark font-caption text-xs text-white;
+  }
+
+  .service-image-box {
+    @apply relative overflow-hidden;
+  }
+
+  @media (min-width: 1024px) {
+    .service-image-box {
+      min-height: 100%;
+    }
+
+    .service-image-box img {
+      @apply absolute inset-0 min-h-0 w-full object-cover;
+    }
+  }
+</style>

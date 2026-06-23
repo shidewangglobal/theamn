@@ -1,0 +1,119 @@
+---
+import type { ArchetypePreview } from '../../data/archetypes-preview';
+import ArchetypeBento from './ArchetypeBento.astro';
+
+interface Props {
+  archetypes: ArchetypePreview[];
+}
+
+const { archetypes } = Astro.props;
+---
+
+<div class="archetype-stack" data-archetype-stack>
+  {
+    archetypes.map((archetype, index) => (
+      <section
+        class:list={['archetype-card bento-solid', index === 0 && 'is-open']}
+        data-archetype-card={archetype.id}
+      >
+        <button
+          type="button"
+          class="archetype-card-header"
+          data-archetype-trigger={archetype.id}
+          aria-expanded={index === 0}
+        >
+          <span class="archetype-card-label">
+            <span class="font-headline-bold text-sm text-amn-dark md:text-base">{archetype.name}</span>
+            <span class="text-amn-brown/35" aria-hidden="true">·</span>
+            <span class="font-body-secondary text-sm text-amn-brown/65">{archetype.tagline}</span>
+          </span>
+          <svg class="archetype-card-chevron" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+            <path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+        </button>
+
+        <div class="archetype-card-body" hidden={index !== 0}>
+          <ArchetypeBento archetype={archetype} />
+        </div>
+      </section>
+    ))
+  }
+</div>
+
+<style>
+  .archetype-stack {
+    display: flex;
+    width: 100%;
+    min-width: 0;
+    flex-direction: column;
+    gap: 0.625rem;
+  }
+
+  .archetype-card {
+    width: 100%;
+    min-width: 0;
+    overflow: hidden;
+    padding: 0;
+  }
+
+  .archetype-card-header {
+    @apply flex w-full items-center justify-between gap-3 border-0 bg-transparent px-4 py-3 text-left md:px-5 md:py-3.5;
+    cursor: pointer;
+  }
+
+  .archetype-card-label {
+    display: flex;
+    flex: 1 1 auto;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.35rem 0.5rem;
+    min-width: 0;
+  }
+
+  .archetype-card-chevron {
+    flex-shrink: 0;
+    color: rgba(74, 63, 53, 0.45);
+    transition: transform 0.2s ease;
+  }
+
+  .archetype-card.is-open .archetype-card-chevron {
+    transform: rotate(180deg);
+    color: rgba(74, 63, 53, 0.65);
+  }
+
+  .archetype-card-body {
+    padding: 0 0.625rem 0.625rem;
+  }
+
+  @media (min-width: 768px) {
+    .archetype-card-body {
+      padding: 0 0.75rem 0.75rem;
+    }
+  }
+</style>
+
+<script>
+  const stack = document.querySelector('[data-archetype-stack]');
+  if (stack) {
+    const cards = Array.from(stack.querySelectorAll<HTMLElement>('[data-archetype-card]'));
+
+    const openCard = (id: string) => {
+      cards.forEach((card) => {
+        const isOpen = card.dataset.archetypeCard === id;
+        card.classList.toggle('is-open', isOpen);
+
+        const trigger = card.querySelector<HTMLButtonElement>('[data-archetype-trigger]');
+        const body = card.querySelector<HTMLElement>('.archetype-card-body');
+        if (trigger) trigger.setAttribute('aria-expanded', String(isOpen));
+        if (body) body.hidden = !isOpen;
+      });
+    };
+
+    cards.forEach((card) => {
+      const trigger = card.querySelector<HTMLButtonElement>('[data-archetype-trigger]');
+      trigger?.addEventListener('click', () => {
+        if (card.dataset.archetypeCard) openCard(card.dataset.archetypeCard);
+      });
+    });
+  }
+</script>

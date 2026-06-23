@@ -31,8 +31,8 @@ const techCards = [
       <div class="tech-intro-left">
         <p class="reveal section-label mb-2.5 !text-amn-lime">Technology Ecosystem</p>
         <p class="reveal max-w-md font-body-secondary text-sm leading-relaxed text-white/60 md:text-[0.9375rem]">
-          THE AMN is proudly a strategic partner of Advant Labs, the central intelligence and technology
-          within the luxury hospitality ecosystem.
+          Two complementary layers: Advant Labs builds the intelligence and automation stack; THE AMN runs
+          your brand marketing on top of it — strategy through execution.
         </p>
       </div>
       <h2 class="reveal tech-powered-title font-headline-bold text-right text-[1.35rem] leading-[1.25] text-white sm:text-[1.45rem] md:text-[1.55rem] lg:text-[1.65rem]">
@@ -48,26 +48,26 @@ const techCards = [
             class="tech-expand-card tech-hover-card bento-box group relative min-w-0 overflow-hidden"
             tabindex="0"
           >
-            <div class="tech-idle-surface absolute inset-0 z-[2] flex items-center justify-center px-4 transition duration-[600ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:opacity-0 group-hover:pointer-events-none group-focus-within:opacity-0 sm:px-5">
+            <div class="tech-idle-surface absolute inset-0 z-[2] flex items-center justify-center px-4 transition duration-[600ms] ease-[cubic-bezier(0.22,1,0.36,1)] sm:px-5">
               {card.partner === 'advant' ? (
-                <div class="tech-idle-cluster tech-idle-cluster--advant inline-flex w-full max-w-full items-center">
+                <div class="tech-idle-cluster tech-idle-cluster--advant inline-flex w-full max-w-full items-center justify-center">
                   <p class="tech-advant-wordmark shrink-0 text-[1.75rem] leading-none text-amn-dark sm:text-[2rem] md:text-[2.35rem]">
                     <span class="font-headline-bold tracking-[-0.02em]">advant</span>
                     <span class="font-headline font-light tracking-[-0.02em]">labs</span>
                   </p>
-                  <span class="tech-bridge-dot"></span>
-                  <span class="tech-bridge-arm tech-bridge-arm--grow"></span>
-                  <span class="tech-bridge-word">artificial</span>
+                  <span class="tech-bridge-dot hidden sm:inline-block"></span>
+                  <span class="tech-bridge-arm tech-bridge-arm--grow hidden sm:block"></span>
+                  <span class="tech-bridge-word hidden sm:inline">artificial</span>
                 </div>
               ) : (
-                <div class="tech-idle-cluster tech-idle-cluster--amn inline-flex w-full max-w-full items-center">
-                  <span class="tech-bridge-word tech-bridge-word--italic">intelligence</span>
-                  <span class="tech-bridge-arm tech-bridge-arm--grow"></span>
-                  <span class="tech-bridge-dot"></span>
+                <div class="tech-idle-cluster tech-idle-cluster--amn inline-flex w-full max-w-full items-center justify-center">
+                  <span class="tech-bridge-word tech-bridge-word--italic hidden sm:inline">intelligence</span>
+                  <span class="tech-bridge-arm tech-bridge-arm--grow hidden sm:block"></span>
+                  <span class="tech-bridge-dot hidden sm:inline-block"></span>
                   <img
                     src={card.idleLogo}
                     alt={card.idleAlt}
-                    class="tech-amn-idle-logo h-12 w-auto shrink-0 sm:h-14 md:h-16"
+                    class="tech-amn-idle-logo h-14 w-auto shrink-0 sm:h-14 md:h-16"
                     loading="lazy"
                   />
                 </div>
@@ -78,11 +78,11 @@ const techCards = [
               <img
                 src={card.hoverImage}
                 alt={card.hoverAlt}
-                class="h-full w-full object-cover transition duration-[600ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.04] group-focus-within:scale-[1.04]"
+                class="tech-reveal-image h-full w-full object-cover transition duration-[600ms] ease-[cubic-bezier(0.22,1,0.36,1)]"
                 loading="lazy"
               />
-              <div class="tech-hover-overlay absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-black/20 opacity-0 transition duration-[350ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:opacity-100 group-focus-within:opacity-100"></div>
-              <div class="tech-hover-content absolute inset-x-0 bottom-0 translate-y-4 p-4 opacity-0 transition duration-[350ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:translate-y-0 group-hover:opacity-100 group-focus-within:translate-y-0 group-focus-within:opacity-100 sm:p-5 md:p-6">
+              <div class="tech-hover-overlay absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-black/20 opacity-0 transition duration-[350ms] ease-[cubic-bezier(0.22,1,0.36,1)]"></div>
+              <div class="tech-hover-content absolute inset-x-0 bottom-0 translate-y-4 p-4 opacity-0 transition duration-[350ms] ease-[cubic-bezier(0.22,1,0.36,1)] sm:p-5 md:p-6">
                 <p class="font-caption mb-1.5 text-[10px] tracking-[0.2em] text-amn-blue sm:text-xs">{card.label}</p>
                 <h3 class="font-headline-bold mb-2 text-base leading-tight text-white sm:text-lg md:text-xl">{card.title}</h3>
                 <p class="font-body-secondary text-xs leading-relaxed text-white/82 sm:text-sm md:text-[0.9375rem]">
@@ -91,8 +91,10 @@ const techCards = [
               </div>
             </div>
 
-            <div class="tech-hover-hint pointer-events-none absolute left-4 top-4 z-[3] rounded-full border border-black/8 bg-white/90 px-3 py-1 font-caption text-[10px] uppercase tracking-wider text-amn-brown/50 backdrop-blur-sm transition duration-[350ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:opacity-0 group-focus-within:opacity-0 sm:left-5 sm:top-5">
-              Hover to explore
+            <div class="tech-hover-hint pointer-events-none absolute left-4 top-4 z-[3] rounded-full border border-black/8 bg-white/90 px-3 py-1 font-caption text-[10px] uppercase tracking-wider text-amn-brown/50 backdrop-blur-sm sm:left-5 sm:top-5">
+              <span class="hidden sm:inline">Hover to explore</span>
+              <span class="tech-hint-mobile-idle sm:hidden">Tap for details</span>
+              <span class="tech-hint-mobile-open hidden sm:hidden">Tap again to close</span>
             </div>
           </article>
         ))}
@@ -100,6 +102,41 @@ const techCards = [
     </div>
   </div>
 </section>
+
+<script>
+  const techCards = document.querySelectorAll('.tech-expand-card');
+  const mobileTechQuery = window.matchMedia('(max-width: 639px)');
+
+  const syncTechCardHints = () => {
+    techCards.forEach((card) => {
+      const isOpen = card.classList.contains('is-expanded');
+      const idleHint = card.querySelector('.tech-hint-mobile-idle');
+      const openHint = card.querySelector('.tech-hint-mobile-open');
+      idleHint?.classList.toggle('hidden', isOpen);
+      openHint?.classList.toggle('hidden', !isOpen);
+    });
+  };
+
+  const closeAllTechCards = () => {
+    techCards.forEach((card) => card.classList.remove('is-expanded'));
+    syncTechCardHints();
+  };
+
+  techCards.forEach((card) => {
+    card.addEventListener('click', () => {
+      if (!mobileTechQuery.matches) return;
+
+      const isOpen = card.classList.contains('is-expanded');
+      closeAllTechCards();
+      if (!isOpen) card.classList.add('is-expanded');
+      syncTechCardHints();
+    });
+  });
+
+  mobileTechQuery.addEventListener('change', () => {
+    if (!mobileTechQuery.matches) closeAllTechCards();
+  });
+</script>
 
 <style>
   .tech-intro-left {
@@ -263,53 +300,98 @@ const techCards = [
     flex: 0 0 auto;
   }
 
-  .tech-cards-expand:has(> .tech-expand-card:nth-child(1):hover) > .tech-expand-card:nth-child(1),
-  .tech-cards-expand:has(> .tech-expand-card:nth-child(1):focus-within) > .tech-expand-card:nth-child(1),
-  .tech-cards-expand:has(> .tech-expand-card:nth-child(2):hover) > .tech-expand-card:nth-child(2),
-  .tech-cards-expand:has(> .tech-expand-card:nth-child(2):focus-within) > .tech-expand-card:nth-child(2) {
-    flex: 3 1 0;
-  }
-
-  .tech-cards-expand:has(> .tech-expand-card:nth-child(1):hover) > .tech-expand-card:nth-child(2),
-  .tech-cards-expand:has(> .tech-expand-card:nth-child(1):focus-within) > .tech-expand-card:nth-child(2),
-  .tech-cards-expand:has(> .tech-expand-card:nth-child(2):hover) > .tech-expand-card:nth-child(1),
-  .tech-cards-expand:has(> .tech-expand-card:nth-child(2):focus-within) > .tech-expand-card:nth-child(1) {
-    flex: 1 1 0;
-    opacity: 0.82;
-  }
-
-  @media (max-width: 639px) {
-    .tech-cards-expand {
-      flex-direction: column;
-      height: auto;
+  @media (hover: hover) and (pointer: fine) {
+    .tech-expand-card:hover .tech-idle-surface,
+    .tech-expand-card:focus-within .tech-idle-surface {
+      opacity: 0;
+      pointer-events: none;
     }
 
-    .tech-expand-card {
-      flex: none !important;
-      aspect-ratio: 1;
-      max-height: 18rem;
-      opacity: 1 !important;
+    .tech-expand-card:hover .tech-reveal-image,
+    .tech-expand-card:focus-within .tech-reveal-image {
+      transform: scale(1.04);
+    }
+
+    .tech-expand-card:hover .tech-hover-overlay,
+    .tech-expand-card:focus-within .tech-hover-overlay {
+      opacity: 1;
+    }
+
+    .tech-expand-card:hover .tech-hover-content,
+    .tech-expand-card:focus-within .tech-hover-content {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .tech-expand-card:hover .tech-hover-hint,
+    .tech-expand-card:focus-within .tech-hover-hint {
+      opacity: 0;
+    }
+  }
+
+  @media (min-width: 640px) {
+    .tech-cards-expand:has(> .tech-expand-card:nth-child(1):hover) > .tech-expand-card:nth-child(1),
+    .tech-cards-expand:has(> .tech-expand-card:nth-child(1):focus-within) > .tech-expand-card:nth-child(1),
+    .tech-cards-expand:has(> .tech-expand-card:nth-child(2):hover) > .tech-expand-card:nth-child(2),
+    .tech-cards-expand:has(> .tech-expand-card:nth-child(2):focus-within) > .tech-expand-card:nth-child(2) {
+      flex: 3 1 0;
     }
 
     .tech-cards-expand:has(> .tech-expand-card:nth-child(1):hover) > .tech-expand-card:nth-child(2),
     .tech-cards-expand:has(> .tech-expand-card:nth-child(1):focus-within) > .tech-expand-card:nth-child(2),
     .tech-cards-expand:has(> .tech-expand-card:nth-child(2):hover) > .tech-expand-card:nth-child(1),
     .tech-cards-expand:has(> .tech-expand-card:nth-child(2):focus-within) > .tech-expand-card:nth-child(1) {
-      max-height: 8rem;
-      aspect-ratio: auto;
-      transition:
-        flex 0.6s cubic-bezier(0.22, 1, 0.36, 1),
-        max-height 0.6s cubic-bezier(0.22, 1, 0.36, 1),
-        opacity 0.4s ease;
+      flex: 1 1 0;
+      opacity: 0.82;
+    }
+  }
+
+  @media (max-width: 639px) {
+    .tech-cards-expand {
+      flex-direction: column;
+      gap: 0.75rem;
+      height: auto;
     }
 
-    .tech-cards-expand:has(> .tech-expand-card:nth-child(1):hover) > .tech-expand-card:nth-child(1),
-    .tech-cards-expand:has(> .tech-expand-card:nth-child(1):focus-within) > .tech-expand-card:nth-child(1),
-    .tech-cards-expand:has(> .tech-expand-card:nth-child(2):hover) > .tech-expand-card:nth-child(2),
-    .tech-cards-expand:has(> .tech-expand-card:nth-child(2):focus-within) > .tech-expand-card:nth-child(2) {
+    .tech-expand-card {
       flex: none !important;
-      max-height: 22rem;
-      aspect-ratio: 16 / 11;
+      aspect-ratio: auto;
+      min-height: 11.5rem;
+      max-height: none;
+      opacity: 1 !important;
+    }
+
+    .tech-idle-cluster--advant,
+    .tech-idle-cluster--amn {
+      justify-content: center;
+      padding-left: 0;
+      padding-right: 0;
+    }
+
+    .tech-expand-card.is-expanded {
+      min-height: 16rem;
+    }
+
+    .tech-expand-card.is-expanded .tech-idle-surface {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .tech-expand-card.is-expanded .tech-reveal-image {
+      transform: scale(1.04);
+    }
+
+    .tech-expand-card.is-expanded .tech-hover-overlay {
+      opacity: 1;
+    }
+
+    .tech-expand-card.is-expanded .tech-hover-content {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .tech-expand-card.is-expanded .tech-hover-hint {
+      opacity: 1;
     }
   }
 

@@ -1,0 +1,99 @@
+---
+import type { CaseStudyPreview } from '../../data/case-studies-preview';
+
+interface Props {
+  cases: CaseStudyPreview[];
+  groupId: string;
+  showMobileStack?: boolean;
+}
+
+const { cases, groupId, showMobileStack = false } = Astro.props;
+const first = cases[0];
+---
+
+<div class="proof-image-panel" data-proof-image={groupId}>
+  <!-- Desktop / tablet: toggle -->
+  <div class:list={['proof-stage bento-image relative min-h-[14rem] overflow-hidden lg:min-h-[18rem]', showMobileStack && 'hidden sm:block']}>
+    <div class="proof-toggle absolute right-3 top-3 z-10 flex rounded-full border border-black/8 bg-white/92 p-0.5 backdrop-blur-sm">
+      <button
+        type="button"
+        class="proof-mode-btn rounded-full px-3 py-1 font-caption text-[10px] uppercase tracking-wider text-amn-brown/55"
+        data-proof-mode={groupId}
+        data-mode="before"
+      >
+        Before
+      </button>
+      <button
+        type="button"
+        class="proof-mode-btn is-active rounded-full px-3 py-1 font-caption text-[10px] uppercase tracking-wider"
+        data-proof-mode={groupId}
+        data-mode="after"
+      >
+        After
+      </button>
+    </div>
+
+    {
+      cases.map((item, index) => (
+        <div
+          class:list={['proof-slide-set absolute inset-0', index !== 0 && 'hidden']}
+          data-proof-slide={groupId}
+          data-case-id={item.id}
+        >
+          <img
+            src={item.beforeImage}
+            alt={`${item.client} before`}
+            class="proof-img proof-img--before absolute inset-0 h-full w-full object-cover object-top opacity-0 transition duration-500"
+            loading="lazy"
+          />
+          <img
+            src={item.afterImage}
+            alt={`${item.client} after`}
+            class="proof-img proof-img--after absolute inset-0 h-full w-full object-cover object-top opacity-100 transition duration-500"
+            loading="lazy"
+          />
+        </div>
+      ))
+    }
+
+    <p class="proof-caption absolute bottom-3 left-3 z-10 max-w-[85%] rounded-full bg-black/55 px-3 py-1 font-caption text-[10px] uppercase tracking-wider text-white/90 backdrop-blur-sm">
+      {first.client}
+    </p>
+  </div>
+
+  <!-- Mobile lab preview: stacked before + after -->
+  {
+    showMobileStack && (
+      <div class="flex flex-col gap-2.5 sm:hidden">
+        {
+          cases.slice(0, 1).map((item) => (
+            <div class="flex flex-col gap-2.5">
+              <div class="bento-image relative min-h-[11rem] overflow-hidden">
+                <span class="absolute left-3 top-3 z-10 rounded-full bg-black/55 px-2.5 py-1 font-caption text-[10px] uppercase tracking-wider text-white">
+                  Before
+                </span>
+                <img src={item.beforeImage} alt="" class="h-full w-full object-cover object-top" loading="lazy" />
+              </div>
+              <div class="bento-image relative min-h-[11rem] overflow-hidden">
+                <span class="absolute left-3 top-3 z-10 rounded-full bg-amn-blue/90 px-2.5 py-1 font-caption text-[10px] uppercase tracking-wider text-white">
+                  After
+                </span>
+                <img src={item.afterImage} alt="" class="h-full w-full object-cover object-top" loading="lazy" />
+              </div>
+            </div>
+          ))
+        }
+      </div>
+    )
+  }
+</div>
+
+<style>
+  .proof-mode-btn.is-active {
+    @apply bg-amn-dark text-white;
+  }
+
+  .proof-img {
+    transition-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+  }
+</style>

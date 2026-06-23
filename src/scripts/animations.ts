@@ -348,7 +348,7 @@ function initHeroWordRotator() {
   gsap.delayedCall(HERO_A_HOLD, cycle);
 }
 
-const HERO_A_WORDS = ['Agile', 'Accelerated', 'Authentic', 'Artistic', 'Adaptive', 'Astute', 'Amplified'];
+const HERO_A_WORDS = ['Agile', 'Accelerated', 'Authentic', 'Artistic', 'Aesthetic', 'Adaptive', 'Advanced', 'Amplified'];
 const HERO_A_HOLD = 1.55;
 const HERO_A_TRANSITION = 0.42;
 

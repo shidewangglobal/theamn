@@ -1,0 +1,82 @@
+---
+import type { CaseStudyPreview } from '../../data/case-studies-preview';
+
+interface Props {
+  cases: CaseStudyPreview[];
+  groupId: string;
+  compact?: boolean;
+}
+
+const { cases, groupId, compact = false } = Astro.props;
+const first = cases[0];
+---
+
+<div class="proof-story-panel" data-proof-story={groupId}>
+  <div class="mb-4 flex flex-wrap gap-1.5" role="tablist" aria-label="Select property">
+    {
+      cases.map((item, index) => (
+        <button
+          type="button"
+          class:list={['proof-case-tab', index === 0 && 'is-active']}
+          data-proof-tab={groupId}
+          data-case-id={item.id}
+          role="tab"
+          aria-selected={index === 0}
+        >
+          {item.client.split(' ').slice(-2).join(' ')}
+        </button>
+      ))
+    }
+  </div>
+
+  {
+    cases.map((item, index) => (
+      <div
+        class:list={['proof-story-copy', index !== 0 && 'hidden']}
+        data-proof-copy={groupId}
+        data-case-id={item.id}
+      >
+        <p class="font-caption mb-1 text-[10px] tracking-[0.18em] text-amn-blue text-accent-italic">
+          {item.client} · {item.location}
+        </p>
+        {!compact && (
+          <>
+            <p class="mb-2 font-body-secondary text-xs font-medium uppercase tracking-wide text-amn-brown/45">
+              The Challenge
+            </p>
+            <p class="proof-challenge mb-4 font-body-secondary text-sm leading-relaxed text-amn-brown/75">
+              {item.challenge}
+            </p>
+          </>
+        )}
+        <p class="mb-2 font-body-secondary text-xs font-medium uppercase tracking-wide text-amn-brown/45">
+          The Turnaround
+        </p>
+        <p class="proof-turnaround font-body-secondary text-sm leading-relaxed text-amn-brown/80">
+          {item.turnaround}
+        </p>
+        {
+          item.metric && (
+            <span class="proof-metric mt-4 inline-flex rounded-full bg-amn-lime/35 px-3 py-1 font-caption text-[10px] uppercase tracking-wider text-amn-olive">
+              {item.metric}
+            </span>
+          )
+        }
+      </div>
+    ))
+  }
+</div>
+
+<style>
+  .proof-case-tab {
+    @apply rounded-full border border-amn-brown/10 bg-white px-3 py-1.5 font-caption text-[10px] uppercase tracking-wider text-amn-brown/60 transition;
+  }
+
+  .proof-case-tab.is-active {
+    @apply border-amn-dark/20 bg-amn-dark text-white;
+  }
+
+  .proof-case-tab:hover:not(.is-active) {
+    @apply border-amn-brown/25 text-amn-dark;
+  }
+</style>

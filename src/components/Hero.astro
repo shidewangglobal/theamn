@@ -4,8 +4,9 @@ const heroAWords = [
   'Accelerated',
   'Authentic',
   'Artistic',
+  'Aesthetic',
   'Adaptive',
-  'Astute',
+  'Advanced',
   'Amplified',
 ];
 
@@ -15,8 +16,8 @@ const heroAWordMax = heroAWords.reduce(
 );
 
 const heroVideos = [
-  { src: '/videos/hero-banner-1.mov', label: 'Hero background video 1' },
-  { src: '/videos/hero-banner-2.mov', label: 'Hero background video 2' },
+  { src: '/videos/hero-banner-2.mp4', label: 'Hero background video 2' },
+  { src: '/videos/hero-banner-1.mp4', label: 'Hero background video 1' },
 ];
 ---
 
@@ -47,10 +48,8 @@ const heroVideos = [
       </div>
 
       <div class="hero-overlay-stack absolute inset-0 z-[1]">
-        <div class="hero-panel-blue absolute inset-0"></div>
-        <div class="hero-gradient absolute inset-0 bg-gradient-to-b from-amn-dark/55 via-[#0c1a2e]/45 to-amn-dark/75"></div>
-        <div class="hero-glow hero-panel-glow absolute inset-0"></div>
-        <div class="grain-overlay absolute inset-0"></div>
+        <div class="hero-scrim absolute inset-0" aria-hidden="true"></div>
+        <div class="hero-grain absolute inset-0" aria-hidden="true"></div>
       </div>
 
       <div class="hero-content relative z-10 flex min-h-[min(88vh,920px)] flex-col items-center justify-center px-6 pt-20 text-center md:px-12 md:pt-24">
@@ -138,8 +137,57 @@ const heroVideos = [
   }
 
   .hero-overlay-stack {
-    opacity: 0.6;
     pointer-events: none;
+  }
+
+  /* Transparent blue-black only — video stays visible, no gray/white wash */
+  .hero-scrim {
+    background:
+      radial-gradient(
+        ellipse 110% 90% at 50% 42%,
+        rgba(8, 18, 32, 0.42) 0%,
+        rgba(5, 12, 22, 0.54) 55%,
+        rgba(3, 8, 16, 0.61) 100%
+      ),
+      linear-gradient(
+        180deg,
+        rgba(6, 14, 26, 0.46) 0%,
+        rgba(8, 20, 36, 0.53) 50%,
+        rgba(4, 10, 20, 0.59) 100%
+      );
+  }
+
+  .hero-grain {
+    pointer-events: none;
+  }
+
+  .hero-grain::before,
+  .hero-grain::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+    background-size: 220px 220px;
+    pointer-events: none;
+  }
+
+  /* Blue grain */
+  .hero-grain::before {
+    opacity: 0.16;
+    mix-blend-mode: overlay;
+    background-color: rgba(0, 130, 195, 0.5);
+    background-blend-mode: overlay;
+    filter: contrast(1.3) brightness(0.88);
+  }
+
+  /* Warm orange grain — slight offset for chromatic feel */
+  .hero-grain::after {
+    opacity: 0.12;
+    mix-blend-mode: overlay;
+    background-color: rgba(215, 95, 35, 0.42);
+    background-blend-mode: overlay;
+    filter: contrast(1.25) brightness(0.9);
+    transform: translate(0.65px, 0.45px);
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -150,23 +198,6 @@ const heroVideos = [
     .hero-fallback-img.is-visible {
       opacity: 0.3;
     }
-  }
-
-  .hero-panel-blue {
-    background: radial-gradient(
-      ellipse 70% 60% at 50% 45%,
-      rgba(0, 160, 240, 0.18) 0%,
-      rgba(28, 70, 83, 0.12) 45%,
-      transparent 72%
-    );
-  }
-
-  .hero-panel-glow {
-    background: radial-gradient(
-      ellipse 55% 45% at 50% 38%,
-      rgba(0, 160, 240, 0.15) 0%,
-      transparent 68%
-    );
   }
 
   .hero-headline-line {

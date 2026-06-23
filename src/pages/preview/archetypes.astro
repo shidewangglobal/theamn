@@ -1,0 +1,100 @@
+---
+import LabLayout from '../../layouts/LabLayout.astro';
+import ArchetypeStack from '../../components/lab/ArchetypeStack.astro';
+import { archetypeSectionCopy, archetypesPreview } from '../../data/archetypes-preview';
+import { curatingService } from '../../data/case-studies-preview';
+---
+
+<LabLayout title="Archetypes Preview | the amn">
+  <Fragment slot="lab-title">Archetypes Preview</Fragment>
+  <div class="tubik-shell py-8 sm:py-10 md:py-12">
+    <div class="mb-8 max-w-2xl">
+      <p class="section-label mb-2">Preview only · not live</p>
+      <h1 class="font-headline-bold mb-2 text-2xl text-amn-dark md:text-3xl">Archetypes stack</h1>
+      <p class="font-body-secondary text-sm leading-relaxed text-amn-brown/70">
+        12 square tiles + 2×2 hero per archetype. Tiles from credential <em>after</em> feeds.
+        <a href="/preview/case-studies" class="text-amn-blue underline-offset-2 hover:underline">Case study lab</a>
+      </p>
+    </div>
+
+    <div class="lab-frame rounded-[1.35rem] border border-amn-brown/10 bg-[#ebe8e1] p-2.5 sm:p-3">
+      <p class="mb-2.5 px-1 font-caption text-[10px] uppercase tracking-[0.2em] text-amn-brown/45">
+        Curating Your Brand's Aesthetic · excerpt
+      </p>
+
+      <div class="curating-cluster bento-grid gap-2.5">
+        <div class="service-reference-row tubik-pair items-stretch">
+          <article class="service-card bento-solid bento-p-md flex h-full flex-col justify-start">
+            <p class="font-caption mb-2 text-xs tracking-[0.2em] text-amn-blue text-accent-italic">
+              {curatingService.subtitle}
+            </p>
+            <h3 class="font-headline-bold mb-3 text-xl text-amn-dark md:mb-4 md:text-2xl">{curatingService.title}</h3>
+            <p class="font-body-secondary mb-5 text-sm leading-relaxed text-amn-brown/70 md:mb-6">
+              {curatingService.description}
+            </p>
+            <ul class="space-y-2">
+              {curatingService.items.map((item) => (
+                <li class="flex items-center gap-2 font-body-secondary text-sm text-amn-brown/80">
+                  <span class="h-1.5 w-1.5 shrink-0 rounded-full bg-amn-blue/70" />
+                  {item}
+                </li>
+              ))}
+            </ul>
+          </article>
+          <div class="service-image-box bento-image service-image-frame">
+            <img
+              src={curatingService.heroImage}
+              alt=""
+              class="service-image-fill"
+              loading="lazy"
+            />
+          </div>
+        </div>
+
+        <div class="archetype-title-box bento-solid bento-p-md flex flex-col justify-center gap-2 md:flex-row md:items-end md:justify-between md:gap-6">
+          <h2 class="font-headline-bold text-xl text-amn-dark md:text-2xl lg:text-[1.65rem]">
+            {archetypeSectionCopy.label}
+          </h2>
+          <p class="max-w-md font-body-secondary text-sm leading-relaxed text-amn-brown/65 md:text-right">
+            {archetypeSectionCopy.subtitle}
+          </p>
+        </div>
+
+        <ArchetypeStack archetypes={archetypesPreview} />
+      </div>
+    </div>
+  </div>
+</LabLayout>
+
+<style>
+  .archetype-title-box {
+    width: 100%;
+  }
+
+  .service-reference-row {
+    align-items: stretch;
+  }
+
+  .service-image-frame {
+    position: relative;
+    min-height: 14rem;
+    height: 100%;
+    align-self: stretch;
+    overflow: hidden;
+  }
+
+  .service-image-fill {
+    position: absolute;
+    inset: 0;
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    object-position: center;
+  }
+
+  @media (min-width: 1024px) {
+    .service-image-frame {
+      min-height: 100%;
+    }
+  }
+</style>

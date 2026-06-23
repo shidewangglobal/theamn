@@ -1,0 +1,145 @@
+---
+import type { ArchetypePreview } from '../../data/archetypes-preview';
+
+interface Props {
+  archetype: ArchetypePreview;
+}
+
+const { archetype } = Astro.props;
+
+const tile = (index: number) => archetype.tiles[index - 1];
+---
+
+<div class="archetype-feed" data-archetype-feed={archetype.id}>
+  <div class="archetype-feed-top">
+    {
+      (() => {
+        const hero = tile(archetype.hero);
+        if (!hero) return null;
+        return (
+          <div class="archetype-feed-hero archetype-feed-cell">
+            <img src={hero.src} alt={hero.alt} loading="lazy" decoding="async" />
+          </div>
+        );
+      })()
+    }
+
+    <div class="archetype-feed-quad">
+      {
+        archetype.quad.map((slot) => {
+          if (slot === 'title') {
+            return (
+              <div class="archetype-feed-cell archetype-feed-title">
+                <p class="font-headline-bold text-[0.6rem] leading-tight text-white sm:text-xs md:text-sm">
+                  {archetype.titleCard}
+                </p>
+              </div>
+            );
+          }
+
+          const image = tile(slot);
+          if (!image) return null;
+
+          return (
+            <div class="archetype-feed-cell archetype-feed-photo">
+              <img src={image.src} alt={image.alt} loading="lazy" decoding="async" />
+            </div>
+          );
+        })
+      }
+    </div>
+  </div>
+
+  <div class="archetype-feed-bottom">
+    {
+      archetype.bottom.map((index) => {
+        const image = tile(index);
+        if (!image) return null;
+
+        return (
+          <div class="archetype-feed-cell archetype-feed-photo">
+            <img src={image.src} alt={image.alt} loading="lazy" decoding="async" />
+          </div>
+        );
+      })
+    }
+  </div>
+</div>
+
+<style>
+  .archetype-feed {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .archetype-feed-top {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.5rem;
+    width: 100%;
+  }
+
+  .archetype-feed-hero {
+    grid-row: span 1;
+  }
+
+  .archetype-feed-quad {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    gap: 0.5rem;
+    min-width: 0;
+  }
+
+  .archetype-feed-bottom {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 0.5rem;
+    width: 100%;
+    margin-top: 0.5rem;
+  }
+
+  .archetype-feed-cell {
+    position: relative;
+    min-width: 0;
+    overflow: hidden;
+    border-radius: 0.75rem;
+    aspect-ratio: 1 / 1;
+  }
+
+  .archetype-feed-photo {
+    line-height: 0;
+  }
+
+  .archetype-feed-photo img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+  }
+
+  .archetype-feed-title {
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-start;
+    background: #1c1c1c;
+    padding: 0.4rem 0.45rem;
+  }
+
+  @media (min-width: 768px) {
+    .archetype-feed-top,
+    .archetype-feed-quad,
+    .archetype-feed-bottom {
+      gap: 0.625rem;
+    }
+
+    .archetype-feed-bottom {
+      margin-top: 0.625rem;
+    }
+
+    .archetype-feed-cell {
+      border-radius: 0.85rem;
+    }
+  }
+</style>

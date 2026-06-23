@@ -1,0 +1,55 @@
+---
+import '../styles/global.css';
+import '../styles/theme-preview.css';
+
+interface Props {
+  title?: string;
+}
+
+const { title = 'Layout Lab | the amn' } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en" class="theme-preview">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>{title}</title>
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+  </head>
+  <body class="theme-preview min-h-screen overflow-x-hidden bg-[#f2f0eb] text-amn-brown">
+    <header class="sticky top-0 z-50 border-b border-amn-brown/10 bg-[#f2f0eb]/95 backdrop-blur-md">
+      <div class="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-3 px-4 py-3 sm:px-5 md:px-6">
+        <div class="flex min-w-0 items-center gap-3">
+          <a href="/" class="font-caption text-[10px] uppercase tracking-[0.2em] text-amn-brown/50 transition hover:text-amn-dark">
+            ← Home
+          </a>
+          <span class="hidden h-4 w-px bg-amn-brown/15 sm:block"></span>
+          <p class="truncate font-headline-bold text-sm text-amn-dark sm:text-base">
+            <slot name="lab-title">Layout Lab</slot>
+          </p>
+        </div>
+        <nav class="flex flex-wrap gap-1.5" aria-label="Layout variants">
+          <slot name="lab-nav">
+            <a href="/preview/case-studies" class="lab-nav-pill">Case studies</a>
+            <a href="/preview/archetypes" class="lab-nav-pill">Archetypes</a>
+          </slot>
+      </div>
+    </header>
+
+    <main>
+      <slot />
+    </main>
+  </body>
+</html>
+
+<style>
+  .lab-nav-pill {
+    @apply rounded-full border border-amn-brown/10 bg-white/80 px-3 py-1.5 font-caption text-[10px] uppercase tracking-wider text-amn-brown/70 transition;
+  }
+
+  .lab-nav-pill:hover {
+    @apply border-amn-brown/25 bg-white text-amn-dark;
+  }
+</style>

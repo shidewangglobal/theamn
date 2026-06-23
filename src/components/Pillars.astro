@@ -36,7 +36,7 @@ const pillars = [
             <span class="col-start-2 row-start-4">possibilities</span>
           </h2>
         </div>
-        <div class="pillar-image-left-wrap bento-image mt-auto min-h-[10rem] flex-1 lg:min-h-0">
+        <div class="pillar-image-left-wrap bento-image mt-auto hidden min-h-[10rem] flex-1 lg:block lg:min-h-0">
           <img
             src="/images/pillars-resort-square.jpg"
             alt="Tropical overwater resort villas connected by wooden walkways"
@@ -46,29 +46,31 @@ const pillars = [
         </div>
       </div>
 
-      <div class="pillars-col-center lg:col-span-3">
-        <div class="pillar-image-center-wrap bento-image h-full min-h-[14rem] lg:min-h-[28rem]">
-          <img
-            src="/images/pillars-tower-vertical.jpg"
-            alt="Zipline adventure tower rising through lush forest canopy"
-            class="pillar-image-center h-full min-h-[inherit] w-full object-cover"
-            loading="lazy"
-          />
+      <div class="pillars-visual-stack lg:contents">
+        <div class="pillars-col-center relative lg:col-span-3">
+          <div class="pillar-image-center-wrap bento-image h-full min-h-[14rem] lg:min-h-[28rem]">
+            <img
+              src="/images/pillars-tower-vertical.jpg"
+              alt="Zipline adventure tower rising through lush forest canopy"
+              class="pillar-image-center h-full min-h-[inherit] w-full object-cover"
+              loading="lazy"
+            />
+          </div>
         </div>
-      </div>
 
-      <div class="pillars-col-cards bento-grid lg:col-span-6">
-        {pillars.map((pillar) => (
-          <article class="pillar-card bento-solid bento-p-sm flex flex-col justify-center md:p-8">
-            <p class="font-headline-bold text-base tracking-wide text-amn-dark md:text-lg">{pillar.key}</p>
-            <p class="pillar-card-subtitle mt-1 font-headline-bold text-sm text-accent-italic text-amn-olive md:text-base">
-              {pillar.subtitle}
-            </p>
-            <p class="pillar-card-copy mt-2 font-body-secondary text-sm leading-relaxed text-amn-brown/70 md:mt-3 md:text-base">
-              {pillar.description}
-            </p>
-          </article>
-        ))}
+        <div class="pillars-col-cards bento-grid lg:col-span-6">
+          {pillars.map((pillar) => (
+            <article class="pillar-card bento-solid bento-p-sm flex flex-col justify-center md:p-8">
+              <p class="font-headline-bold text-base tracking-wide text-amn-dark md:text-lg">{pillar.key}</p>
+              <p class="pillar-card-subtitle mt-1 font-headline-bold text-sm text-accent-italic text-amn-olive md:text-base">
+                {pillar.subtitle}
+              </p>
+              <p class="pillar-card-copy mt-2 font-body-secondary text-sm leading-relaxed text-amn-brown/70 md:mt-3 md:text-base">
+                {pillar.description}
+              </p>
+            </article>
+          ))}
+        </div>
       </div>
     </div>
   </div>
@@ -77,5 +79,60 @@ const pillars = [
 <style>
   .pillar-card-subtitle {
     white-space: nowrap;
+  }
+
+  @media (max-width: 1023px) {
+    .pillars-visual-stack {
+      display: grid;
+      grid-template-areas: 'stack';
+      min-height: min(78vh, 36rem);
+    }
+
+    .pillars-col-center,
+    .pillars-col-cards {
+      grid-area: stack;
+    }
+
+    .pillars-col-center {
+      z-index: 0;
+      min-height: min(78vh, 36rem);
+    }
+
+    .pillars-col-center::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(8, 12, 18, 0.55) 0%, rgba(8, 12, 18, 0.12) 42%, transparent 68%);
+      pointer-events: none;
+    }
+
+    .pillar-image-center-wrap {
+      min-height: inherit;
+      height: 100%;
+    }
+
+    .pillars-col-cards {
+      z-index: 1;
+      align-self: end;
+      display: flex;
+      flex-direction: column;
+      gap: 0.625rem;
+      padding: 0.75rem;
+      padding-bottom: 1rem;
+    }
+
+    .pillars-col-cards .pillar-card {
+      background: rgba(255, 255, 255, 0.76);
+      backdrop-filter: blur(18px) saturate(125%);
+      -webkit-backdrop-filter: blur(18px) saturate(125%);
+      border: 1px solid rgba(255, 255, 255, 0.42);
+      box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.5),
+        0 10px 28px rgba(0, 0, 0, 0.14);
+    }
+
+    .pillar-card-subtitle {
+      white-space: normal;
+    }
   }
 </style>

@@ -534,8 +534,7 @@
   }
 
   .animate-hero-glow,
-  .animate-marquee,
-  .animate-marquee-reverse {
+  .animate-marquee {
     animation: none !important;
   }
 }
@@ -553,10 +552,7 @@
 
 @media (prefers-reduced-motion: reduce) {
   .marquee-track.animate-marquee-reverse {
-    animation: none;
-    flex-wrap: wrap;
-    justify-content: center;
-    width: 100%;
+    animation-duration: 100s;
   }
 }
 

@@ -23,11 +23,11 @@ const allLogos = [...partnerLogos, ...partnerLogos];
       </p>
     </div>
 
-    <div class="reveal relative overflow-hidden py-2">
-      <div class="pointer-events-none absolute left-0 top-0 z-10 h-full w-16 bg-gradient-to-r from-[#E0DACE] to-transparent md:w-20"></div>
-      <div class="pointer-events-none absolute right-0 top-0 z-10 h-full w-16 bg-gradient-to-l from-[#E0DACE] to-transparent md:w-20"></div>
+    <div class="collective-marquee-viewport reveal relative overflow-hidden py-2">
+      <div class="pointer-events-none absolute left-0 top-0 z-10 h-full w-12 bg-gradient-to-r from-[#E0DACE] to-transparent sm:w-16 md:w-20"></div>
+      <div class="pointer-events-none absolute right-0 top-0 z-10 h-full w-12 bg-gradient-to-l from-[#E0DACE] to-transparent sm:w-16 md:w-20"></div>
 
-      <div class="marquee-track animate-marquee-reverse gap-2.5">
+      <div class="marquee-track collective-marquee-track">
         {allLogos.map((logo, i) => (
           <div class="marquee-item">
             <img
@@ -45,3 +45,71 @@ const allLogos = [...partnerLogos, ...partnerLogos];
     </div>
   </div>
 </section>
+
+<style>
+  .collective-marquee-viewport {
+    width: 100%;
+    overflow: hidden;
+    -webkit-mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
+    mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
+  }
+
+  .collective-marquee-track {
+    display: flex;
+    width: max-content;
+    gap: 0.625rem;
+    -webkit-animation: collective-marquee-ltr 36s linear infinite;
+    animation: collective-marquee-ltr 36s linear infinite;
+    will-change: transform;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+  }
+
+  .collective-marquee-track .marquee-item {
+    height: 4rem;
+    width: 8.5rem;
+    flex-shrink: 0;
+    padding-left: 1.25rem;
+    padding-right: 1.25rem;
+  }
+
+  @media (min-width: 640px) {
+    .collective-marquee-track {
+      gap: 2rem;
+      animation-duration: 42s;
+    }
+
+    .collective-marquee-track .marquee-item {
+      height: 4rem;
+      width: 9rem;
+    }
+  }
+
+  @-webkit-keyframes collective-marquee-ltr {
+    from {
+      -webkit-transform: translate3d(-50%, 0, 0);
+      transform: translate3d(-50%, 0, 0);
+    }
+    to {
+      -webkit-transform: translate3d(0, 0, 0);
+      transform: translate3d(0, 0, 0);
+    }
+  }
+
+  @keyframes collective-marquee-ltr {
+    from {
+      -webkit-transform: translate3d(-50%, 0, 0);
+      transform: translate3d(-50%, 0, 0);
+    }
+    to {
+      -webkit-transform: translate3d(0, 0, 0);
+      transform: translate3d(0, 0, 0);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .collective-marquee-track {
+      animation-duration: 100s;
+    }
+  }
+</style>

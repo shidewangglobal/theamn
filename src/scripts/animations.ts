@@ -186,7 +186,11 @@ function initHeroEntrance() {
 
 const HERO_VIDEO_HOLD_MS = 9000;
 
-function waitForVideoReady(video: HTMLVideoElement, timeoutMs = 15000): Promise<void> {
+function isHeroVideoPlaying(video: HTMLVideoElement): boolean {
+  return !video.paused && video.readyState >= HTMLMediaElement.HAVE_CURRENT_DATA;
+}
+
+function waitForVideoReady(video: HTMLVideoElement, timeoutMs = 20000): Promise<void> {
   if (video.readyState >= HTMLMediaElement.HAVE_FUTURE_DATA) {
     return Promise.resolve();
   }
@@ -194,6 +198,10 @@ function waitForVideoReady(video: HTMLVideoElement, timeoutMs = 15000): Promise<
   return new Promise((resolve, reject) => {
     const timeout = window.setTimeout(() => {
       cleanup();
+      if (video.readyState >= HTMLMediaElement.HAVE_CURRENT_DATA) {
+        resolve();
+        return;
+      }
       reject(new Error('Video load timeout'));
     }, timeoutMs);
 
@@ -210,13 +218,15 @@ function waitForVideoReady(video: HTMLVideoElement, timeoutMs = 15000): Promise<
     const cleanup = () => {
       window.clearTimeout(timeout);
       video.removeEventListener('canplay', onReady);
+      video.removeEventListener('loadeddata', onReady);
       video.removeEventListener('error', onError);
     };
 
     video.addEventListener('canplay', onReady, { once: true });
+    video.addEventListener('loadeddata', onReady, { once: true });
     video.addEventListener('error', onError, { once: true });
 
-    if (video.networkState === HTMLMediaElement.NETWORK_EMPTY) {
+    if (video.networkState === HTMLMediaElement.NETWORK_EMPTY && !video.currentSrc) {
       video.load();
     }
   });
@@ -225,14 +235,19 @@ function waitForVideoReady(video: HTMLVideoElement, timeoutMs = 15000): Promise<
 async function playHeroVideo(video: HTMLVideoElement): Promise<boolean> {
   video.muted = true;
   video.defaultMuted = true;
+  video.setAttribute('muted', '');
   video.playsInline = true;
+
+  if (isHeroVideoPlaying(video)) {
+    return true;
+  }
 
   try {
     await waitForVideoReady(video);
     await video.play();
-    return true;
+    return isHeroVideoPlaying(video) || video.readyState >= HTMLMediaElement.HAVE_FUTURE_DATA;
   } catch {
-    return false;
+    return isHeroVideoPlaying(video);
   }
 }
 
@@ -250,6 +265,10 @@ function initHeroVideoRotator() {
     heroFallback?.classList.add('is-visible');
   };
 
+  videos.forEach((video) => {
+    video.addEventListener('error', () => showFallback(), { once: true });
+  });
+
   if (prefersReducedMotion()) {
     showFallback();
     return;
@@ -260,13 +279,15 @@ function initHeroVideoRotator() {
       video.classList.add('is-active');
     } else {
       video.classList.remove('is-active');
-      video.preload = 'none';
     }
   });
 
   void playHeroVideo(videos[0]).then((started) => {
-    if (!started) {
-      showFallback();
+    const firstPlaying = started || !videos[0].paused;
+    if (firstPlaying) {
+      videos[0].classList.add('is-playing');
+    } else {
+      heroFallback?.classList.add('is-visible');
       return;
     }
 
@@ -279,7 +300,7 @@ function initHeroVideoRotator() {
       const current = videos[active];
       const incoming = videos[next];
 
-      if (incoming.preload === 'none') {
+      if (incoming.readyState < HTMLMediaElement.HAVE_FUTURE_DATA) {
         incoming.preload = 'auto';
         incoming.load();
       }
@@ -287,6 +308,7 @@ function initHeroVideoRotator() {
       const ready = await playHeroVideo(incoming);
       if (!ready) return;
 
+      incoming.classList.add('is-playing');
       incoming.currentTime = 0;
       incoming.classList.add('is-active');
       current.classList.remove('is-active');
@@ -689,19 +711,7 @@ function initCardHover() {
 }
 
 function initMarquee() {
-  if (prefersReducedMotion()) return;
-
-  document.querySelectorAll<HTMLElement>('.marquee-track').forEach((track, i) => {
-    const width = track.scrollWidth / 2;
-    const reverse = track.classList.contains('animate-marquee-reverse');
-
-    gsap.to(track, {
-      x: reverse ? width : -width,
-      duration: 35 + i * 5,
-      repeat: -1,
-      ease: 'none',
-    });
-  });
+  // Collective marquee uses CSS animation in Collective.astro for reliable mobile playback.
 }
 
 export function initAnimations() {

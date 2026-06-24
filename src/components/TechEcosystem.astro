@@ -74,12 +74,13 @@ const techCards = [
               )}
             </div>
 
-            <div class="tech-reveal-layer absolute inset-0">
+            <div class="tech-reveal-layer absolute inset-0 z-[1]">
               <img
                 src={card.hoverImage}
                 alt={card.hoverAlt}
                 class="tech-reveal-image h-full w-full object-cover transition duration-[600ms] ease-[cubic-bezier(0.22,1,0.36,1)]"
                 loading="lazy"
+                decoding="async"
               />
               <div class="tech-hover-overlay absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-black/20 opacity-0 transition duration-[350ms] ease-[cubic-bezier(0.22,1,0.36,1)]"></div>
               <div class="tech-hover-content absolute inset-x-0 bottom-0 translate-y-4 p-4 opacity-0 transition duration-[350ms] ease-[cubic-bezier(0.22,1,0.36,1)] sm:p-5 md:p-6">
@@ -368,6 +369,12 @@ const techCards = [
       padding-right: 0;
     }
 
+    .tech-reveal-layer {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+
     .tech-expand-card.is-expanded {
       min-height: 16rem;
     }
@@ -375,6 +382,12 @@ const techCards = [
     .tech-expand-card.is-expanded .tech-idle-surface {
       opacity: 0;
       pointer-events: none;
+    }
+
+    .tech-expand-card.is-expanded .tech-reveal-layer {
+      opacity: 1;
+      visibility: visible;
+      pointer-events: auto;
     }
 
     .tech-expand-card.is-expanded .tech-reveal-image {
@@ -402,14 +415,42 @@ const techCards = [
       transition: none !important;
     }
 
-    .tech-idle-surface {
-      opacity: 0 !important;
+    @media (min-width: 640px) {
+      .tech-idle-surface {
+        opacity: 0 !important;
+      }
+
+      .tech-hover-overlay,
+      .tech-hover-content {
+        opacity: 1 !important;
+        transform: none !important;
+      }
     }
 
-    .tech-hover-overlay,
-    .tech-hover-content {
-      opacity: 1 !important;
-      transform: none !important;
+    @media (max-width: 639px) {
+      .tech-idle-surface {
+        opacity: 1 !important;
+      }
+
+      .tech-reveal-layer {
+        opacity: 0;
+        visibility: hidden;
+      }
+
+      .tech-expand-card.is-expanded .tech-idle-surface {
+        opacity: 0 !important;
+      }
+
+      .tech-expand-card.is-expanded .tech-reveal-layer {
+        opacity: 1;
+        visibility: visible;
+      }
+
+      .tech-expand-card.is-expanded .tech-hover-overlay,
+      .tech-expand-card.is-expanded .tech-hover-content {
+        opacity: 1 !important;
+        transform: none !important;
+      }
     }
 
     .tech-hover-hint {

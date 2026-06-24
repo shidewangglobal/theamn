@@ -16,8 +16,16 @@ const heroAWordMax = heroAWords.reduce(
 );
 
 const heroVideos = [
-  { src: '/videos/hero-banner-2.mp4', label: 'Hero background video 2' },
-  { src: '/videos/hero-banner-1.mp4', label: 'Hero background video 1' },
+  {
+    mp4: '/videos/hero-banner-2.mp4',
+    mov: '/videos/hero-banner-2.mov',
+    label: 'Hero background video 2',
+  },
+  {
+    mp4: '/videos/hero-banner-1.mp4',
+    mov: '/videos/hero-banner-1.mov',
+    label: 'Hero background video 1',
+  },
 ];
 ---
 
@@ -28,12 +36,13 @@ const heroVideos = [
         {heroVideos.map((video, i) => (
           <video
             class:list={['hero-video-bg', i === 0 ? 'hero-video-a is-active' : 'hero-video-b']}
-            src={video.src}
+            src={video.mp4}
+            data-hero-fallback-src={video.mov}
             autoplay={i === 0}
             muted
             loop
             playsinline
-            preload={i === 0 ? 'auto' : 'none'}
+            preload={i === 0 ? 'auto' : 'metadata'}
             poster="/images/hero-cover.jpeg"
             data-hero-video-index={i}
             aria-label={video.label}
@@ -104,6 +113,80 @@ const heroVideos = [
   </div>
 </section>
 
+<script is:inline>
+  (function () {
+    var reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reducedMotion) return;
+
+    function primeVideo(video) {
+      if (!video) return;
+      video.muted = true;
+      video.defaultMuted = true;
+      video.setAttribute('muted', '');
+      video.setAttribute('playsinline', '');
+      video.setAttribute('webkit-playsinline', '');
+      video.playsInline = true;
+    }
+
+    function markPlaying(video) {
+      video.classList.add('is-playing');
+    }
+
+    function tryPlay(video) {
+      primeVideo(video);
+      var promise = video.play();
+      if (!promise || !promise.then) {
+        if (!video.paused) markPlaying(video);
+        return;
+      }
+      promise
+        .then(function () {
+          markPlaying(video);
+        })
+        .catch(function () {
+          if (!video.paused) markPlaying(video);
+        });
+    }
+
+    function swapToFallback(video) {
+      var fallback = video.getAttribute('data-hero-fallback-src');
+      if (!fallback || video.dataset.heroSwapped === 'true') return;
+      video.dataset.heroSwapped = 'true';
+      video.src = fallback;
+      video.load();
+      tryPlay(video);
+    }
+
+    function bootHeroVideos() {
+      var videos = document.querySelectorAll('.hero-video-bg');
+      if (!videos.length) return;
+
+      var first = videos[0];
+      primeVideo(first);
+
+      if (first.readyState >= 2) tryPlay(first);
+      else first.addEventListener('canplay', function () { tryPlay(first); }, { once: true });
+
+      first.addEventListener('error', function () { swapToFallback(first); }, { once: true });
+
+      function resumeOnGesture() {
+        videos.forEach(function (video) {
+          if (video.paused) tryPlay(video);
+        });
+      }
+
+      window.addEventListener('touchstart', resumeOnGesture, { once: true, passive: true });
+      window.addEventListener('click', resumeOnGesture, { once: true });
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', bootHeroVideos);
+    } else {
+      bootHeroVideos();
+    }
+  })();
+</script>
+
 <style>
   .hero-media-layer {
     z-index: 0;
@@ -119,7 +202,8 @@ const heroVideos = [
     transition: opacity 1.2s cubic-bezier(0.22, 1, 0.36, 1);
   }
 
-  .hero-video-bg.is-active {
+  .hero-video-bg.is-active,
+  .hero-video-bg.is-playing {
     opacity: 1;
   }
 

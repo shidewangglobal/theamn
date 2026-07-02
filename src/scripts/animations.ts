@@ -19,11 +19,38 @@ function prefersReducedMotion(): boolean {
   return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 }
 
+function setWillChange(targets: gsap.TweenTarget, active: boolean, extra = '') {
+  const value = active ? `transform, opacity${extra ? `, ${extra}` : ''}` : '';
+  gsap.utils.toArray(targets).forEach((el) => {
+    (el as HTMLElement).style.willChange = value;
+  });
+}
+
+function withMotionWillChange(targets: gsap.TweenTarget, vars: gsap.TweenVars, extra = ''): gsap.TweenVars {
+  const { onStart, onComplete, onReverseComplete, ...rest } = vars;
+
+  return {
+    ...rest,
+    onStart() {
+      setWillChange(targets, true, extra);
+      onStart?.();
+    },
+    onComplete() {
+      setWillChange(targets, false);
+      onComplete?.();
+    },
+    onReverseComplete() {
+      setWillChange(targets, false);
+      onReverseComplete?.();
+    },
+  };
+}
+
 function initSmoothScroll(): Lenis | null {
   if (prefersReducedMotion()) return null;
 
   const lenis = new Lenis({
-    duration: 0.95,
+    duration: 0.58,
     easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
     smoothWheel: true,
     syncTouch: false,
@@ -34,7 +61,6 @@ function initSmoothScroll(): Lenis | null {
   gsap.ticker.add((time) => {
     lenis.raf(time * 1000);
   });
-  gsap.ticker.lagSmoothing(0);
 
   // Lenis uses virtual scroll; proxy so ScrollTrigger reads the correct position
   ScrollTrigger.scrollerProxy(document.documentElement, {
@@ -155,7 +181,7 @@ function revealFromTo(
   gsap.fromTo(
     targets,
     { y, x, rotation, opacity: opacity === 1 ? undefined : 0, immediateRender: false },
-    {
+    withMotionWillChange(targets, {
       y: 0,
       x: 0,
       rotation: 0,
@@ -168,7 +194,7 @@ function revealFromTo(
         start,
         toggleActions: SCROLL_REPLAY,
       },
-    },
+    }),
   );
 }
 
@@ -342,6 +368,7 @@ function initHeroWordRotator() {
   let index = 0;
 
   const cycle = () => {
+    setWillChange(wordEl, true);
     gsap.to(wordEl, {
       y: -36,
       opacity: 0,
@@ -359,6 +386,7 @@ function initHeroWordRotator() {
             duration: HERO_A_TRANSITION,
             ease: MOTION_EASE,
             onComplete: () => {
+              setWillChange(wordEl, false);
               gsap.delayedCall(HERO_A_HOLD, cycle);
             },
           },
@@ -391,12 +419,17 @@ function initAboutSlide() {
   gsap.set([leftText, rightText], { opacity: 0, y: 12, filter: 'blur(6px)' });
   gsap.set(highlights, { opacity: 0, y: 6 });
 
+  const aboutTargets = [panel, textCard, leftText, rightText, ...gsap.utils.toArray(highlights)];
+
   const revealTl = gsap.timeline({
     scrollTrigger: {
       trigger: panel,
       start: 'top 82%',
       toggleActions: SCROLL_REPLAY,
     },
+    onStart: () => setWillChange(aboutTargets, true, 'filter'),
+    onComplete: () => setWillChange(aboutTargets, false),
+    onReverseComplete: () => setWillChange(aboutTargets, false),
   });
 
   revealTl
@@ -432,7 +465,7 @@ function initHowWeWork() {
     gsap.fromTo(
       els,
       { y: MOTION_TRAVEL_Y, opacity: 0 },
-      {
+      withMotionWillChange(els, {
         y: 0,
         opacity: 1,
         duration: MOTION_DURATION,
@@ -443,7 +476,7 @@ function initHowWeWork() {
           start,
           toggleActions: SCROLL_REPLAY,
         },
-      },
+      }),
     );
   };
 
@@ -461,7 +494,7 @@ function initHowWeWork() {
     gsap.fromTo(
       hubBox,
       { x: -MOTION_TRAVEL_X, opacity: 0 },
-      {
+      withMotionWillChange(hubBox, {
         x: 0,
         opacity: 1,
         duration: MOTION_DURATION,
@@ -471,7 +504,7 @@ function initHowWeWork() {
           start: 'top 90%',
           toggleActions: SCROLL_REPLAY,
         },
-      },
+      }),
     );
   }
 
@@ -479,7 +512,7 @@ function initHowWeWork() {
     gsap.fromTo(
       networkBox,
       { x: MOTION_TRAVEL_X, opacity: 0 },
-      {
+      withMotionWillChange(networkBox, {
         x: 0,
         opacity: 1,
         duration: MOTION_DURATION,
@@ -489,7 +522,7 @@ function initHowWeWork() {
           start: 'top 90%',
           toggleActions: SCROLL_REPLAY,
         },
-      },
+      }),
     );
   }
 }
@@ -510,7 +543,7 @@ function initPillarsCredential() {
     gsap.fromTo(
       [asterisk, headline],
       { y: 20, opacity: 0 },
-      {
+      withMotionWillChange([asterisk, headline], {
         y: 0,
         opacity: 1,
         duration: MOTION_DURATION,
@@ -521,7 +554,7 @@ function initPillarsCredential() {
           start: 'top 78%',
           toggleActions: SCROLL_REPLAY,
         },
-      },
+      }),
     );
   }
 
@@ -529,7 +562,7 @@ function initPillarsCredential() {
     gsap.fromTo(
       leftImage,
       { opacity: 0, y: MOTION_TRAVEL_Y },
-      {
+      withMotionWillChange(leftImage, {
         opacity: 1,
         y: 0,
         duration: MOTION_DURATION,
@@ -539,7 +572,7 @@ function initPillarsCredential() {
           start: 'top 75%',
           toggleActions: SCROLL_REPLAY,
         },
-      },
+      }),
     );
   }
 
@@ -547,7 +580,7 @@ function initPillarsCredential() {
     gsap.fromTo(
       centerImage,
       { opacity: 0, scale: 0.985 },
-      {
+      withMotionWillChange(centerImage, {
         opacity: 1,
         scale: 1,
         duration: MOTION_DURATION,
@@ -557,7 +590,7 @@ function initPillarsCredential() {
           start: 'top 72%',
           toggleActions: SCROLL_REPLAY,
         },
-      },
+      }),
     );
   }
 
@@ -565,7 +598,7 @@ function initPillarsCredential() {
     gsap.fromTo(
       cards,
       { x: 56, opacity: 0 },
-      {
+      withMotionWillChange(cards, {
         x: 0,
         opacity: 1,
         duration: MOTION_DURATION,
@@ -576,7 +609,7 @@ function initPillarsCredential() {
           start: 'top 80%',
           toggleActions: SCROLL_REPLAY,
         },
-      },
+      }),
     );
   }
 }
@@ -590,7 +623,7 @@ function initServicesAlternate() {
     gsap.fromTo(
       card,
       { x: fromX, opacity: 0, y: 28 },
-      {
+      withMotionWillChange(card, {
         x: 0,
         y: 0,
         opacity: 1,
@@ -601,7 +634,7 @@ function initServicesAlternate() {
           start: 'top 85%',
           toggleActions: SCROLL_REPLAY,
         },
-      },
+      }),
     );
   });
 }
@@ -613,7 +646,7 @@ function initTextReveals() {
     gsap.fromTo(
       el,
       { y: 20, opacity: 0 },
-      {
+      withMotionWillChange(el, {
         y: 0,
         opacity: 1,
         duration: MOTION_DURATION,
@@ -623,7 +656,7 @@ function initTextReveals() {
           start: 'top 88%',
           toggleActions: SCROLL_REPLAY,
         },
-      },
+      }),
     );
   });
 }

@@ -282,12 +282,10 @@
   /* Hide until GSAP reveal */
   .about-glass-card {
     opacity: 0;
-    will-change: transform, opacity;
   }
 
   .about-panel {
     opacity: 0;
-    will-change: transform, opacity;
   }
 
   .about-text-left,
@@ -316,7 +314,6 @@
   .how-hub-box,
   .how-network-box {
     opacity: 0;
-    will-change: transform, opacity;
   }
 
   .how-asterisk,

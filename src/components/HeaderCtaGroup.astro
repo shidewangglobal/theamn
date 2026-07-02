@@ -1,0 +1,54 @@
+---
+interface Props {
+  insightsHref?: string;
+  connectHref?: string;
+  showInsights?: boolean;
+}
+
+const {
+  insightsHref = '/insights',
+  connectHref = '/#contact',
+  showInsights = true,
+} = Astro.props;
+---
+
+<div class="header-cta-group">
+  {
+    showInsights && (
+      <a href={insightsHref} class="header-cta-insights pill-nav-link">
+        <span class="header-cta-insights-label">Insights</span>
+      </a>
+    )
+  }
+  <a href={connectHref} class="header-cta-connect pill-nav-link btn-primary">
+    Connect
+  </a>
+</div>
+
+<style>
+  .header-cta-group {
+    @apply inline-flex w-full items-center gap-0.5 rounded-full border border-amn-brown/10 bg-white/85 p-1 backdrop-blur-md sm:w-auto;
+    box-shadow: 0 4px 20px rgba(10, 10, 10, 0.06);
+  }
+
+  .header-cta-insights {
+    @apply flex-1 rounded-full px-4 py-2 text-center font-body-secondary text-xs font-medium normal-case tracking-normal text-amn-brown/65 sm:flex-none sm:text-left;
+    transition: all var(--motion-duration-fast) var(--motion-ease);
+  }
+
+  .header-cta-insights-label {
+    @apply text-accent-italic;
+  }
+
+  .header-cta-insights:hover {
+    @apply bg-amn-cream text-amn-dark;
+  }
+
+  .header-cta-connect {
+    @apply flex-1 px-5 py-2 text-center text-xs shadow-none sm:flex-none;
+  }
+
+  .header-cta-connect:hover {
+    @apply shadow-glow;
+  }
+</style>

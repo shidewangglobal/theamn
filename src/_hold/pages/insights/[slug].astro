@@ -1,0 +1,134 @@
+---
+import PageLayout from '../../layouts/PageLayout.astro';
+import { getCollection, render } from 'astro:content';
+import { insightSlug } from '../../utils/insights';
+
+export async function getStaticPaths() {
+  const insights = await getCollection('insights', ({ data }) => !data.draft);
+  return insights.map((entry) => ({
+    params: { slug: insightSlug(entry.id) },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+
+const seoTitle = entry.data.seoTitle ?? entry.data.title;
+const seoDescription = entry.data.seoDescription ?? entry.data.description;
+const ogImage = entry.data.ogImage ?? '/images/hero-cover.jpeg';
+
+const formatDate = (date: Date) =>
+  date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+
+const insightUrl = `https://theamn.network/insights/${insightSlug(entry.id)}`;
+---
+
+<PageLayout
+  title={seoTitle}
+  description={seoDescription}
+  ogImage={ogImage}
+  ogType="article"
+  jsonLd={{
+    '@context': 'https://schema.org',
+    '@type': entry.data.category === 'Q&A' ? 'FAQPage' : 'Article',
+    headline: entry.data.title,
+    description: entry.data.description,
+    datePublished: entry.data.publishDate.toISOString(),
+    dateModified: (entry.data.updatedDate ?? entry.data.publishDate).toISOString(),
+    url: insightUrl,
+    author: {
+      '@type': 'Organization',
+      name: 'The AMN Limited',
+    },
+    publisher: {
+      '@type': 'Organization',
+      name: 'The AMN Limited',
+      url: 'https://theamn.network',
+    },
+    mainEntityOfPage: insightUrl,
+  }}
+>
+  <article class="tubik-section">
+    <div class="tubik-shell">
+      <div class="insight-layout mx-auto max-w-3xl">
+        <a href="/insights" class="insight-back font-caption text-xs uppercase tracking-wider text-amn-brown/50 transition hover:text-amn-blue">
+          ← All insights
+        </a>
+
+        <header class="insight-header mt-4 mb-8 md:mb-10">
+          <p class="font-caption mb-2 text-[10px] uppercase tracking-[0.2em] text-amn-blue">
+            {entry.data.category}
+          </p>
+          <h1 class="font-headline-bold text-3xl leading-tight text-amn-dark md:text-4xl">
+            {entry.data.title}
+          </h1>
+          <p class="mt-4 font-body-secondary text-lg leading-relaxed text-amn-brown/75">
+            {entry.data.description}
+          </p>
+          <time
+            class="mt-4 block font-caption text-[10px] uppercase tracking-wider text-amn-brown/45"
+            datetime={entry.data.publishDate.toISOString()}
+          >
+            {formatDate(entry.data.publishDate)}
+          </time>
+        </header>
+
+        <div class="insight-prose font-body-secondary text-amn-brown/85">
+          <Content />
+        </div>
+
+        <footer class="insight-footer mt-10 border-t border-amn-brown/10 pt-8">
+          <p class="font-body-secondary text-sm text-amn-brown/70">
+            Ready to improve your brand's AI visibility?
+          </p>
+          <div class="mt-4 flex flex-wrap gap-3">
+            <a href="/services/seo-geo" class="pill-nav-link btn-primary px-6 py-3 text-sm">
+              Search Visibility
+            </a>
+          </div>
+        </footer>
+      </div>
+    </div>
+  </article>
+</PageLayout>
+
+<style>
+  .insight-prose :global(h2) {
+    @apply font-headline-bold mb-4 mt-8 text-xl text-amn-dark md:text-2xl;
+  }
+
+  .insight-prose :global(p) {
+    @apply mb-4 text-base leading-relaxed;
+  }
+
+  .insight-prose :global(strong) {
+    @apply font-medium text-amn-dark;
+  }
+
+  .insight-prose :global(ul),
+  .insight-prose :global(ol) {
+    @apply mb-4 ml-5 list-disc space-y-2;
+  }
+
+  .insight-prose :global(table) {
+    @apply mb-6 w-full border-collapse text-sm;
+  }
+
+  .insight-prose :global(th),
+  .insight-prose :global(td) {
+    @apply border border-amn-brown/15 px-3 py-2 text-left;
+  }
+
+  .insight-prose :global(th) {
+    @apply bg-white/60 font-medium text-amn-dark;
+  }
+
+  .insight-prose :global(a) {
+    @apply text-amn-blue underline-offset-2 transition hover:underline;
+  }
+
+  .insight-prose :global(hr) {
+    @apply my-8 border-amn-brown/10;
+  }
+</style>

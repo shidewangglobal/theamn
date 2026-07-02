@@ -12,7 +12,7 @@ const serviceGroups = [
       'Multi-property content sync & editorial calendars',
       'Persona-driven storytelling & curated editorial trips',
     ],
-    image: '/images/luxury-content-hero.png',
+    image: '/images/luxury-content-hero.jpg',
   },
   {
     title: 'Advanced Performance Solutions',
@@ -78,12 +78,92 @@ const serviceGroups = [
       ))}
     </div>
 
-    <div class="reveal mt-2.5 text-center md:mt-3">
-      <p class="font-body-secondary mb-3 text-sm text-amn-brown/60">
-        Case studies and detailed portfolio coming in Phase 2.
-      </p>
-      <a href="#contact" class="pill-nav-link btn-dark">Request a Consultation</a>
-    </div>
+    <article class="service-card seo-geo-card bento-solid-cream bento-p-md mt-2.5 md:mt-3">
+      <div class="seo-geo-inner">
+        <div class="seo-geo-intro min-w-0">
+          <p class="font-caption text-xs tracking-[0.2em] text-amn-blue text-accent-italic">
+            Search &amp; Generative Engine Optimization
+          </p>
+          <h3 class="font-headline-bold mt-1.5 text-2xl text-amn-dark md:text-3xl">SEO + GEO</h3>
+          <p class="font-body-secondary mt-3 max-w-xl text-sm leading-relaxed text-amn-brown/75 md:text-base">
+            <span class="text-accent-italic">Positioning luxury brands</span> at the forefront of AI-driven discovery.
+          </p>
+        </div>
+
+        <div class="seo-geo-side flex min-w-0 flex-col gap-4">
+          <div class="geo-chat-preview geo-chat-live" aria-label="Sample AI search conversation preview">
+            <div class="geo-chat-chrome">
+              <span class="geo-chat-dot" aria-hidden="true"></span>
+              <span class="geo-chat-dot" aria-hidden="true"></span>
+              <span class="geo-chat-dot" aria-hidden="true"></span>
+              <p class="geo-chat-label font-caption text-[10px] uppercase tracking-[0.2em] text-amn-brown/45">
+                Generative discovery preview
+              </p>
+            </div>
+
+            <div class="geo-chat-viewport">
+              <div class="geo-chat-track geo-chat-main" data-geo-track>
+                <section class="geo-chat-turn" data-geo-turn="1">
+                  <div class="geo-chat-bubble geo-chat-bubble--user">
+                    <p class="font-body-secondary text-[0.8125rem] leading-relaxed text-amn-dark md:text-sm geo-type" data-geo-user-1></p>
+                  </div>
+
+                  <div class="geo-chat-bubble geo-chat-bubble--ai geo-ai-hidden" data-geo-ai-1-wrap>
+                    <p class="mb-2.5 font-caption text-[10px] uppercase tracking-[0.16em] text-amn-brown/40">
+                      AI answer
+                    </p>
+                    <p class="font-body-secondary text-[0.8125rem] leading-relaxed text-amn-brown/85 md:text-sm geo-type" data-geo-ai-intro-1></p>
+                    <ul class="mt-2.5 space-y-2.5 text-[0.78rem] leading-snug text-amn-brown/80 md:text-[0.8125rem]">
+                      <li class="geo-point" data-geo-bullet-1></li>
+                      <li class="geo-point geo-point-dim" data-geo-bullet-2></li>
+                      <li class="geo-point geo-point-dim" data-geo-bullet-3></li>
+                    </ul>
+                  </div>
+                </section>
+
+                <section class="geo-chat-turn" data-geo-turn="2">
+                  <div class="geo-chat-bubble geo-chat-bubble--user">
+                    <p class="font-body-secondary text-[0.8125rem] leading-relaxed text-amn-dark md:text-sm geo-type" data-geo-user-2></p>
+                  </div>
+
+                  <div class="geo-chat-bubble geo-chat-bubble--ai geo-ai-hidden" data-geo-ai-2-wrap>
+                    <p class="mb-2.5 font-caption text-[10px] uppercase tracking-[0.16em] text-amn-brown/40">
+                      AI answer
+                    </p>
+                    <p class="font-body-secondary text-[0.8125rem] leading-relaxed text-amn-brown/85 md:text-sm geo-type" data-geo-ai-intro-2></p>
+                    <ul class="mt-2.5 space-y-2.5 text-[0.78rem] leading-snug text-amn-brown/80 md:text-[0.8125rem]">
+                      <li class="geo-point" data-geo-standout-1></li>
+                      <li class="geo-point" data-geo-standout-2></li>
+                      <li class="geo-point" data-geo-standout-3></li>
+                    </ul>
+                  </div>
+                </section>
+              </div>
+
+            </div>
+
+          </div>
+        </div>
+
+        <p class="geo-static-message geo-static-message-bottom text-accent-italic font-body-secondary max-w-[66ch] text-sm leading-relaxed md:text-[0.95rem]">
+          <span class="text-amn-dark/90">AI search engines do not discover unique experiences by accident. </span><span class="geo-glow">From broad keywords to high-yield intent, this journey is driven by structured semantic optimization. </span><span class="geo-glow-lime">While competitors fade, GEO helps your property capture the spotlight and lead the narrative.</span>
+        </p>
+
+        <div class="seo-geo-cta-wrap">
+          <p class="font-caption mb-2 text-[10px] uppercase tracking-[0.18em] text-amn-brown/45">
+            Free quick scan
+          </p>
+          <a
+            href="https://geoauditor.theamn.network/"
+            class="pill-nav-link btn-primary seo-geo-cta seo-geo-cta-inline w-fit"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Search Visibility
+          </a>
+        </div>
+      </div>
+    </article>
   </div>
 </section>
 
@@ -114,4 +194,405 @@ const serviceGroups = [
       min-height: 100%;
     }
   }
+
+  .seo-geo-card {
+    border: 1px solid rgba(0, 160, 240, 0.12);
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.98) 0%, rgba(242, 240, 235, 0.95) 100%);
+  }
+
+  .seo-geo-card:hover {
+    border-color: rgba(0, 160, 240, 0.22);
+  }
+
+  .seo-geo-inner {
+    @apply flex flex-col gap-5;
+  }
+
+  @media (min-width: 1024px) {
+    .seo-geo-inner {
+      display: grid;
+      grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+      grid-template-rows: auto 1fr auto;
+      gap: 1.5rem;
+      align-items: stretch;
+    }
+
+    .seo-geo-intro {
+      grid-column: 1;
+      grid-row: 1;
+    }
+
+    .seo-geo-side {
+      grid-column: 2;
+      grid-row: 1 / -1;
+    }
+
+    .geo-static-message-bottom {
+      grid-column: 1;
+      grid-row: 2;
+      align-self: end;
+      margin-top: auto;
+      transform: translateY(calc(1.05rem - 1lh));
+    }
+
+    .seo-geo-cta-wrap {
+      grid-column: 1;
+      grid-row: 3;
+    }
+  }
+
+  .seo-geo-cta-wrap {
+    margin-top: 0;
+  }
+
+  .seo-geo-cta {
+    @apply px-6 py-3.5 text-center text-sm;
+    white-space: normal;
+    line-height: 1.35;
+  }
+
+  .seo-geo-cta-inline {
+    box-shadow: none;
+  }
+
+  .geo-chat-preview {
+    @apply flex flex-col overflow-hidden rounded-[1.35rem] border border-amn-brown/10 bg-white;
+    box-shadow:
+      0 1px 0 rgba(255, 255, 255, 0.8) inset,
+      0 12px 32px rgba(10, 10, 10, 0.06);
+    width: 100%;
+    min-height: 0;
+  }
+
+  .geo-chat-chrome {
+    @apply relative flex items-center gap-1.5 border-b border-amn-brown/10 px-4 py-3;
+    background: linear-gradient(180deg, rgba(242, 240, 235, 0.9) 0%, rgba(255, 255, 255, 0.95) 100%);
+  }
+
+  .geo-chat-dot {
+    @apply h-2 w-2 rounded-full bg-amn-brown/15;
+  }
+
+  .geo-chat-label {
+    @apply absolute left-1/2 -translate-x-1/2;
+  }
+
+  .geo-chat-viewport {
+    position: relative;
+    height: 19.25rem;
+    overflow: hidden;
+    background:
+      radial-gradient(circle at 100% 0%, rgba(0, 160, 240, 0.05), transparent 42%),
+      radial-gradient(circle at 0% 100%, rgba(212, 230, 0, 0.06), transparent 38%);
+    transition: filter 0.8s ease, opacity 0.8s ease;
+  }
+
+  @media (min-width: 768px) {
+    .geo-chat-viewport {
+      height: 20.5rem;
+    }
+  }
+
+  .geo-chat-track {
+    display: flex;
+    flex-direction: column;
+    height: 200%;
+    transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .geo-chat-turn {
+    flex: 0 0 50%;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    padding: 1rem 1.25rem;
+    justify-content: flex-start;
+    min-height: 0;
+    overflow: hidden;
+  }
+
+  @media (min-width: 768px) {
+    .geo-chat-turn {
+      padding: 1.25rem;
+      gap: 0.85rem;
+    }
+  }
+
+  .geo-chat-bubble {
+    @apply rounded-2xl px-4 py-3.5;
+    max-width: 100%;
+  }
+
+  .geo-chat-bubble p {
+    word-break: break-word;
+  }
+
+  .geo-chat-bubble--user {
+    margin-left: 0.75rem;
+    border: 1px solid rgba(0, 160, 240, 0.12);
+    background: rgba(0, 160, 240, 0.06);
+  }
+
+  .geo-chat-bubble--ai {
+    margin-right: 0.75rem;
+    border: 1px solid rgba(74, 66, 51, 0.1);
+    background: rgba(255, 255, 255, 0.92);
+    box-shadow: 0 8px 20px rgba(10, 10, 10, 0.04);
+  }
+
+  .geo-point {
+    position: relative;
+    padding-left: 1.05rem;
+    transition: opacity 0.35s ease, background-color 1s ease, box-shadow 1s ease;
+  }
+
+  .geo-point::before {
+    content: '•';
+    position: absolute;
+    left: 0;
+    top: 0;
+    color: rgba(74, 66, 51, 0.45);
+  }
+
+  .geo-point-dim {
+    opacity: 0.12;
+  }
+
+  .geo-point-highlight {
+    border-radius: 0.5rem;
+    background: linear-gradient(90deg, rgba(212, 230, 0, 0.2), rgba(0, 160, 240, 0.12));
+    box-shadow: 0 0 0 1px rgba(212, 230, 0, 0.22) inset;
+  }
+
+  .geo-type-cursor::after {
+    content: '▋';
+    margin-left: 0.1rem;
+    animation: geo-blink 0.9s steps(1, end) infinite;
+    color: rgba(74, 66, 51, 0.55);
+  }
+
+  .geo-ai-hidden {
+    opacity: 0;
+    transform: translateY(8px);
+    pointer-events: none;
+    transition: opacity 0.35s ease, transform 0.35s ease;
+  }
+
+  .geo-ai-visible {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+  }
+
+  .geo-hidden {
+    display: none !important;
+  }
+
+  .geo-chat-live {
+    position: relative;
+  }
+
+  .geo-glow {
+    color: #00a0f0;
+    text-shadow: 0 0 15px rgba(0, 160, 240, 0.24);
+  }
+
+  .geo-glow-lime {
+    color: #8b9a4b;
+    text-shadow: 0 0 15px rgba(139, 154, 75, 0.2);
+  }
+
+  .geo-kw {
+    @apply font-medium;
+  }
+
+  .geo-kw--blue {
+    @apply text-amn-blue;
+  }
+
+  .geo-kw--lime {
+    @apply text-amn-olive;
+  }
+
+  @keyframes geo-blink {
+    50% {
+      opacity: 0;
+    }
+  }
 </style>
+
+<script is:inline>
+  (() => {
+    const root = document.querySelector('.geo-chat-live');
+    if (!root) return;
+
+    const wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+    let runToken = 0;
+    let isRunning = false;
+    let canTrigger = true;
+
+    const selectors = {
+      track: '[data-geo-track]',
+      user1: '[data-geo-user-1]',
+      ai1Wrap: '[data-geo-ai-1-wrap]',
+      aiIntro1: '[data-geo-ai-intro-1]',
+      bullet1: '[data-geo-bullet-1]',
+      bullet2: '[data-geo-bullet-2]',
+      bullet3: '[data-geo-bullet-3]',
+      user2: '[data-geo-user-2]',
+      ai2Wrap: '[data-geo-ai-2-wrap]',
+      aiIntro2: '[data-geo-ai-intro-2]',
+      standout1: '[data-geo-standout-1]',
+      standout2: '[data-geo-standout-2]',
+      standout3: '[data-geo-standout-3]',
+    };
+
+    const getEls = () =>
+      Object.fromEntries(Object.entries(selectors).map(([key, sel]) => [key, root.querySelector(sel)]));
+
+    const typeText = async (el, text, speed = 14, token = runToken) => {
+      if (!el) return;
+      el.textContent = '';
+      el.classList.add('geo-type-cursor');
+      for (let i = 0; i < text.length; i += 1) {
+        if (token !== runToken) {
+          el.classList.remove('geo-type-cursor');
+          return false;
+        }
+        el.textContent += text[i];
+        await wait(speed);
+      }
+      el.classList.remove('geo-type-cursor');
+      return true;
+    };
+
+    const revealAi = (wrap) => {
+      if (!wrap) return;
+      wrap.classList.remove('geo-ai-hidden');
+      wrap.classList.add('geo-ai-visible');
+    };
+
+    const slideToTurn = (track, turnIndex) => {
+      if (!track) return;
+      track.style.transform = `translateY(-${turnIndex * 50}%)`;
+    };
+
+    const resetConversation = () => {
+      const {
+        track, user1, user2, ai1Wrap, ai2Wrap, aiIntro1, aiIntro2, bullet1, bullet2, bullet3, standout1, standout2, standout3,
+      } = getEls();
+      if (!track) return;
+
+      const resetPoints = [bullet1, bullet2, bullet3, standout1, standout2, standout3];
+      resetPoints.forEach((point) => {
+        if (!point) return;
+        point.textContent = '';
+        point.classList.remove('geo-point-highlight');
+      });
+
+      [user1, user2, aiIntro1, aiIntro2].forEach((el) => {
+        if (el) el.textContent = '';
+      });
+
+      [bullet2, bullet3].forEach((point) => point && point.classList.add('geo-point-dim'));
+      [ai1Wrap, ai2Wrap].forEach((wrap) => {
+        if (!wrap) return;
+        wrap.classList.add('geo-ai-hidden');
+        wrap.classList.remove('geo-ai-visible');
+      });
+
+      track.style.transform = 'translateY(0)';
+    };
+
+    const runConversation = async (token) => {
+      const {
+        track, user1, user2, ai1Wrap, ai2Wrap, aiIntro1, aiIntro2, bullet1, bullet2, bullet3, standout1, standout2, standout3,
+      } = getEls();
+
+      if (!track || !user1 || !aiIntro1 || !bullet1 || !bullet2 || !bullet3) return;
+      resetConversation();
+      isRunning = true;
+
+      if (!(await typeText(user1, 'any luxury resort near bangkok', 16, token))) return;
+      await wait(200);
+      if (token !== runToken) return;
+      revealAi(ai1Wrap);
+      await wait(360);
+      if (!(await typeText(aiIntro1, 'Here are top-rated luxury resorts near Bangkok:', 16, token))) return;
+      await wait(220);
+      if (!(await typeText(
+        bullet1,
+        'InterContinental Khao Yai: Bill Bensley design, vintage rail story, and repurposed heritage train suites.',
+        13,
+        token,
+      ))) return;
+      bullet1.classList.add('geo-point-highlight');
+      bullet2.textContent = 'sala khaoyai: secluded boutique villas with mountain-view infinity pools.';
+      bullet3.textContent = 'Muthi Maya: private pool villas beside Khao Yai National Park.';
+
+      await wait(900);
+      if (token !== runToken) return;
+      slideToTurn(track, 1);
+      await wait(900);
+
+      if (!(await typeText(user2, 'What makes InterContinental Khao Yai more special than others nearby?', 15, token))) return;
+      await wait(280);
+      if (token !== runToken) return;
+      revealAi(ai2Wrap);
+      await wait(360);
+      if (!(await typeText(aiIntro2, 'InterContinental stands out for its immersive rail-inspired luxury concept:', 15, token))) return;
+
+      const standoutItems = [
+        {
+          el: standout1,
+          text: 'Upcycled Heritage Railcar Suites: 19 historic carriages transformed into luxury suites and villas.',
+        },
+        {
+          el: standout2,
+          text: 'Immersive Train-Car Dining: a French brasserie set inside a vintage carriage.',
+        },
+        {
+          el: standout3,
+          text: 'Back on Track Spa: a wellness carriage offering all-natural luxury therapies.',
+        },
+      ];
+
+      for (const item of standoutItems) {
+        if (!item.el) continue;
+        if (!(await typeText(item.el, item.text, 12, token))) return;
+        item.el.classList.add('geo-point-highlight');
+        await wait(320);
+      }
+
+      await wait(450);
+      if (token !== runToken) return;
+      isRunning = false;
+    };
+
+    const servicesSection = document.querySelector('#services');
+    if (!servicesSection) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting && canTrigger && !isRunning) {
+            canTrigger = false;
+            runToken += 1;
+            runConversation(runToken);
+            continue;
+          }
+
+          if (!entry.isIntersecting) {
+            canTrigger = true;
+            runToken += 1;
+            isRunning = false;
+            resetConversation();
+          }
+        }
+      },
+      { threshold: 0.45 },
+    );
+
+    observer.observe(servicesSection);
+  })();
+</script>

@@ -11,5 +11,10 @@ export default defineConfig({
     '/contact': '/#contact',
     '/preview': '/',
     '/preview/': '/',
+    '/articles': '/',
+    '/insights': '/',
+    '/services/seo-geo': '/',
+    '/preview/archetypes': '/',
+    '/preview/case-studies': '/',
   },
 });

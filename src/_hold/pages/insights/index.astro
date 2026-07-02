@@ -1,0 +1,82 @@
+---
+import PageLayout from '../../layouts/PageLayout.astro';
+import { getCollection } from 'astro:content';
+import { insightSlug } from '../../utils/insights';
+
+const insights = (await getCollection('insights', ({ data }) => !data.draft)).sort(
+  (a, b) => b.data.publishDate.valueOf() - a.data.publishDate.valueOf(),
+);
+
+const formatDate = (date: Date) =>
+  date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+---
+
+<PageLayout
+  title="Insights | Luxury marketing & GEO"
+  description="Insights, guides, and Q&A on SEO, Generative Engine Optimization, and digital marketing for luxury hospitality brands."
+  jsonLd={{
+    '@context': 'https://schema.org',
+    '@type': 'Blog',
+    name: 'THE AMN Insights',
+    url: 'https://theamn.network/insights',
+    publisher: {
+      '@type': 'Organization',
+      name: 'The AMN Limited',
+      url: 'https://theamn.network',
+    },
+  }}
+>
+  <section class="tubik-section">
+    <div class="tubik-shell">
+      <div class="insights-intro mb-8 md:mb-10">
+        <p class="section-label mb-2.5 text-accent-italic">Editorial</p>
+        <h1 class="font-headline-bold text-3xl text-amn-dark md:text-4xl lg:text-5xl">Insights</h1>
+        <p class="mt-4 max-w-2xl font-body-secondary text-base leading-relaxed text-amn-brown/70 md:text-lg">
+          Thought leadership on SEO, Generative Engine Optimization, and performance marketing
+          for premium hotels and resorts.
+        </p>
+      </div>
+
+      {
+        insights.length === 0 ? (
+          <p class="font-body-secondary text-amn-brown/60">New insights coming soon.</p>
+        ) : (
+          <ul class="insights-list grid gap-4 md:grid-cols-2 md:gap-5">
+            {insights.map((entry) => (
+              <li>
+                <a href={`/insights/${insightSlug(entry.id)}`} class="insight-card bento-solid bento-p-md group block h-full">
+                  <p class="font-caption mb-2 text-[10px] uppercase tracking-[0.2em] text-amn-blue">
+                    {entry.data.category}
+                  </p>
+                  <h2 class="font-headline-bold mb-2 text-xl text-amn-dark transition group-hover:text-amn-blue md:text-2xl">
+                    {entry.data.title}
+                  </h2>
+                  <p class="mb-4 font-body-secondary text-sm leading-relaxed text-amn-brown/70">
+                    {entry.data.description}
+                  </p>
+                  <time
+                    class="font-caption text-[10px] uppercase tracking-wider text-amn-brown/45"
+                    datetime={entry.data.publishDate.toISOString()}
+                  >
+                    {formatDate(entry.data.publishDate)}
+                  </time>
+                </a>
+              </li>
+            ))}
+          </ul>
+        )
+      }
+    </div>
+  </section>
+</PageLayout>
+
+<style>
+  .insight-card {
+    @apply h-full transition duration-[350ms] ease-[cubic-bezier(0.22,1,0.36,1)];
+  }
+
+  .insight-card:hover {
+    @apply border-amn-blue/20;
+    box-shadow: 0 8px 32px rgba(10, 10, 10, 0.06);
+  }
+</style>

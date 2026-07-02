@@ -1,6 +1,7 @@
 ---
 import '../styles/global.css';
 import '../styles/theme-preview.css';
+import HeaderCtaGroup from '../components/HeaderCtaGroup.astro';
 
 interface Props {
   title?: string;
@@ -24,7 +25,6 @@ const navLinks = [
   { href: '#tech', label: 'Tech' },
   { href: '#services', label: 'Services' },
   { href: '#collective', label: 'Collective' },
-  { href: '#contact', label: 'Connect' },
 ];
 ---
 
@@ -75,9 +75,9 @@ const navLinks = [
           ))}
         </nav>
 
-        <a href="#contact" class="pill-nav-link btn-primary hidden px-6 py-2.5 text-xs md:inline-flex">
-          Connect
-        </a>
+        <div class="hidden shrink-0 md:block">
+          <HeaderCtaGroup connectHref="#contact" showInsights={false} />
+        </div>
 
         <button
           id="mobile-menu-btn"
@@ -101,6 +101,9 @@ const navLinks = [
             {link.label}
           </a>
         ))}
+        <div class="mt-2 border-t border-amn-brown/8 pt-2">
+          <HeaderCtaGroup connectHref="#contact" showInsights={false} />
+        </div>
       </nav>
     </header>
 

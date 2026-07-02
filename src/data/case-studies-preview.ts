@@ -57,5 +57,5 @@ export const curatingService = {
     'Social media layout systems & standardized templates',
     'Persona-driven storytelling & curated editorial trips',
   ],
-  heroImage: '/images/luxury-content-hero.png',
+  heroImage: '/images/luxury-content-hero.jpg',
 };

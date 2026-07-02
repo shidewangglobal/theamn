@@ -1,0 +1,139 @@
+---
+import PageLayout from '../../layouts/PageLayout.astro';
+---
+
+<PageLayout
+  title="SEO + GEO for Luxury Hospitality | The AMN"
+  description="Position your luxury hotel or resort at the forefront of AI-driven discovery. THE AMN combines traditional SEO with Generative Engine Optimization for premium hospitality brands."
+  ogImage="/images/hero-cover.jpeg"
+  jsonLd={{
+    '@context': 'https://schema.org',
+    '@type': 'Service',
+    name: 'SEO + Generative Engine Optimization',
+    provider: {
+      '@type': 'Organization',
+      name: 'The AMN Limited',
+      url: 'https://theamn.network',
+    },
+    areaServed: 'Worldwide',
+    serviceType: 'Digital marketing — SEO and GEO for luxury hospitality',
+    url: 'https://theamn.network/services/seo-geo',
+    description:
+      'Search and Generative Engine Optimization for luxury hotels and resorts — structured semantic optimization for AI-driven discovery.',
+  }}
+>
+  <section class="tubik-section">
+    <div class="tubik-shell">
+      <div class="service-hero mx-auto max-w-3xl text-center">
+        <p class="section-label mb-2.5 text-accent-italic">Search &amp; Generative Engine Optimization</p>
+        <h1 class="font-headline-bold text-3xl text-amn-dark md:text-4xl lg:text-5xl">SEO + GEO</h1>
+        <p class="mx-auto mt-4 max-w-2xl font-body-secondary text-base leading-relaxed text-amn-brown/75 md:text-lg">
+          <span class="text-accent-italic">Positioning luxury brands</span> at the forefront of AI-driven discovery —
+          from traditional search rankings to citations inside generative answers.
+        </p>
+        <div class="mt-8 flex flex-wrap items-center justify-center gap-3">
+          <a
+            href="https://geoauditor.theamn.network/"
+            class="pill-nav-link btn-primary px-6 py-3.5 text-sm"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Free GEO scan — under 30s
+          </a>
+          <a href="/#contact" class="pill-nav-link btn-dark px-6 py-3.5 text-sm">
+            Request a consultation
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="tubik-section-alt">
+    <div class="tubik-shell">
+      <div class="service-grid mx-auto grid max-w-5xl gap-5 lg:grid-cols-2">
+        <article class="bento-solid bento-p-md">
+          <h2 class="font-headline-bold mb-3 text-xl text-amn-dark md:text-2xl">The challenge</h2>
+          <p class="font-body-secondary text-sm leading-relaxed text-amn-brown/75 md:text-base">
+            AI search engines do not discover unique experiences by accident. Travelers increasingly ask
+            ChatGPT, Perplexity, and Google AI Overviews before they click a single blue link — and luxury
+            properties without structured semantic presence fade behind competitors who own the narrative.
+          </p>
+        </article>
+
+        <article class="bento-solid bento-p-md">
+          <h2 class="font-headline-bold mb-3 text-xl text-amn-dark md:text-2xl">Our approach</h2>
+          <p class="font-body-secondary text-sm leading-relaxed text-amn-brown/75 md:text-base">
+            From broad keywords to high-yield intent, we drive discovery through structured semantic optimization —
+            technical SEO, entity clarity, authoritative content, and GEO practices that help AI systems understand
+            and cite your property accurately.
+          </p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="tubik-section">
+    <div class="tubik-shell">
+      <div class="mx-auto max-w-3xl">
+        <h2 class="font-headline-bold mb-6 text-center text-2xl text-amn-dark md:text-3xl">What we deliver</h2>
+        <ul class="service-deliverables bento-solid bento-p-md space-y-3">
+          {
+            [
+              'Technical SEO audits and remediation for luxury hospitality sites',
+              'Entity and schema strategy for properties, experiences, and brand groups',
+              'Content architecture aligned to high-intent and conversational queries',
+              'Generative Engine Optimization — visibility inside AI-generated answers',
+              'Ongoing monitoring, reporting, and iteration as models evolve',
+            ].map((item) => (
+              <li class="flex items-start gap-3 font-body-secondary text-sm text-amn-brown/80 md:text-base">
+                <span class="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-amn-lime/30">
+                  <svg class="h-3 w-3 text-amn-olive" fill="currentColor" viewBox="0 0 20 20">
+                    <path
+                      fill-rule="evenodd"
+                      d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                      clip-rule="evenodd"
+                    />
+                  </svg>
+                </span>
+                {item}
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="tubik-section-alt">
+    <div class="tubik-shell">
+      <div class="service-cta bento-solid-cream bento-p-md mx-auto max-w-3xl text-center">
+        <p class="font-caption mb-2 text-[10px] uppercase tracking-[0.18em] text-amn-brown/45">SEO + GEO</p>
+        <h2 class="font-headline-bold mb-3 text-xl text-amn-dark md:text-2xl">
+          Free scan + full-service GEO
+        </h2>
+        <p class="mb-6 font-body-secondary text-sm leading-relaxed text-amn-brown/70 md:text-base">
+          Start with our GEO Auditor for an instant snapshot, or speak with our team for a tailored SEO + GEO roadmap.
+        </p>
+        <div class="flex flex-wrap items-center justify-center gap-3">
+          <a
+            href="https://geoauditor.theamn.network/"
+            class="pill-nav-link btn-primary px-6 py-3.5 text-sm"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Run free GEO scan
+          </a>
+          <a href="/#contact" class="pill-nav-link btn-dark px-6 py-3.5 text-sm">
+            Request a consultation
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+</PageLayout>
+
+<style>
+  .service-hero {
+    padding-top: 0.5rem;
+  }
+</style>

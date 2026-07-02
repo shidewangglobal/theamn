@@ -569,13 +569,10 @@ const serviceGroups = [
       isRunning = false;
     };
 
-    const servicesSection = document.querySelector('#services');
-    if (!servicesSection) return;
-
     const observer = new IntersectionObserver(
       (entries) => {
         for (const entry of entries) {
-          if (entry.isIntersecting && canTrigger && !isRunning) {
+          if (entry.isIntersecting && entry.intersectionRatio >= 0.3 && canTrigger && !isRunning) {
             canTrigger = false;
             runToken += 1;
             runConversation(runToken);
@@ -590,9 +587,9 @@ const serviceGroups = [
           }
         }
       },
-      { threshold: 0.45 },
+      { threshold: [0, 0.3] },
     );
 
-    observer.observe(servicesSection);
+    observer.observe(root);
   })();
 </script>

@@ -5,6 +5,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 gsap.registerPlugin(ScrollTrigger);
 
 const SCROLL_REPLAY = 'play reverse play reverse';
+const HIDDEN_FROM = { immediateRender: false } as const;
 
 /** Tech-box motion: fast, confident — matches cubic-bezier(0.22, 1, 0.36, 1) */
 const MOTION_EASE = 'power4.out';
@@ -180,7 +181,7 @@ function revealFromTo(
 
   gsap.fromTo(
     targets,
-    { y, x, rotation, opacity: opacity === 1 ? undefined : 0, immediateRender: false },
+    { y, x, rotation, opacity: opacity === 1 ? undefined : 0, ...HIDDEN_FROM },
     withMotionWillChange(targets, {
       y: 0,
       x: 0,
@@ -413,12 +414,6 @@ function initAboutSlide() {
   if (!panel || !textCard) return;
 
   const aboutIn = 0.45;
-
-  gsap.set(panel, { opacity: 0, y: 14 });
-  gsap.set(textCard, { opacity: 0, x: 36, y: 8, filter: 'blur(10px)' });
-  gsap.set([leftText, rightText], { opacity: 0, y: 12, filter: 'blur(6px)' });
-  gsap.set(highlights, { opacity: 0, y: 6 });
-
   const aboutTargets = [panel, textCard, leftText, rightText, ...gsap.utils.toArray(highlights)];
 
   const revealTl = gsap.timeline({
@@ -433,15 +428,16 @@ function initAboutSlide() {
   });
 
   revealTl
-    .to(panel, { y: 0, opacity: 1, duration: aboutIn, ease: MOTION_EASE })
-    .to(
+    .fromTo(panel, { opacity: 0, y: 14, ...HIDDEN_FROM }, { y: 0, opacity: 1, duration: aboutIn, ease: MOTION_EASE })
+    .fromTo(
       textCard,
+      { opacity: 0, x: 36, y: 8, filter: 'blur(10px)', ...HIDDEN_FROM },
       { x: 0, y: 0, opacity: 1, filter: 'blur(0px)', duration: aboutIn, ease: MOTION_EASE },
       '-=0.34',
     )
-    .to(leftText, { y: 0, opacity: 1, filter: 'blur(0px)', duration: 0.32, ease: MOTION_EASE }, '-=0.3')
-    .to(rightText, { y: 0, opacity: 1, filter: 'blur(0px)', duration: 0.32, ease: MOTION_EASE }, '-=0.26')
-    .to(highlights, { y: 0, opacity: 1, duration: 0.24, stagger: 0.03, ease: MOTION_EASE }, '-=0.2');
+    .fromTo(leftText, { y: 12, opacity: 0, filter: 'blur(6px)', ...HIDDEN_FROM }, { y: 0, opacity: 1, filter: 'blur(0px)', duration: 0.32, ease: MOTION_EASE }, '-=0.3')
+    .fromTo(rightText, { y: 12, opacity: 0, filter: 'blur(6px)', ...HIDDEN_FROM }, { y: 0, opacity: 1, filter: 'blur(0px)', duration: 0.32, ease: MOTION_EASE }, '-=0.26')
+    .fromTo(highlights, { y: 6, opacity: 0, ...HIDDEN_FROM }, { y: 0, opacity: 1, duration: 0.24, stagger: 0.03, ease: MOTION_EASE }, '-=0.2');
 }
 
 function initHowWeWork() {
@@ -464,7 +460,7 @@ function initHowWeWork() {
     if (!els.length || !els[0]) return;
     gsap.fromTo(
       els,
-      { y: MOTION_TRAVEL_Y, opacity: 0 },
+      { y: MOTION_TRAVEL_Y, opacity: 0, ...HIDDEN_FROM },
       withMotionWillChange(els, {
         y: 0,
         opacity: 1,
@@ -493,7 +489,7 @@ function initHowWeWork() {
   if (hubBox && boxesRow) {
     gsap.fromTo(
       hubBox,
-      { x: -MOTION_TRAVEL_X, opacity: 0 },
+      { x: -MOTION_TRAVEL_X, opacity: 0, ...HIDDEN_FROM },
       withMotionWillChange(hubBox, {
         x: 0,
         opacity: 1,
@@ -511,7 +507,7 @@ function initHowWeWork() {
   if (networkBox && boxesRow) {
     gsap.fromTo(
       networkBox,
-      { x: MOTION_TRAVEL_X, opacity: 0 },
+      { x: MOTION_TRAVEL_X, opacity: 0, ...HIDDEN_FROM },
       withMotionWillChange(networkBox, {
         x: 0,
         opacity: 1,
@@ -542,7 +538,7 @@ function initPillarsCredential() {
   if (asterisk && headline) {
     gsap.fromTo(
       [asterisk, headline],
-      { y: 20, opacity: 0 },
+      { y: 20, opacity: 0, ...HIDDEN_FROM },
       withMotionWillChange([asterisk, headline], {
         y: 0,
         opacity: 1,
@@ -561,7 +557,7 @@ function initPillarsCredential() {
   if (leftImage) {
     gsap.fromTo(
       leftImage,
-      { opacity: 0, y: MOTION_TRAVEL_Y },
+      { opacity: 0, y: MOTION_TRAVEL_Y, ...HIDDEN_FROM },
       withMotionWillChange(leftImage, {
         opacity: 1,
         y: 0,
@@ -579,7 +575,7 @@ function initPillarsCredential() {
   if (centerImage) {
     gsap.fromTo(
       centerImage,
-      { opacity: 0, scale: 0.985 },
+      { opacity: 0, scale: 0.985, ...HIDDEN_FROM },
       withMotionWillChange(centerImage, {
         opacity: 1,
         scale: 1,
@@ -597,7 +593,7 @@ function initPillarsCredential() {
   if (cards.length) {
     gsap.fromTo(
       cards,
-      { x: 56, opacity: 0 },
+      { x: 56, opacity: 0, ...HIDDEN_FROM },
       withMotionWillChange(cards, {
         x: 0,
         opacity: 1,
@@ -622,7 +618,7 @@ function initServicesAlternate() {
 
     gsap.fromTo(
       card,
-      { x: fromX, opacity: 0, y: 28 },
+      { x: fromX, opacity: 0, y: 28, ...HIDDEN_FROM },
       withMotionWillChange(card, {
         x: 0,
         y: 0,
@@ -645,7 +641,7 @@ function initTextReveals() {
   document.querySelectorAll<HTMLElement>('.text-reveal').forEach((el) => {
     gsap.fromTo(
       el,
-      { y: 20, opacity: 0 },
+      { y: 20, opacity: 0, ...HIDDEN_FROM },
       withMotionWillChange(el, {
         y: 0,
         opacity: 1,
@@ -747,6 +743,13 @@ function initMarquee() {
   // Collective marquee uses CSS animation in Collective.astro for reliable mobile playback.
 }
 
+function refreshScrollTriggers(lenis: Lenis | null) {
+  if (lenis && window.scrollY > 0) {
+    lenis.scrollTo(window.scrollY, { immediate: true });
+  }
+  ScrollTrigger.refresh();
+}
+
 export function initAnimations() {
   const lenis = initSmoothScroll();
   initPillNav(lenis);
@@ -763,9 +766,10 @@ export function initAnimations() {
   initCardHover();
   initMarquee();
 
-  ScrollTrigger.refresh();
+  refreshScrollTriggers(lenis);
+  requestAnimationFrame(() => refreshScrollTriggers(lenis));
 
   window.addEventListener('load', () => {
-    ScrollTrigger.refresh();
+    refreshScrollTriggers(lenis);
   });
 }

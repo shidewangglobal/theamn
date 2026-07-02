@@ -1,0 +1,57 @@
+---
+import { splitInsightTitle } from '../utils/insightTitle';
+
+interface Props {
+  title: string;
+  titleEmphasis?: string;
+  as?: 'h1' | 'h2' | 'h3' | 'span';
+  size?: 'article' | 'featured' | 'card' | 'related';
+  class?: string;
+}
+
+const {
+  title,
+  titleEmphasis,
+  as: Tag = 'h2',
+  size = 'card',
+  class: className = '',
+} = Astro.props;
+
+const parts = splitInsightTitle(title, titleEmphasis);
+---
+
+<Tag class:list={['insight-title', `insight-title--${size}`, className]}>
+  {
+    parts ? (
+      <>
+        {parts.before}
+        <span class="headline-italic">{parts.emphasis}</span>
+        {parts.after}
+      </>
+    ) : (
+      title
+    )
+  }
+</Tag>
+
+<style>
+  .insight-title {
+    @apply font-headline font-light tracking-tight text-amn-dark;
+  }
+
+  .insight-title--article {
+    @apply text-3xl leading-[1.12] md:text-4xl lg:text-[2.85rem] lg:leading-[1.08];
+  }
+
+  .insight-title--featured {
+    @apply mt-2 text-2xl leading-tight md:text-3xl;
+  }
+
+  .insight-title--card {
+    @apply mt-2 text-lg leading-snug md:text-xl;
+  }
+
+  .insight-title--related {
+    @apply mt-1 text-sm leading-snug;
+  }
+</style>

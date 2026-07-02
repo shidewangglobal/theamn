@@ -1,5 +1,6 @@
 ---
 import '../styles/global.css';
+import '../styles/theme-preview.css';
 import SiteHeader from '../components/SiteHeader.astro';
 import Footer from '../components/Footer.astro';
 
@@ -34,7 +35,7 @@ const pageNavLinks = [
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang="en" class="theme-preview">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -67,7 +68,7 @@ const pageNavLinks = [
       )
     }
   </head>
-  <body class="min-h-screen overflow-x-hidden bg-amn-cream text-amn-brown">
+  <body class="theme-preview min-h-screen overflow-x-hidden text-amn-brown">
     <SiteHeader homeHref="/" navLinks={pageNavLinks} connectHref="/#contact" />
 
     <main class="page-main">

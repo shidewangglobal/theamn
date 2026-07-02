@@ -1,16 +1,17 @@
 ---
 title: 'Q&A: Do OTAs hurt your GEO visibility?'
+titleEmphasis: Do OTAs hurt your GEO visibility?
 description: >-
-  How Booking.com and Expedia listings interact with AI search — and why owned
+  How Booking.com and Expedia listings interact with AI search, and why owned
   media still matters for luxury hospitality brands.
 publishDate: 2026-06-30
 category: Q&A
 coverImage: /images/ai-solution-vertical.jpeg
 draft: false
-closingTitle: The bottom line
+closingTitle: Own the story, keep the channels
 closing: >-
   OTAs are distribution partners, not your brand authors. This quarter, make your
-  owned site the richest description of your property — then measure whether AI
+  owned site the richest description of your property, then measure whether AI
   answers still default to aggregator pages. If they do, your entity work is not
   finished yet.
 faqs:
@@ -18,10 +19,10 @@ faqs:
     answer: >-
       Often, yes. OTAs have strong domain authority and structured listing pages. When
       your owned site is thin or vague, AI cites the source that is easiest to
-      summarize — frequently an OTA.
+      summarize, frequently an OTA.
   - question: Does that mean we should reduce OTA investment?
     answer: >-
-      Not necessarily. OTAs still fill rooms. The strategic shift is parity — your
+      Not necessarily. OTAs still fill rooms. The strategic shift is parity, your
       website should be the most complete, authoritative description of your property,
       not the thinnest.
   - question: What owned-channel fixes help most?
@@ -36,7 +37,7 @@ faqs:
       gap.
   - question: Can multi-property groups solve this centrally?
     answer: >-
-      Yes — with a central entity template and property-level specificity. Corporate
+      Yes, with a central entity template and property-level specificity. Corporate
       boilerplate without local detail fails GEO the same way it fails discerning
       guests.
 ---
@@ -45,22 +46,34 @@ The boardroom version of this question sounds polite: *"How should we think abou
 
 The owner version is blunter: *"Booking.com shows up when I ask ChatGPT about my own hotel. Why am I paying everyone except myself?"*
 
-Both questions point to the same tension. OTAs are distribution. Your website is identity. AI systems cite whoever is **easiest to understand** — and today, that is often not the property that actually owns the experience.
+Both questions point to the same tension. OTAs are distribution. Your website is identity. [GEO visibility](/insights/what-is-generative-engine-optimization) starts on your owned site: AI systems cite whoever is **easiest to understand**, and today, that is often not the property that actually owns the experience.
 
-## The real risk for luxury owners
+## Should we worry that *OTAs appear in AI answers* instead of us?
 
-Commission pain is familiar. The newer pain is **invisible brand** — guests who never learned you existed because AI summarized someone else's listing page with cleaner facts than your own site.
+Often, yes. OTAs have strong domain authority and structured listing pages. When your owned site is thin or vague, AI cites the source that is easiest to summarize, frequently an OTA.
 
-That is not an OTA conspiracy. It is a signal that your owned presence is under-built relative to your physical product.
+Commission pain is familiar. The newer pain is **invisible brand**: guests who never learned you existed because AI summarized someone else's listing page with cleaner facts than your own site. That is not an OTA conspiracy. It is a signal that your owned presence is under-built relative to your physical product.
 
-## How to think about the channel mix
+## Does that mean we should *reduce OTA investment*?
 
-Stop treating your website as a digital brochure. Treat it as your **primary entity record** — the source every other channel should echo. OTAs handle transaction. Owned media handles identity and discovery.
+Not necessarily. OTAs still fill rooms. The strategic shift is parity: your website should be the most complete, authoritative description of your property, not the thinnest.
 
-Under-investing in either creates a different kind of hurt. You already know the OTA commission line. The line you may not see yet is direct booking softness from guests who never entered your funnel.
+Stop treating your website as a digital brochure. Treat it as your **primary entity record**, the source every other channel should echo. OTAs handle transaction. Owned media handles identity and discovery.
 
-## What good parity looks like
+## What *owned-channel fixes* help most?
 
-Your listing on an OTA should not be the only place where room types, experiences, and location context are spelled out clearly. Your site should win on depth, voice, and specificity — then OTAs extend reach without becoming your accidental spokesperson.
+Dedicated experience and suite pages with [specific copy](/insights/experience-copy-ai-can-cite), honest amenity detail, fresh editorial content, and [schema](/insights/structured-data-checklist-resorts) tying rooms, dining, and spa to one brand entity.
+
+Your listing on an OTA should not be the only place where room types, experiences, and location context are spelled out clearly. Your site should win on depth, voice, and specificity, then OTAs extend reach without becoming your accidental spokesperson.
+
+## How do we measure the *gap between OTA and owned presence*?
+
+Monthly branded queries in AI tools, GEO audit results, and Search Console branded impressions. If OTAs narrate you better than you do, that is a strategy gap. [AI Overviews](/insights/ai-overviews-luxury-travel-research) often surface the same aggregator pages when owned copy is thin.
+
+Under-investing in either channel creates a different kind of hurt. You already know the OTA commission line. The line you may not see yet is direct booking softness from guests who never entered your funnel.
+
+## Can *multi-property groups* solve this centrally?
+
+Yes, with a central entity template and property-level specificity. Corporate boilerplate without local detail fails GEO the same way it fails discerning guests.
 
 The owners who navigate this well treat owned copy with the same standards they apply to lobby design: specific, consistent, unmistakably theirs.

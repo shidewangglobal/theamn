@@ -1,37 +1,47 @@
-# THE AMN Website — Project Notes
+# THE AMN Website - Project Notes
 
 Last updated: 2026-07-02
 
 ## Production (live scope)
 
-**Public:** Homepage only (`/`) — all sections on one page (Hero → Contact).
+**Public:**
+- Homepage (`/`) - all sections on one page (Hero → Contact)
+- Insights hub (`/insights`) + 6 published articles (`draft: false`)
 
 **Hidden until ready** (moved to `src/_hold/pages/`, not built as real pages):
 
 | Path | Status |
 |------|--------|
-| `/insights` + posts | Scaffold only — redesign box + Q&A planned |
-| `/services/seo-geo` | Search Visibility pillar — content WIP |
+| `/services/seo-geo` | Search Visibility pillar - content WIP |
 | `/preview/*` | Internal lab pages |
 
-Redirects to `/` with `noindex` (see `astro.config.mjs` + `public/_redirects`).
+**Sitemap:** Homepage + `/insights` and all published insight slugs.
 
-**Sitemap:** Only `https://theamn.network/`
+## Style: no em dashes
 
-## Re-enable Insights / Search Visibility later
-
-1. Move back: `src/_hold/pages/insights` → `src/pages/insights`
-2. Move back: `src/_hold/pages/services` → `src/pages/services`
-3. Set `draft: false` on content in `src/content/insights/*.md`
-4. Restore footer/header links (Insights, Search Visibility)
-5. Update `astro.config.mjs` redirects (remove `/insights`, `/services/seo-geo` → `/`)
-6. SEO section button: can link to `/services/seo-geo` again when page is ready
+Never use em dashes (`—`) in website copy. Use periods, colons, commas, or hyphens instead. See `.cursor/rules/no-em-dash.mdc`.
 
 ## Nav (current live)
 
-- **Header:** pill nav (About → Collective) + **Connect** only (Insights hidden)
-- **Footer:** Home · Connect
-- **SEO card:** button **Search Visibility** → `https://geoauditor.theamn.network/`
+- **Header:** Insights · Connect (+ pill nav on homepage)
+- **Footer:** Home · Insights · Connect
+- **SEO card:** button **"Check your brand performance in less than 30s."** → `https://geoauditor.theamn.network/`
+
+## Insights (live)
+
+- Hub: `src/pages/insights/index.astro`
+- Article template: `src/pages/insights/[slug].astro`
+- Content: `src/content/insights/*.md` (6 articles, `featured` on pillar GEO post)
+- Schema: `faqs`, `closing`, `closingTitle`, `coverImage` in `src/content.config.ts`
+
+## Search Visibility page (deferred)
+
+No `/services/seo-geo` on theamn.network for now. Funnel is homepage → GEO Auditor → contact.
+
+To launch later:
+1. Move back: `src/_hold/pages/services` → `src/pages/services`
+2. Restore nav/footer links if needed
+3. Remove redirect in `astro.config.mjs` + `public/_redirects`
 
 ## Hosting
 
@@ -42,7 +52,7 @@ Redirects to `/` with `noindex` (see `astro.config.mjs` + `public/_redirects`).
 ## CMS plan (not connected yet)
 
 - **Frontend:** Astro (keep)
-- **CMS:** Sanity (free tier) — Studio for content, not WordPress
+- **CMS:** Sanity (free tier) - Studio for content, not WordPress
 - **SEO:** Technical SEO via Astro build (meta, JSON-LD, sitemap); internal SEO tool writes drafts → Sanity API or Studio review
 - **Team:** 1–2 writers, no dedicated dev; future edits via Sanity + Claude Code for code
 
@@ -50,16 +60,16 @@ Redirects to `/` with `noindex` (see `astro.config.mjs` + `public/_redirects`).
 
 Sanity `layout` field → Astro components:
 
-- `standard` — long-form article
-- `qa` — Q&A + FAQ schema
-- `box` — bento box sections
+- `standard` - long-form article
+- `qa` - Q&A + FAQ schema
+- `box` - bento box sections
 
 New layout = new Astro template + new enum option (not full site rebuild).
 
 ## Content collection (local, pre-Sanity)
 
 - `src/content.config.ts` → collection `insights`
-- Add posts: `src/content/insights/*.md` with frontmatter (`draft: true` while hidden)
+- Add posts: `src/content/insights/*.md` with frontmatter (`draft: true` to hide)
 
 ## Key URLs
 
@@ -67,5 +77,5 @@ New layout = new Astro template + new enum option (not full site rebuild).
 |-----|---------|
 | `theamn.network` | Marketing site |
 | `geoauditor.theamn.network` | GEO Auditor tool (separate) |
-| `/insights` | Content hub (when launched) |
+| `/insights` | Content hub (live) |
 | `/services/seo-geo` | Search Visibility service page (when launched) |

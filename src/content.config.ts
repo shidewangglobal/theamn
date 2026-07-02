@@ -4,6 +4,7 @@ const insights = defineCollection({
   type: 'content',
   schema: z.object({
     title: z.string(),
+    titleEmphasis: z.string().optional(),
     description: z.string(),
     publishDate: z.coerce.date(),
     updatedDate: z.coerce.date().optional(),

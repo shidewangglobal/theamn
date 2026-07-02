@@ -279,21 +279,6 @@
     @apply bento-glass;
   }
 
-  /* Hide until GSAP reveal */
-  .about-glass-card {
-    opacity: 0;
-  }
-
-  .about-panel {
-    opacity: 0;
-  }
-
-  .about-text-left,
-  .about-text-right {
-    opacity: 0;
-    transform: translate3d(0, 24px, 0);
-  }
-
   .about-glass-bar p,
   .glass-card h3,
   .glass-card dd,
@@ -309,18 +294,6 @@
     height: auto;
     min-height: 0;
     align-self: start;
-  }
-
-  .how-hub-box,
-  .how-network-box {
-    opacity: 0;
-  }
-
-  .how-asterisk,
-  .how-headline,
-  .how-subheadline {
-    opacity: 0;
-    transform: translate3d(0, 24px, 0);
   }
 
   .white-card {

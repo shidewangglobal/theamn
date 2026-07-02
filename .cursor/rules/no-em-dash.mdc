@@ -1,0 +1,21 @@
+---
+description: Never use em dashes in website copy or UI text
+globs: src/**/*.{astro,md,ts,tsx,js,mjs}
+alwaysApply: false
+---
+
+# No em dashes on the website
+
+Do not use the em dash character (`—`) anywhere in user-facing website content: articles, page copy, components, meta descriptions, CTAs, or alt text.
+
+**Use instead:**
+- Period or colon for independent clauses
+- Comma where grammar allows
+- Hyphen (`-`) for compound modifiers or simple breaks in UI labels
+
+**Examples:**
+- Bad: `GEO is not a side project—it is revenue infrastructure.`
+- Good: `GEO is not a side project. It is revenue infrastructure.`
+- Good: `GEO is not a side project: it is revenue infrastructure.`
+
+CSS comments and internal dev notes are lower priority, but prefer plain hyphens there too when editing nearby code.

@@ -12,7 +12,6 @@ export default defineConfig({
     '/preview': '/',
     '/preview/': '/',
     '/articles': '/',
-    '/insights': '/',
     '/services/seo-geo': '/',
     '/preview/archetypes': '/',
     '/preview/case-studies': '/',

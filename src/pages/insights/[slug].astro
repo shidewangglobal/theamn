@@ -1,0 +1,373 @@
+---
+import PageLayout from '../../layouts/PageLayout.astro';
+import { getCollection, render } from 'astro:content';
+import { insightSlug } from '../../utils/insights';
+
+export async function getStaticPaths() {
+  const insights = await getCollection('insights', ({ data }) => !data.draft);
+  return insights.map((entry) => ({
+    params: { slug: insightSlug(entry.id) },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+
+const allInsights = (await getCollection('insights', ({ data }) => !data.draft)).sort(
+  (a, b) => b.data.publishDate.valueOf() - a.data.publishDate.valueOf(),
+);
+const relatedInsights = allInsights
+  .filter((item) => item.id !== entry.id)
+  .slice(0, 3);
+
+const seoTitle = entry.data.seoTitle ?? entry.data.title;
+const seoDescription = entry.data.seoDescription ?? entry.data.description;
+const ogImage = entry.data.ogImage ?? entry.data.coverImage;
+
+const formatDate = (date: Date) =>
+  date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+
+const insightUrl = `https://theamn.network/insights/${insightSlug(entry.id)}`;
+
+const faqSchema = entry.data.faqs.map((item) => ({
+  '@type': 'Question',
+  name: item.question,
+  acceptedAnswer: {
+    '@type': 'Answer',
+    text: item.answer,
+  },
+}));
+
+const articleJsonLd = {
+  '@type': 'Article',
+  headline: entry.data.title,
+  description: entry.data.description,
+  datePublished: entry.data.publishDate.toISOString(),
+  dateModified: (entry.data.updatedDate ?? entry.data.publishDate).toISOString(),
+  url: insightUrl,
+  image: ogImage.startsWith('http') ? ogImage : `https://theamn.network${ogImage}`,
+  author: {
+    '@type': 'Organization',
+    name: 'The AMN Limited',
+  },
+  publisher: {
+    '@type': 'Organization',
+    name: 'The AMN Limited',
+    url: 'https://theamn.network',
+  },
+  mainEntityOfPage: insightUrl,
+};
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    articleJsonLd,
+    {
+      '@type': 'FAQPage',
+      mainEntity: faqSchema,
+    },
+  ],
+};
+---
+
+<PageLayout
+  title={seoTitle}
+  description={seoDescription}
+  ogImage={ogImage}
+  ogType="article"
+  jsonLd={jsonLd}
+>
+  <article class="insight-article tubik-section">
+    <div class="tubik-shell insight-article__shell">
+      <a href="/insights" class="insight-back font-caption text-xs uppercase tracking-wider text-amn-brown/50 transition hover:text-amn-blue">
+        ← All insights
+      </a>
+
+      <header class="insight-header mt-4 max-w-4xl">
+        <p class="font-caption mb-2 text-[10px] uppercase tracking-[0.2em] text-amn-blue">
+          {entry.data.category}
+        </p>
+        <h1 class="font-headline-bold text-3xl leading-tight text-amn-dark md:text-4xl lg:text-[2.85rem] lg:leading-[1.08]">
+          {entry.data.title}
+        </h1>
+        <time
+          class="mt-4 block font-caption text-[10px] uppercase tracking-wider text-amn-brown/45"
+          datetime={entry.data.publishDate.toISOString()}
+        >
+          {formatDate(entry.data.publishDate)}
+        </time>
+      </header>
+
+      <div class="insight-cover mt-8 overflow-hidden rounded-[1.25rem] border border-amn-brown/10">
+        <img
+          src={entry.data.coverImage}
+          alt=""
+          class="insight-cover__image h-full w-full object-cover"
+          width="1400"
+          height="700"
+          loading="eager"
+        />
+      </div>
+
+      <div class="insight-article__body mt-8 lg:mt-10">
+        <div class="insight-main min-w-0">
+          <p class="insight-deck font-body-secondary text-lg leading-relaxed text-amn-brown/75 md:text-xl">
+            {entry.data.description}
+          </p>
+
+          <div class="insight-prose mt-8 font-body-secondary text-amn-brown/85">
+            <Content />
+          </div>
+
+          <section class="insight-faq mt-10 border-t border-amn-brown/10 pt-8" aria-labelledby="insight-faq-heading">
+            <p class="font-caption text-[10px] uppercase tracking-[0.2em] text-amn-blue">Common questions</p>
+            <h2 id="insight-faq-heading" class="insight-faq__title font-headline-bold mt-2 text-2xl text-amn-dark md:text-[1.65rem]">
+              Questions owners ask us
+            </h2>
+            <ul class="insight-faq__list mt-5 space-y-3">
+              {entry.data.faqs.map((item) => (
+                <li class="insight-faq__item">
+                  <details class="insight-faq__details group">
+                    <summary class="insight-faq__question font-headline-bold cursor-pointer list-none text-base leading-snug text-amn-dark md:text-[1.05rem]">
+                      <span class="insight-faq__question-text">{item.question}</span>
+                      <span class="insight-faq__icon" aria-hidden="true" />
+                    </summary>
+                    <p class="insight-faq__answer mt-3 font-body-secondary text-base leading-relaxed text-amn-brown/80">
+                      {item.answer}
+                    </p>
+                  </details>
+                </li>
+              ))}
+            </ul>
+          </section>
+
+          <section class="insight-closing mt-10 rounded-[1.15rem] border border-amn-brown/10 bg-white p-6 md:p-7" aria-labelledby="insight-closing-heading">
+            <p class="font-caption text-[10px] uppercase tracking-[0.18em] text-amn-brown/45">What to do next</p>
+            <h2 id="insight-closing-heading" class="font-headline-bold mt-2 text-xl text-amn-dark md:text-2xl">
+              {entry.data.closingTitle}
+            </h2>
+            <p class="insight-closing__text mt-3 font-body-secondary text-base leading-relaxed text-amn-brown/80">
+              {entry.data.closing}
+            </p>
+            <div class="insight-closing__actions mt-5 flex flex-wrap gap-3">
+              <a
+                href="https://geoauditor.theamn.network/"
+                class="pill-nav-link btn-primary px-6 py-3 text-sm"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Check your brand performance in less than 30s.
+              </a>
+              <a href="/#contact" class="pill-nav-link btn-dark px-6 py-3 text-sm">
+                Connect
+              </a>
+            </div>
+          </section>
+
+          <footer class="insight-footer mt-8 border-t border-amn-brown/10 pt-8 lg:hidden">
+            <p class="font-body-secondary text-sm text-amn-brown/70">
+              Ready to see how AI discovers your brand?
+            </p>
+            <div class="mt-4 flex flex-wrap gap-3">
+              <a
+                href="https://geoauditor.theamn.network/"
+                class="pill-nav-link btn-primary px-6 py-3 text-sm"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Check your brand performance in less than 30s.
+              </a>
+              <a href="/#contact" class="pill-nav-link btn-dark px-6 py-3 text-sm">
+                Connect
+              </a>
+            </div>
+          </footer>
+        </div>
+
+        <aside class="insight-aside" aria-label="Article sidebar">
+          <div class="insight-aside__inner">
+            <div class="insight-aside-card insight-aside-card--cta">
+              <p class="font-caption text-[10px] uppercase tracking-[0.18em] text-amn-brown/45">
+                Free quick scan
+              </p>
+              <p class="mt-2 font-headline-bold text-lg leading-snug text-amn-dark">
+                See if AI recommends your hotel
+              </p>
+              <p class="mt-2 font-body-secondary text-sm leading-relaxed text-amn-brown/70">
+                Run a free GEO audit in about 30 seconds.
+              </p>
+              <a
+                href="https://geoauditor.theamn.network/"
+                class="pill-nav-link btn-primary mt-4 block px-5 py-3 text-center text-sm"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Check your brand performance in less than 30s.
+              </a>
+              <a href="/#contact" class="pill-nav-link btn-dark mt-2 block px-5 py-3 text-center text-sm">
+                Connect
+              </a>
+            </div>
+
+            {
+              relatedInsights.length > 0 && (
+                <div class="insight-aside-card">
+                  <p class="font-caption text-[10px] uppercase tracking-[0.18em] text-amn-brown/45">
+                    More insights
+                  </p>
+                  <ul class="mt-3 space-y-3">
+                    {relatedInsights.map((item) => (
+                      <li>
+                        <a
+                          href={`/insights/${insightSlug(item.id)}`}
+                          class="insight-related group block"
+                        >
+                          <span class="insight-related__category font-caption text-[10px] uppercase tracking-[0.14em] text-amn-blue">
+                            {item.data.category}
+                          </span>
+                          <span class="insight-related__title mt-1 block font-headline-bold text-sm leading-snug text-amn-dark transition group-hover:text-amn-blue">
+                            {item.data.title}
+                          </span>
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
+                  <a href="/insights" class="insight-aside-link mt-4 inline-block font-caption text-[10px] uppercase tracking-wider text-amn-brown/50 transition hover:text-amn-blue">
+                    View all insights →
+                  </a>
+                </div>
+              )
+            }
+          </div>
+        </aside>
+      </div>
+    </div>
+  </article>
+</PageLayout>
+
+<style>
+  .insight-cover {
+    @apply relative aspect-[21/9] min-h-[12rem] bg-amn-cream md:min-h-[16rem] lg:min-h-[18rem];
+  }
+
+  .insight-article__body {
+    @apply grid gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(17rem,20rem)] lg:gap-10 xl:grid-cols-[minmax(0,1fr)_22rem] xl:gap-12;
+  }
+
+  .insight-main {
+    @apply max-w-3xl lg:max-w-none;
+  }
+
+  .insight-aside__inner {
+    @apply flex flex-col gap-4 lg:sticky lg:top-24;
+  }
+
+  .insight-aside-card {
+    @apply rounded-[1.15rem] border border-amn-brown/10 bg-white p-5;
+    box-shadow: 0 8px 28px rgba(10, 10, 10, 0.04);
+  }
+
+  .insight-aside-card--cta {
+    border-color: rgba(0, 160, 240, 0.14);
+    background: linear-gradient(160deg, rgba(255, 255, 255, 0.98) 0%, rgba(242, 240, 235, 0.94) 100%);
+  }
+
+  .insight-related {
+    @apply rounded-xl border border-transparent px-2 py-2 transition;
+  }
+
+  .insight-related:hover {
+    @apply border-amn-brown/10 bg-amn-cream/60;
+  }
+
+  .insight-prose :global(h2) {
+    @apply font-headline-bold mb-4 mt-8 text-xl text-amn-dark md:text-2xl;
+  }
+
+  .insight-prose :global(p) {
+    @apply mb-4 text-base leading-relaxed;
+  }
+
+  .insight-prose :global(strong) {
+    @apply font-medium text-amn-dark;
+  }
+
+  .insight-prose :global(ul),
+  .insight-prose :global(ol) {
+    @apply mb-4 ml-5 list-disc space-y-2;
+  }
+
+  .insight-prose :global(table) {
+    @apply mb-6 w-full border-collapse text-sm;
+  }
+
+  .insight-prose :global(th),
+  .insight-prose :global(td) {
+    @apply border border-amn-brown/15 px-3 py-2 text-left;
+  }
+
+  .insight-prose :global(th) {
+    @apply bg-white/60 font-medium text-amn-dark;
+  }
+
+  .insight-prose :global(a) {
+    @apply text-amn-blue underline-offset-2 transition hover:underline;
+  }
+
+  .insight-prose :global(hr) {
+    @apply my-8 border-amn-brown/10;
+  }
+
+  .insight-faq__item {
+    @apply overflow-hidden rounded-[1rem] border border-amn-brown/10 bg-amn-cream/35;
+  }
+
+  .insight-faq__details {
+    @apply px-4 py-4 md:px-5 md:py-4;
+  }
+
+  .insight-faq__question {
+    @apply flex items-start justify-between gap-4;
+  }
+
+  .insight-faq__question::-webkit-details-marker {
+    display: none;
+  }
+
+  .insight-faq__icon {
+    @apply relative mt-1 h-4 w-4 shrink-0 rounded-full border border-amn-brown/20 bg-white;
+  }
+
+  .insight-faq__icon::before,
+  .insight-faq__icon::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0.5rem;
+    height: 1px;
+    background: rgba(74, 66, 51, 0.55);
+    transform: translate(-50%, -50%);
+    transition: transform 0.2s ease;
+  }
+
+  .insight-faq__icon::after {
+    transform: translate(-50%, -50%) rotate(90deg);
+  }
+
+  .insight-faq__details[open] .insight-faq__icon::after {
+    transform: translate(-50%, -50%) rotate(0deg);
+    opacity: 0;
+  }
+
+  .insight-closing {
+    box-shadow: 0 8px 28px rgba(10, 10, 10, 0.04);
+  }
+
+  .insight-closing__actions .pill-nav-link {
+    white-space: normal;
+    line-height: 1.35;
+    text-align: center;
+  }
+</style>

@@ -9,14 +9,30 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "studio": "sanity dev --config sanity/sanity.config.ts",
+    "studio:deploy": "sanity deploy --config sanity/sanity.config.ts",
+    "studio:setup": "bash scripts/deploy-studio.sh",
+    "migrate:insights": "node scripts/migrate-insights-to-sanity.mjs"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.4.0",
     "@astrojs/tailwind": "^6.0.2",
+    "@portabletext/to-html": "^2.0.17",
+    "@sanity/client": "^7.23.0",
+    "@sanity/image-url": "^1.2.0",
     "astro": "^5.9.0",
     "gsap": "^3.15.0",
     "lenis": "^1.3.23",
+    "styled-components": "^6.4.3",
     "tailwindcss": "^3.4.17"
+  },
+  "devDependencies": {
+    "@sanity/vision": "^3.99.0",
+    "gray-matter": "^4.0.3",
+    "marked": "^15.0.12",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "sanity": "^3.99.0"
   }
 }

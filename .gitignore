@@ -16,6 +16,9 @@ pnpm-debug.log*
 .env
 .env.production
 
+# sanity studio local cache
+.sanity/
+
 # macOS-specific files
 .DS_Store
 

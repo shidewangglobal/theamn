@@ -1,30 +1,26 @@
 ---
 import PageLayout from '../../layouts/PageLayout.astro';
 import InsightTitle from '../../components/InsightTitle.astro';
-import { getCollection, render } from 'astro:content';
-import { insightSlug } from '../../utils/insights';
+import { getPublishedInsights, getMarkdownInsightContent } from '../../lib/insights/repository';
 
 export async function getStaticPaths() {
-  const insights = await getCollection('insights', ({ data }) => !data.draft);
-  return insights.map((entry) => ({
-    params: { slug: insightSlug(entry.id) },
-    props: { entry },
+  const insights = await getPublishedInsights();
+  return insights.map((insight) => ({
+    params: { slug: insight.slug },
+    props: { insight },
   }));
 }
 
-const { entry } = Astro.props;
-const { Content } = await render(entry);
+const { insight } = Astro.props;
+const { data, slug, source, bodyHtml } = insight;
+const seo = data.seo;
 
-const allInsights = (await getCollection('insights', ({ data }) => !data.draft)).sort(
-  (a, b) => b.data.publishDate.valueOf() - a.data.publishDate.valueOf(),
-);
-const relatedInsights = allInsights
-  .filter((item) => item.id !== entry.id)
-  .slice(0, 3);
+const markdownContent =
+  source === 'markdown' ? await getMarkdownInsightContent(slug) : null;
+const Content = markdownContent?.Content;
 
-const seoTitle = entry.data.seoTitle ?? entry.data.title;
-const seoDescription = entry.data.seoDescription ?? entry.data.description;
-const ogImage = entry.data.ogImage ?? entry.data.coverImage;
+const allInsights = await getPublishedInsights();
+const relatedInsights = allInsights.filter((item) => item.slug !== slug).slice(0, 3);
 
 const formatDate = (date: Date) =>
   date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
@@ -32,11 +28,11 @@ const formatDate = (date: Date) =>
 const ensureQuestionMark = (question: string) =>
   question.trim().endsWith('?') ? question.trim() : `${question.trim()}?`;
 
-const isQaArticle = entry.data.category === 'Q&A';
+const isQaArticle = data.category === 'Q&A';
 
-const insightUrl = `https://theamn.network/insights/${insightSlug(entry.id)}`;
+const insightUrl = seo.canonicalUrl ?? `https://theamn.network/insights/${slug}`;
 
-const faqSchema = entry.data.faqs.map((item) => ({
+const faqSchema = data.faqs.map((item) => ({
   '@type': 'Question',
   name: ensureQuestionMark(item.question),
   acceptedAnswer: {
@@ -47,12 +43,12 @@ const faqSchema = entry.data.faqs.map((item) => ({
 
 const articleJsonLd = {
   '@type': 'Article',
-  headline: entry.data.title,
-  description: entry.data.description,
-  datePublished: entry.data.publishDate.toISOString(),
-  dateModified: (entry.data.updatedDate ?? entry.data.publishDate).toISOString(),
+  headline: data.title,
+  description: data.description,
+  datePublished: data.publishDate.toISOString(),
+  dateModified: (data.updatedDate ?? data.publishDate).toISOString(),
   url: insightUrl,
-  image: ogImage.startsWith('http') ? ogImage : `https://theamn.network${ogImage}`,
+  image: seo.ogImage,
   author: {
     '@type': 'Organization',
     name: 'The AMN Limited',
@@ -78,9 +74,18 @@ const jsonLd = {
 ---
 
 <PageLayout
-  title={seoTitle}
-  description={seoDescription}
-  ogImage={ogImage}
+  title={seo.title}
+  description={seo.description}
+  ogTitle={seo.ogTitle}
+  ogDescription={seo.ogDescription}
+  ogImage={seo.ogImage}
+  twitterCard={seo.twitterCard}
+  twitterTitle={seo.twitterTitle}
+  twitterDescription={seo.twitterDescription}
+  twitterImage={seo.twitterImage}
+  canonicalUrl={seo.canonicalUrl}
+  noindex={seo.noindex}
+  nofollow={seo.nofollow}
   ogType="article"
   jsonLd={jsonLd}
 >
@@ -92,25 +97,25 @@ const jsonLd = {
 
       <header class="insight-header mt-4 max-w-4xl">
         <p class="font-caption mb-2 text-[10px] uppercase tracking-[0.2em] text-amn-blue">
-          {entry.data.category}
+          {data.category}
         </p>
         <InsightTitle
           as="h1"
-          title={entry.data.title}
-          titleEmphasis={entry.data.titleEmphasis}
+          title={data.title}
+          titleEmphasis={data.titleEmphasis}
           size="article"
         />
         <time
           class="mt-4 block font-caption text-[10px] uppercase tracking-wider text-amn-brown/45"
-          datetime={entry.data.publishDate.toISOString()}
+          datetime={data.publishDate.toISOString()}
         >
-          {formatDate(entry.data.publishDate)}
+          {formatDate(data.publishDate)}
         </time>
       </header>
 
       <div class="insight-cover mt-8 overflow-hidden rounded-[1.25rem] border border-amn-brown/10">
         <img
-          src={entry.data.coverImage}
+          src={data.coverImage}
           alt=""
           class="insight-cover__image h-full w-full object-cover"
           width="1400"
@@ -122,11 +127,15 @@ const jsonLd = {
       <div class="insight-article__body mt-8 lg:mt-10">
         <div class="insight-main min-w-0">
           <p class="insight-deck font-body-secondary text-lg leading-relaxed text-amn-brown/75 md:text-xl">
-            {entry.data.description}
+            {data.description}
           </p>
 
           <div class:list={['insight-prose mt-8 font-body-secondary text-amn-brown/85', isQaArticle && 'insight-prose--qa']}>
-            <Content />
+            {source === 'sanity' && bodyHtml ? (
+              <div set:html={bodyHtml} />
+            ) : (
+              Content && <Content />
+            )}
           </div>
 
           {!isQaArticle && (
@@ -136,7 +145,7 @@ const jsonLd = {
               Questions owners ask us
             </h2>
             <ul class="insight-faq__list mt-5 space-y-3">
-              {entry.data.faqs.map((item) => (
+              {data.faqs.map((item) => (
                 <li class="insight-faq__item">
                   <details class="insight-faq__details group">
                     <summary class="insight-faq__question font-headline-bold cursor-pointer list-none text-base leading-snug text-amn-dark md:text-[1.05rem]">
@@ -155,10 +164,10 @@ const jsonLd = {
 
           <section class="insight-closing mt-10 border-t border-amn-brown/10 pt-8" aria-labelledby="insight-closing-heading">
             <h2 id="insight-closing-heading" class="font-headline-bold text-xl text-amn-dark md:text-2xl">
-              {entry.data.closingTitle}
+              {data.closingTitle}
             </h2>
             <p class="insight-closing__text mt-3 font-body-secondary text-base leading-relaxed text-amn-brown/80">
-              {entry.data.closing}
+              {data.closing}
             </p>
             <p class="insight-closing__links mt-4 font-body-secondary text-sm leading-relaxed text-amn-brown/75">
               <a
@@ -212,7 +221,7 @@ const jsonLd = {
                     {relatedInsights.map((item) => (
                       <li>
                         <a
-                          href={`/insights/${insightSlug(item.id)}`}
+                          href={`/insights/${item.slug}`}
                           class="insight-related group block"
                         >
                           <span class="insight-related__category font-caption text-[10px] uppercase tracking-[0.14em] text-amn-blue">

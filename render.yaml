@@ -10,6 +10,12 @@ services:
     envVars:
       - key: PUBLIC_FORMSPREE_URL
         sync: false
+      - key: PUBLIC_SANITY_PROJECT_ID
+        sync: false
+      - key: PUBLIC_SANITY_DATASET
+        value: production
+      - key: SANITY_API_READ_TOKEN
+        sync: false
     headers:
       - path: /videos/*
         name: Cache-Control

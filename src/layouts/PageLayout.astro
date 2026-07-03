@@ -9,6 +9,15 @@ interface Props {
   description: string;
   ogImage?: string;
   ogType?: 'website' | 'article';
+  ogTitle?: string;
+  ogDescription?: string;
+  twitterCard?: 'summary' | 'summary_large_image';
+  twitterTitle?: string;
+  twitterDescription?: string;
+  twitterImage?: string;
+  canonicalUrl?: string;
+  noindex?: boolean;
+  nofollow?: boolean;
   jsonLd?: Record<string, unknown> | Record<string, unknown>[];
 }
 
@@ -17,14 +26,36 @@ const {
   description,
   ogImage = '/images/hero-cover.jpeg',
   ogType = 'website',
+  ogTitle,
+  ogDescription,
+  twitterCard = 'summary_large_image',
+  twitterTitle,
+  twitterDescription,
+  twitterImage,
+  canonicalUrl,
+  noindex = false,
+  nofollow = false,
   jsonLd,
 } = Astro.props;
 
 const siteName = 'the amn';
 const siteUrl = 'https://theamn.network';
-const fullTitle = title.includes('The AMN') || title.includes('the amn') ? title : `${title} | ${siteName}`;
-const canonicalURL = new URL(Astro.url.pathname, Astro.site);
-const ogImageUrl = ogImage.startsWith('http') ? ogImage : `${siteUrl}${ogImage}`;
+const documentTitle =
+  title.includes('The AMN') || title.includes('the amn') ? title : `${title} | ${siteName}`;
+const resolvedCanonical = canonicalUrl ?? new URL(Astro.url.pathname, Astro.site).toString();
+const resolvedOgTitle = ogTitle ?? documentTitle;
+const resolvedOgDescription = ogDescription ?? description;
+const resolvedTwitterTitle = twitterTitle ?? resolvedOgTitle;
+const resolvedTwitterDescription = twitterDescription ?? resolvedOgDescription;
+
+const toAbsoluteUrl = (value: string) => (value.startsWith('http') ? value : `${siteUrl}${value}`);
+const ogImageUrl = toAbsoluteUrl(ogImage);
+const twitterImageUrl = toAbsoluteUrl(twitterImage ?? ogImage);
+
+const robotsDirectives = [
+  noindex ? 'noindex' : 'index',
+  nofollow ? 'nofollow' : 'follow',
+].join(', ');
 
 const pageNavLinks = [
   { href: '/#about', label: 'About' },
@@ -41,22 +72,23 @@ const pageNavLinks = [
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="generator" content={Astro.generator} />
 
-    <title>{fullTitle}</title>
+    <title>{documentTitle}</title>
     <meta name="description" content={description} />
-    <link rel="canonical" href={canonicalURL} />
+    <meta name="robots" content={robotsDirectives} />
+    <link rel="canonical" href={resolvedCanonical} />
 
     <meta property="og:type" content={ogType} />
-    <meta property="og:title" content={fullTitle} />
-    <meta property="og:description" content={description} />
-    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:title" content={resolvedOgTitle} />
+    <meta property="og:description" content={resolvedOgDescription} />
+    <meta property="og:url" content={resolvedCanonical} />
     <meta property="og:locale" content="en_US" />
     <meta property="og:site_name" content={siteName} />
     <meta property="og:image" content={ogImageUrl} />
 
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content={fullTitle} />
-    <meta name="twitter:description" content={description} />
-    <meta name="twitter:image" content={ogImageUrl} />
+    <meta name="twitter:card" content={twitterCard} />
+    <meta name="twitter:title" content={resolvedTwitterTitle} />
+    <meta name="twitter:description" content={resolvedTwitterDescription} />
+    <meta name="twitter:image" content={twitterImageUrl} />
 
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
     <link rel="icon" type="image/png" sizes="512x512" href="/favicon.png" />

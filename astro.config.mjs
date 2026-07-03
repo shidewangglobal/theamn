@@ -4,6 +4,9 @@ import tailwind from '@astrojs/tailwind';
 
 export default defineConfig({
   site: 'https://theamn.network',
+  server: {
+    port: 4322,
+  },
   integrations: [tailwind(), sitemap()],
   redirects: {
     '/about': '/#about',

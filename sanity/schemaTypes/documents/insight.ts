@@ -125,24 +125,7 @@ export const insight = defineType({
             ],
           },
         }),
-        defineArrayMember({
-          type: 'object',
-          name: 'table',
-          title: 'Table',
-          fields: [
-            defineField({
-              name: 'rows',
-              title: 'Rows',
-              type: 'array',
-              of: [
-                defineArrayMember({
-                  type: 'array',
-                  of: [defineArrayMember({ type: 'string' })],
-                }),
-              ],
-            }),
-          ],
-        }),
+        defineArrayMember({ type: 'table' }),
       ],
       validation: (Rule) => Rule.required(),
     }),

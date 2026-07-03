@@ -19,16 +19,20 @@ const portableTextComponents = {
     em: ({ children }: { children: string }) => `<em>${children}</em>`,
   },
   types: {
-    table: ({ value }: { value?: { rows?: string[][] } }) => {
+    table: ({ value }: { value?: { rows?: { cells?: string[] }[] } }) => {
       const rows = value?.rows ?? [];
       if (!rows.length) return '';
 
       const [head, ...body] = rows;
-      const headHtml = head
-        ? `<thead><tr>${head.map((cell) => `<th>${cell}</th>`).join('')}</tr></thead>`
+      const headCells = head?.cells ?? [];
+      const headHtml = headCells.length
+        ? `<thead><tr>${headCells.map((cell) => `<th>${cell}</th>`).join('')}</tr></thead>`
         : '';
       const bodyHtml = body
-        .map((row) => `<tr>${row.map((cell) => `<td>${cell}</td>`).join('')}</tr>`)
+        .map((row) => {
+          const cells = row.cells ?? [];
+          return `<tr>${cells.map((cell) => `<td>${cell}</td>`).join('')}</tr>`;
+        })
         .join('');
 
       return `<table>${headHtml}<tbody>${bodyHtml}</tbody></table>`;

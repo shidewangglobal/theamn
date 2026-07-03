@@ -158,8 +158,11 @@ function markdownToBlocks(markdown) {
       }
     } else if (token.type === 'table') {
       const rows = [
-        token.header.map((cell) => cell.text),
-        ...token.rows.map((row) => row.map((cell) => cell.text)),
+        { _key: key(), cells: token.header.map((cell) => cell.text) },
+        ...token.rows.map((row) => ({
+          _key: key(),
+          cells: row.map((cell) => cell.text),
+        })),
       ];
       blocks.push({
         _type: 'table',

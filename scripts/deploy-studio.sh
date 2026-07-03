@@ -8,6 +8,14 @@ cd "$(dirname "$0")/.."
 echo ""
 echo "=== THE AMN — Deploy Sanity Studio ==="
 echo ""
+
+if lsof -i :4321 -sTCP:LISTEN -t >/dev/null 2>&1; then
+  echo "⚠️  Port 4321 đang bận. Dừng process đó (Ctrl+C) rồi thử lại."
+  echo "   (Astro dev giờ dùng port 4322 — npm run dev)"
+  echo ""
+  read -p "Đã dừng chưa? Nhấn Enter để tiếp tục..."
+fi
+
 echo "Bước 1/2: Trình duyệt sẽ mở."
 echo "→ Chọn đăng nhập bằng Google (cùng tài khoản đã tạo project Sanity)"
 echo ""

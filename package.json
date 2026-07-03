@@ -10,8 +10,9 @@
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
-    "studio": "sanity dev --config sanity/sanity.config.ts",
-    "studio:deploy": "sanity deploy --config sanity/sanity.config.ts",
+    "studio": "sanity dev",
+    "studio:deploy": "sanity deploy --yes",
+    "studio:deploy:token": "bash scripts/deploy-studio-token.sh",
     "studio:setup": "bash scripts/deploy-studio.sh",
     "migrate:insights": "node scripts/migrate-insights-to-sanity.mjs"
   },

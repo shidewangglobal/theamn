@@ -2,6 +2,8 @@
 
 THE AMN Insights can be managed in **Sanity Studio** with Yoast-style SEO fields. The Astro site reads published documents at build time. If Sanity is not configured, or has no published insights, the site falls back to markdown in `src/content/insights/`.
 
+**Editor handbook (English):** [STUDIO-GUIDE.md](./STUDIO-GUIDE.md)
+
 ## What you get
 
 - **Sanity Studio** at `npm run studio` (local) or `https://theamn.sanity.studio` (hosted)

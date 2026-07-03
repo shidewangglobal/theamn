@@ -14,7 +14,8 @@
     "studio:deploy": "sanity deploy --yes",
     "studio:deploy:token": "bash scripts/deploy-studio-token.sh",
     "studio:setup": "bash scripts/deploy-studio.sh",
-    "migrate:insights": "node scripts/migrate-insights-to-sanity.mjs"
+    "migrate:insights": "node scripts/migrate-insights-to-sanity.mjs",
+    "setup:auto-deploy": "node scripts/setup-auto-deploy.mjs"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.4.0",

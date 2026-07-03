@@ -70,6 +70,8 @@ Add these env vars in Render (see `render.yaml`):
 
 Redeploy after saving. New publishes in Studio appear on the next build.
 
+For **automatic** rebuilds when editors publish in Studio, see [AUTO-DEPLOY.md](./AUTO-DEPLOY.md).
+
 ## Content model
 
 ### Insight document

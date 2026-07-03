@@ -51,7 +51,7 @@ const articleJsonLd = {
   image: seo.ogImage,
   author: {
     '@type': 'Organization',
-    name: 'The AMN Limited',
+    name: data.author,
   },
   publisher: {
     '@type': 'Organization',
@@ -61,10 +61,35 @@ const articleJsonLd = {
   mainEntityOfPage: insightUrl,
 };
 
+const breadcrumbJsonLd = {
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    {
+      '@type': 'ListItem',
+      position: 1,
+      name: 'Home',
+      item: 'https://theamn.network',
+    },
+    {
+      '@type': 'ListItem',
+      position: 2,
+      name: 'Insights',
+      item: 'https://theamn.network/insights',
+    },
+    {
+      '@type': 'ListItem',
+      position: 3,
+      name: data.title,
+      item: insightUrl,
+    },
+  ],
+};
+
 const jsonLd = {
   '@context': 'https://schema.org',
   '@graph': [
     articleJsonLd,
+    breadcrumbJsonLd,
     {
       '@type': 'FAQPage',
       mainEntity: faqSchema,
@@ -332,6 +357,55 @@ const jsonLd = {
 
   .insight-prose :global(hr) {
     @apply my-8 border-amn-brown/10;
+  }
+
+  .insight-prose :global(.insight-figure) {
+    @apply my-8 overflow-hidden rounded-[1rem] border border-amn-brown/10 bg-white;
+  }
+
+  .insight-prose :global(.insight-figure__image) {
+    @apply h-auto w-full object-cover;
+  }
+
+  .insight-prose :global(.insight-figure__caption) {
+    @apply px-4 py-3 font-caption text-xs text-amn-brown/60;
+  }
+
+  .insight-prose :global(.insight-callout) {
+    @apply my-8 rounded-[1rem] border px-5 py-4;
+  }
+
+  .insight-prose :global(.insight-callout--info) {
+    @apply border-amn-blue/15 bg-[#f5f5f7];
+  }
+
+  .insight-prose :global(.insight-callout--cta) {
+    border-color: rgba(0, 160, 240, 0.2);
+    background: linear-gradient(160deg, rgba(255, 255, 255, 0.98) 0%, rgba(245, 245, 247, 0.94) 100%);
+  }
+
+  .insight-prose :global(.insight-callout__title) {
+    @apply font-headline-bold text-base text-amn-dark md:text-lg;
+  }
+
+  .insight-prose :global(.insight-callout p) {
+    @apply mb-3 text-sm leading-relaxed text-amn-brown/75;
+  }
+
+  .insight-prose :global(.insight-callout__btn) {
+    @apply inline-block px-5 py-2.5 text-sm no-underline;
+  }
+
+  .insight-prose :global(.insight-pull-quote) {
+    @apply my-8 border-l-4 border-amn-blue/40 py-1 pl-5;
+  }
+
+  .insight-prose :global(.insight-pull-quote p) {
+    @apply font-headline text-xl leading-snug text-amn-dark md:text-2xl;
+  }
+
+  .insight-prose :global(.insight-pull-quote__attr) {
+    @apply mt-3 block font-caption text-xs not-italic uppercase tracking-wider text-amn-brown/50;
   }
 
   .insight-faq__item {

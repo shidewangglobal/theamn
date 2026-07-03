@@ -1,4 +1,6 @@
 import { defineArrayMember, defineField, defineType } from 'sanity';
+import { PublishChecklist } from '../../studio/components/PublishChecklist';
+import { SeoPreview } from '../../studio/components/SeoPreview';
 
 export const insight = defineType({
   name: 'insight',
@@ -79,6 +81,15 @@ export const insight = defineType({
       type: 'image',
       group: 'content',
       options: { hotspot: true },
+      fields: [
+        defineField({
+          name: 'alt',
+          title: 'Alt text',
+          type: 'string',
+          description: 'Required for SEO. Describe the cover image.',
+          validation: (Rule) => Rule.required().min(5).max(160),
+        }),
+      ],
       validation: (Rule) => Rule.required(),
     }),
     defineField({
@@ -108,7 +119,7 @@ export const insight = defineType({
               {
                 name: 'link',
                 type: 'object',
-                title: 'Link',
+                title: 'External link',
                 fields: [
                   defineField({
                     name: 'href',
@@ -122,9 +133,26 @@ export const insight = defineType({
                   }),
                 ],
               },
+              {
+                name: 'insightLink',
+                type: 'object',
+                title: 'Link to Insight',
+                fields: [
+                  defineField({
+                    name: 'insight',
+                    title: 'Insight article',
+                    type: 'reference',
+                    to: [{ type: 'insight' }],
+                    validation: (Rule) => Rule.required(),
+                  }),
+                ],
+              },
             ],
           },
         }),
+        defineArrayMember({ type: 'bodyImage' }),
+        defineArrayMember({ type: 'callout' }),
+        defineArrayMember({ type: 'pullQuote' }),
         defineArrayMember({ type: 'table' }),
       ],
       validation: (Rule) => Rule.required(),
@@ -153,10 +181,34 @@ export const insight = defineType({
       validation: (Rule) => Rule.required(),
     }),
     defineField({
+      name: 'seoPreview',
+      title: 'Search preview',
+      type: 'string',
+      group: 'seo',
+      readOnly: true,
+      components: { input: SeoPreview },
+    }),
+    defineField({
       name: 'seo',
-      title: 'SEO',
+      title: 'SEO settings',
       type: 'seo',
       group: 'seo',
+    }),
+    defineField({
+      name: 'publishChecklist',
+      title: 'Before you publish',
+      type: 'string',
+      group: 'settings',
+      readOnly: true,
+      components: { input: PublishChecklist },
+    }),
+    defineField({
+      name: 'author',
+      title: 'Author',
+      type: 'string',
+      group: 'settings',
+      initialValue: 'The AMN Limited',
+      description: 'Shown in article schema for E-E-A-T.',
     }),
     defineField({
       name: 'publishDate',
@@ -170,6 +222,7 @@ export const insight = defineType({
       title: 'Updated date',
       type: 'datetime',
       group: 'settings',
+      description: 'Set when you materially refresh the article (freshness signal).',
     }),
     defineField({
       name: 'featured',

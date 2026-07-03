@@ -28,6 +28,7 @@ type SanityInsight = {
   publishDate: string;
   updatedDate?: string;
   featured?: boolean;
+  author?: string;
   seo?: {
     focusKeyphrase?: string;
     metaTitle?: string;
@@ -53,13 +54,24 @@ const INSIGHTS_QUERY = `*[_type == "insight" && draft != true && defined(slug.cu
   description,
   category,
   coverImage,
-  body,
+  "coverImageAlt": coverImage.alt,
+  body[]{
+    ...,
+    markDefs[]{
+      ...,
+      _type == "insightLink" => {
+        ...,
+        "href": "/insights/" + insight->slug.current
+      }
+    }
+  },
   faqs,
   closingTitle,
   closing,
   publishDate,
   updatedDate,
   featured,
+  author,
   seo {
     focusKeyphrase,
     metaTitle,
@@ -102,6 +114,7 @@ function mapSanityInsight(doc: SanityInsight): InsightRecord {
     category: doc.category,
     coverImage,
     featured: Boolean(doc.featured),
+    author: doc.author || 'The AMN Limited',
     closingTitle: doc.closingTitle || 'The bottom line',
     closing: doc.closing || '',
     faqs: doc.faqs ?? [],
@@ -155,8 +168,9 @@ function mapMarkdownInsight(entry: CollectionEntry<'insights'>): InsightRecord {
     updatedDate: entry.data.updatedDate,
     category: entry.data.category,
     coverImage,
-    featured: entry.data.featured,
-    closingTitle: entry.data.closingTitle,
+        featured: entry.data.featured,
+        author: 'The AMN Limited',
+        closingTitle: entry.data.closingTitle,
     closing: entry.data.closing,
     faqs: entry.data.faqs,
     seo,

@@ -78,9 +78,25 @@ For **automatic** rebuilds when editors publish in Studio, see [AUTO-DEPLOY.md](
 
 | Group | Fields |
 |-------|--------|
-| Content | title, titleEmphasis, slug, description, category, layout, coverImage, body, faqs, closing |
-| SEO | focusKeyphrase, metaTitle, metaDescription, canonical, OG, Twitter, noindex/nofollow |
-| Settings | publishDate, updatedDate, featured, draft (hide from site) |
+| Content | title, slug, body (blocks, images, callouts, pull quotes, tables), FAQs, closing |
+| SEO | Google preview, focus keyphrase, meta title/description, canonical, OG, Twitter, noindex |
+| Settings | publish checklist, author, dates, featured, draft (hide from site) |
+
+### Editor blocks (body)
+
+| Block | Use |
+|-------|-----|
+| **Image** | Inline image with required alt text |
+| **Callout / CTA** | Info box or button CTA |
+| **Pull quote** | Editorial quote |
+| **Link to Insight** | Internal link picker to other articles |
+| **Table** | Comparison tables |
+
+### Studio sidebar
+
+- **Live on website** — published insights
+- **Hidden / drafts** — not on theamn.network
+- **Featured** — hub hero candidates
 
 ### SEO fallbacks (like Yoast)
 

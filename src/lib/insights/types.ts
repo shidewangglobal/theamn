@@ -30,6 +30,7 @@ export type InsightData = {
   category: InsightCategory;
   coverImage: string;
   featured: boolean;
+  author: string;
   closingTitle: string;
   closing: string;
   faqs: InsightFaq[];

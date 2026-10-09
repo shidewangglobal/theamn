@@ -1,0 +1,541 @@
+---
+const steps = [
+  {
+    name: 'Discover',
+    line: 'See where the next stage of growth can come from.',
+    description:
+      'We invest our expertise upfront to assess commercial opportunities, uncover overlooked potential and identify new growth avenues that build on existing sales.',
+  },
+  {
+    name: 'Unlock',
+    line: 'Turn the full brand story into customer desire.',
+    description:
+      'Bring distinctive products, brand stories and exceptional experiences to life for digital audiences, giving the right customers compelling reasons to discover, engage and buy.',
+  },
+  {
+    name: 'Build',
+    line: 'Grow without building every capability in-house.',
+    description:
+      'Access the expertise, technology and connected systems needed to grow digitally, while founders stay focused on their products, customers and core business.',
+  },
+  {
+    name: 'Reach',
+    line: 'Reach more of the customers who value the brand.',
+    description:
+      'Expand digital reach across relevant audiences and markets, creating more opportunities for high-value customers to discover and engage with original brands.',
+  },
+  {
+    name: 'Convert',
+    line: 'Turn customer interest into measurable revenue.',
+    description:
+      'Create a seamless path from discovery to inquiry, direct booking or purchase, making it easier for customers to choose and buy from the brand.',
+  },
+  {
+    name: 'Grow Together',
+    line: 'Build growth on aligned commercial interests.',
+    description:
+      'Our revenue-sharing model aligns commercial interests around agreed results, creating a shared incentive to grow digital revenue over time.',
+  },
+];
+---
+
+<section id="growth" class="growth-section tubik-section scroll-mt-28">
+  <div class="tubik-shell">
+    <h2 class="reveal max-w-3xl font-headline text-3xl font-light leading-[1.12] tracking-tight text-amn-dark md:text-4xl lg:text-5xl">
+      What we build into your growth.
+    </h2>
+
+    <div class="growth" data-growth>
+      <div class="growth-snap">
+        <div class="growth-scroller" data-growth-scroller data-lenis-prevent>
+          {
+            steps.map((step, index) => (
+              <article class="growth-slide" data-growth-slide={String(index)}>
+                <p class="growth-kicker font-caption">
+                  <span>{String(index + 1).padStart(2, '0')}</span>
+                  {step.name}
+                </p>
+                <p class="growth-line font-headline font-light">{step.line}</p>
+                <p class="growth-copy">{step.description}</p>
+              </article>
+            ))
+          }
+        </div>
+        <div class="growth-meter" aria-hidden="true"><span data-growth-meter></span></div>
+      </div>
+
+      <div class="growth-desk">
+        <div class="growth-track" role="tablist" aria-label="Stages of growth" aria-orientation="vertical">
+          {
+            steps.map((step, index) => (
+              <button
+                type="button"
+                class:list={['growth-tab', index === 0 && 'is-active']}
+                role="tab"
+                id={`growth-tab-${index + 1}`}
+                aria-selected={index === 0 ? 'true' : 'false'}
+                aria-controls={`growth-panel-${index + 1}`}
+                data-growth-tab={String(index)}
+              >
+                <span class="growth-tab-index font-caption">{String(index + 1).padStart(2, '0')}</span>
+                <span class="growth-tab-name font-headline">{step.name}</span>
+              </button>
+            ))
+          }
+        </div>
+
+        <div class="growth-detail">
+          {
+            steps.map((step, index) => (
+              <div
+                class:list={['growth-panel', index === 0 && 'is-active']}
+                role="tabpanel"
+                id={`growth-panel-${index + 1}`}
+                aria-labelledby={`growth-tab-${index + 1}`}
+                data-growth-panel={String(index)}
+                aria-hidden={index === 0 ? 'false' : 'true'}
+              >
+                <p class="growth-line font-headline font-light">{step.line}</p>
+                <p class="growth-copy">{step.description}</p>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-growth]').forEach((root) => {
+    const tabs = [...root.querySelectorAll<HTMLButtonElement>('[data-growth-tab]')];
+    const panels = [...root.querySelectorAll<HTMLElement>('[data-growth-panel]')];
+
+    let index = 0;
+    let fadeToken = 0;
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+    const detail = root.querySelector<HTMLElement>('.growth-detail');
+    const track = root.querySelector<HTMLElement>('.growth-track');
+
+    const fit = () => {
+      if (!detail || !track) return;
+      const height = track.clientHeight;
+      if (height < 40 || height > 900) return;
+      detail.style.height = `${height}px`;
+    };
+
+    const showPanel = (id: string) => {
+      panels.forEach((panel) => {
+        const on = panel.dataset.growthPanel === id;
+        panel.classList.toggle('is-active', on);
+        panel.setAttribute('aria-hidden', on ? 'false' : 'true');
+      });
+    };
+
+    const select = (id: string) => {
+      if (Number(id) === index && panels[index]?.classList.contains('is-active')) return;
+      index = Number(id);
+      tabs.forEach((tab) => {
+        const on = tab.dataset.growthTab === id;
+        tab.setAttribute('aria-selected', on ? 'true' : 'false');
+        tab.classList.toggle('is-active', on);
+      });
+      root.style.setProperty('--step', String(index + 1));
+      const token = ++fadeToken;
+      if (reduced.matches) {
+        showPanel(id);
+        return;
+      }
+      panels.forEach((panel) => {
+        panel.classList.remove('is-active');
+        panel.setAttribute('aria-hidden', 'true');
+      });
+      window.setTimeout(() => {
+        if (token !== fadeToken) return;
+        showPanel(id);
+      }, 280);
+    };
+
+    fit();
+    requestAnimationFrame(fit);
+    window.addEventListener('resize', fit);
+
+    tabs.forEach((tab, index) => {
+      tab.addEventListener('click', () => {
+        if (tab.dataset.growthTab) select(tab.dataset.growthTab);
+      });
+      tab.addEventListener('keydown', (event) => {
+        const next =
+          event.key === 'ArrowDown' || event.key === 'ArrowRight'
+            ? tabs[(index + 1) % tabs.length]
+            : event.key === 'ArrowUp' || event.key === 'ArrowLeft'
+              ? tabs[(index - 1 + tabs.length) % tabs.length]
+              : null;
+        if (!next) return;
+        event.preventDefault();
+        next.focus();
+        if (next.dataset.growthTab) select(next.dataset.growthTab);
+      });
+    });
+
+    const section = root.closest('section');
+    const desktop = window.matchMedia('(min-width: 900px)');
+    let wheelLock = 0;
+    let held = false;
+
+    const lenis = () => (window as Window & {
+      __amnLenis?: { stop: () => void; start: () => void; scroll: number; scrollTo: (value: number, opts?: { immediate?: boolean; force?: boolean }) => void } | null;
+    }).__amnLenis;
+
+    const engaged = () => {
+      if (!section || !desktop.matches || reduced.matches) return false;
+      const rect = section.getBoundingClientRect();
+      const headerOffset = 112;
+      const reachedTop = rect.top <= headerOffset;
+      const fullBlockVisible = rect.bottom > headerOffset + Math.min(rect.height * 0.72, window.innerHeight * 0.55);
+      return reachedTop && fullBlockVisible;
+    };
+
+    const hold = () => {
+      const scroll = lenis();
+      if (!held) held = true;
+      scroll?.stop();
+    };
+
+    const release = () => {
+      if (!held) return;
+      held = false;
+      lenis()?.start();
+    };
+
+    window.addEventListener(
+      'wheel',
+      (event) => {
+        if (!engaged()) {
+          release();
+          return;
+        }
+        const dir = Math.sign(event.deltaY);
+        if (!dir) return;
+        const next = index + dir;
+        if (next < 0 || next >= tabs.length) {
+          release();
+          return;
+        }
+        event.preventDefault();
+        event.stopPropagation();
+        hold();
+        if (Date.now() < wheelLock) return;
+        wheelLock = Date.now() + 560;
+        select(String(next));
+      },
+      { passive: false, capture: true },
+    );
+
+    const scroller = root.querySelector<HTMLElement>('[data-growth-scroller]');
+    const meter = root.querySelector<HTMLElement>('[data-growth-meter]');
+    if (!scroller || !meter) return;
+    const slides = [...scroller.querySelectorAll<HTMLElement>('[data-growth-slide]')];
+
+    const syncMeter = () => {
+      const max = scroller.scrollWidth - scroller.clientWidth;
+      const ratio = max > 0 ? scroller.scrollLeft / max : 0;
+      meter.style.transform = `scaleX(${(1 + ratio * (slides.length - 1)) / slides.length})`;
+    };
+
+    scroller.addEventListener('scroll', syncMeter, { passive: true });
+    syncMeter();
+  });
+</script>
+
+<style>
+  .growth-section {
+    padding-top: 3rem;
+    padding-bottom: 3rem;
+  }
+
+  .growth {
+    --step: 1;
+    margin-top: 1.5rem;
+  }
+
+  .growth-desk {
+    display: none;
+  }
+
+  .growth-scroller {
+    display: flex;
+    gap: 0.75rem;
+    margin-right: -1rem;
+    padding-right: 1rem;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-padding-left: 0;
+    overscroll-behavior-x: contain;
+    scrollbar-width: none;
+  }
+
+  .growth-scroller::-webkit-scrollbar {
+    display: none;
+  }
+
+  .growth-slide {
+    border: 1px solid rgba(74, 66, 51, 0.08);
+    border-radius: 1.25rem;
+    background: #fff;
+    box-shadow: 0 10px 32px rgba(10, 10, 10, 0.045);
+  }
+
+  .growth-slide {
+    display: flex;
+    flex: 0 0 86%;
+    flex-direction: column;
+    scroll-snap-align: start;
+    padding: 1.2rem 1.2rem 1.3rem;
+  }
+
+  .growth-slide::before,
+  .growth-panel::before {
+    content: '';
+    display: block;
+    width: 2.25rem;
+    height: 2px;
+    margin-bottom: 0.9rem;
+    border-radius: 999px;
+    background: #00a0f0;
+  }
+
+  .growth-kicker {
+    display: flex;
+    align-items: baseline;
+    gap: 0.55rem;
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: #00a0f0;
+  }
+
+  .growth-kicker span {
+    color: rgba(0, 160, 240, 0.55);
+  }
+
+  .growth-line {
+    margin-top: 0.55rem;
+    font-size: 1.35rem;
+    line-height: 1.25;
+    color: #1c1915;
+  }
+
+  .growth-copy {
+    margin-top: 0.7rem;
+    font-size: 0.92rem;
+    line-height: 1.6;
+    color: rgba(74, 66, 51, 0.72);
+  }
+
+  .growth-meter {
+    height: 2px;
+    margin-top: 0.9rem;
+    overflow: hidden;
+    border-radius: 999px;
+    background: rgba(0, 160, 240, 0.16);
+  }
+
+  .growth-meter span {
+    display: block;
+    width: 100%;
+    height: 100%;
+    border-radius: inherit;
+    background: #00a0f0;
+    transform: scaleX(0.1667);
+    transform-origin: left center;
+    transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .growth-detail {
+    position: relative;
+    min-width: 0;
+    min-height: 0;
+    overflow: hidden;
+  }
+
+  .growth-panel {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 1.15rem 1.35rem 1.3rem;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.28s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .growth-panel.is-active {
+    opacity: 1;
+    pointer-events: auto;
+    transition: opacity 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .growth-track {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 0.1rem;
+    padding-left: 1.45rem;
+  }
+
+  .growth-track::before,
+  .growth-track::after {
+    content: '';
+    position: absolute;
+    left: 0.22rem;
+    top: 0.95rem;
+    width: 2px;
+    border-radius: 999px;
+  }
+
+  .growth-track::before {
+    bottom: 0.95rem;
+    background: rgba(0, 160, 240, 0.16);
+  }
+
+  .growth-track::after {
+    height: calc((var(--step) - 1) / 5 * (100% - 1.9rem));
+    background: #00a0f0;
+    transition: height 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .growth-tab {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.15rem;
+    width: 100%;
+    padding: 0.45rem 0.7rem;
+    border: 0;
+    border-radius: 0.85rem;
+    background: transparent;
+    text-align: left;
+    cursor: pointer;
+    transition:
+      background 0.55s cubic-bezier(0.22, 1, 0.36, 1),
+      box-shadow 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .growth-tab::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: -1.35rem;
+    width: 0.55rem;
+    height: 0.55rem;
+    border-radius: 999px;
+    background: #f7f5f1;
+    box-shadow: inset 0 0 0 1.5px rgba(0, 160, 240, 0.4);
+    transform: translateY(-50%);
+    transition:
+      background 0.55s cubic-bezier(0.22, 1, 0.36, 1),
+      box-shadow 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .growth-tab.is-active {
+    background: #fff;
+    box-shadow: 0 6px 20px rgba(10, 10, 10, 0.06);
+  }
+
+  .growth-tab.is-active::before {
+    background: #00a0f0;
+    box-shadow: 0 0 0 4px rgba(0, 160, 240, 0.16);
+  }
+
+  .growth-tab-index {
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: rgba(0, 160, 240, 0.65);
+    transition: color 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .growth-tab.is-active .growth-tab-index {
+    color: #00a0f0;
+  }
+
+  .growth-tab-name {
+    font-size: 1.15rem;
+    font-weight: 300;
+    line-height: 1.15;
+    color: rgba(74, 66, 51, 0.42);
+    transition: color 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .growth-tab.is-active .growth-tab-name {
+    color: #1c1915;
+  }
+
+  .growth-tab:focus-visible {
+    outline: 2px solid #00a0f0;
+    outline-offset: 3px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .growth-panel,
+    .growth-track::after,
+    .growth-tab,
+    .growth-tab::before,
+    .growth-tab-index,
+    .growth-tab-name {
+      transition: none;
+    }
+  }
+
+  @media (min-width: 900px) {
+    .growth-section {
+      padding-top: 4rem;
+      padding-bottom: 4.25rem;
+    }
+
+    .growth {
+      margin-top: 2rem;
+    }
+
+    .growth-snap {
+      display: none;
+    }
+
+    .growth-desk {
+      display: grid;
+      grid-template-columns: minmax(13.5rem, 18rem) minmax(0, 1fr);
+      gap: 1.25rem 2.5rem;
+      align-items: stretch;
+    }
+
+    .growth-detail {
+      height: 100%;
+      min-height: 0;
+      border: 1px solid rgba(74, 66, 51, 0.08);
+      border-radius: 1.25rem;
+      background: #fff;
+      box-shadow: 0 10px 32px rgba(10, 10, 10, 0.045);
+    }
+
+    .growth-panel {
+      background: transparent;
+      border: 0;
+      box-shadow: none;
+    }
+
+    .growth-panel .growth-line {
+      max-width: 18em;
+      font-size: clamp(1.45rem, 2vw, 1.85rem);
+    }
+
+    .growth-panel .growth-copy {
+      max-width: 40rem;
+      margin-top: 0.8rem;
+      font-size: 0.98rem;
+    }
+  }
+</style>

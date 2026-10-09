@@ -2,30 +2,61 @@
 import '../styles/global.css';
 import '../styles/theme-preview.css';
 import HeaderCtaGroup from '../components/HeaderCtaGroup.astro';
+import { siteGraph } from '../lib/seo/site';
+
+interface NavLink {
+  href: string;
+  label: string;
+}
 
 interface Props {
   title?: string;
   description?: string;
+  navLinks?: NavLink[];
+  logoHref?: string;
+  showInsights?: boolean;
+  insightsLabel?: string;
+  insightsHref?: string;
+  connectHref?: string;
+  connectLabel?: string;
+  showMarketing?: boolean;
+  marketingHref?: string;
+  marketingLabel?: string;
+  ogImage?: string;
 }
 
 const {
-  title = 'The AMN | Authentic. Agile. Accelerated.',
-  description = 'THE AMN elevates multi-market revenue and direct bookings for premium hotels and resorts through AI-driven digital marketing operations.',
+  title = 'The AMN | Build Demand. Share Revenue.',
+  description = 'We invest our expertise and commercial capabilities in distinctive brands with proven products and untapped digital potential, building the infrastructure to reach more of the right customers and grow revenue together.',
+  navLinks = [
+    { href: '#growth', label: 'Growth' },
+    { href: '#capabilities', label: 'Capabilities' },
+    { href: '#model', label: 'Model' },
+    { href: '#focus', label: 'Focus' },
+    { href: '#vision', label: 'Vision' },
+  ],
+  logoHref = '#hero',
+  showInsights = true,
+  insightsLabel = 'Insights',
+  insightsHref = '/insights',
+  connectHref = '#contact',
+  connectLabel = 'Partner',
+  showMarketing = true,
+  marketingHref = '/marketing',
+  marketingLabel = 'Marketing services',
+  ogImage = '/images/home/hero-positano.jpg',
 } = Astro.props;
 
 const siteName = 'the amn';
 const siteUrl = 'https://theamn.network';
-const fullTitle = title.includes(siteName) ? title : `${title} | ${siteName}`;
+const fullTitle = title.includes('The AMN') || title.includes(siteName) ? title : `${title} | ${siteName}`;
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
-
-const navLinks = [
-  { href: '#about', label: 'About' },
-  { href: '#pillars', label: 'Pillars' },
-  { href: '#how-we-work', label: 'Work' },
-  { href: '#tech', label: 'Tech' },
-  { href: '#services', label: 'Services' },
-  { href: '#collective', label: 'Collective' },
-];
+const ogImageUrl = new URL(ogImage, siteUrl).toString();
+const structuredData = siteGraph({
+  url: canonicalURL.toString(),
+  name: fullTitle,
+  description,
+});
 ---
 
 <!doctype html>
@@ -37,6 +68,7 @@ const navLinks = [
 
     <title>{fullTitle}</title>
     <meta name="description" content={description} />
+    <meta name="robots" content="index, follow" />
     <link rel="canonical" href={canonicalURL} />
 
     <meta property="og:type" content="website" />
@@ -45,11 +77,14 @@ const navLinks = [
     <meta property="og:url" content={canonicalURL} />
     <meta property="og:locale" content="en_US" />
     <meta property="og:site_name" content={siteName} />
-    <meta property="og:image" content={`${siteUrl}/images/hero-cover.jpeg`} />
+    <meta property="og:image" content={ogImageUrl} />
 
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={fullTitle} />
     <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImageUrl} />
+
+    <script type="application/ld+json" set:html={JSON.stringify(structuredData)} />
 
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
     <link rel="icon" type="image/png" sizes="512x512" href="/favicon.png" />
@@ -58,7 +93,7 @@ const navLinks = [
   <body class="theme-preview min-h-screen overflow-x-hidden text-amn-brown">
     <header id="site-header" class="site-header is-scrolled fixed left-0 right-0 top-0 z-50 px-4 pt-3 transition-all duration-[600ms] ease-[cubic-bezier(0.22,1,0.36,1)] md:px-6">
       <div class="mx-auto flex max-w-7xl items-center justify-between gap-4">
-        <a href="#hero" class="shrink-0">
+        <a href={logoHref} class="shrink-0">
           <img
             id="header-logo"
             src="/assets/amn-logo-header-dark.png"
@@ -76,7 +111,16 @@ const navLinks = [
         </nav>
 
         <div class="hidden shrink-0 md:block">
-          <HeaderCtaGroup connectHref="#contact" showInsights={true} />
+          <HeaderCtaGroup
+            connectHref={connectHref}
+            connectLabel={connectLabel}
+            showInsights={showInsights}
+            insightsHref={insightsHref}
+            insightsLabel={insightsLabel}
+            showMarketing={showMarketing}
+            marketingHref={marketingHref}
+            marketingLabel={marketingLabel}
+          />
         </div>
 
         <button
@@ -102,7 +146,16 @@ const navLinks = [
           </a>
         ))}
         <div class="mt-2 border-t border-amn-brown/8 pt-2">
-          <HeaderCtaGroup connectHref="#contact" showInsights={true} />
+          <HeaderCtaGroup
+            connectHref={connectHref}
+            connectLabel={connectLabel}
+            showInsights={showInsights}
+            insightsHref={insightsHref}
+            insightsLabel={insightsLabel}
+            showMarketing={showMarketing}
+            marketingHref={marketingHref}
+            marketingLabel={marketingLabel}
+          />
         </div>
       </nav>
     </header>

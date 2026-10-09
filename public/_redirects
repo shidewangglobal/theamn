@@ -1,4 +1,7 @@
 /articles      /               302
 /articles/*      /               302
-/services/seo-geo  /             302
+/about            /marketing#about      301
+/services         /marketing#services   301
+/contact          /marketing#contact    301
+/services/seo-geo /insights             301
 /preview/*       /               302

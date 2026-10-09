@@ -1,0 +1,112 @@
+---
+import { getCollection } from 'astro:content';
+import PageLayout from '../../layouts/PageLayout.astro';
+import { insightSlug } from '../../utils/insights';
+
+const experiences = (await getCollection('experiences', ({ data }) => !data.draft)).sort(
+  (a, b) => b.data.publishDate.valueOf() - a.data.publishDate.valueOf(),
+);
+
+const scenes = [
+  {
+    src: '/images/home/kyoto-zen.jpg',
+    alt: 'A raked gravel garden and wooden gate at a Kyoto temple',
+  },
+  {
+    src: '/images/home/morocco.jpg',
+    alt: 'An earthen village above a palm grove, with desert mountains beyond',
+  },
+  {
+    src: '/images/home/alpine-lake.jpg',
+    alt: 'Wooden boats on a turquoise alpine lake',
+  },
+  {
+    src: '/images/home/santorini.jpg',
+    alt: 'Whitewashed domes above the Aegean Sea',
+  },
+];
+
+const formatDate = (date: Date) =>
+  date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+---
+
+<PageLayout
+  title="Experiences | The AMN"
+  description="An edit of places, products and experiences, chosen because they are original."
+  jsonLd={{
+    '@context': 'https://schema.org',
+    '@type': 'CollectionPage',
+    name: 'THE AMN Experiences',
+    url: 'https://theamn.network/experiences',
+    description:
+      'Distinctive places, products and experiences curated through The AMN network.',
+    publisher: {
+      '@type': 'Organization',
+      name: 'The AMN Limited',
+      url: 'https://theamn.network',
+    },
+  }}
+>
+  <section class="tubik-section">
+    <div class="tubik-shell">
+      <header class="mb-8 max-w-3xl md:mb-12">
+        <p class="section-label mb-3">Curated through the AMN network</p>
+        <h1 class="font-headline text-[clamp(2.5rem,6vw,4.25rem)] font-light leading-[1.02] tracking-tight text-amn-dark">
+          Extraordinary things deserve to be discovered.
+        </h1>
+        <p class="mt-4 max-w-xl font-body-secondary text-base leading-relaxed text-amn-brown/70 md:text-lg">
+          An edit of places, products and experiences, chosen because they are original.
+        </p>
+      </header>
+
+      {
+        experiences.length === 0 ? (
+          <>
+            <p class="max-w-2xl font-body-secondary leading-relaxed text-amn-brown/70">
+              Selections will be published here as they are made.
+            </p>
+            <ul class="mt-8 grid gap-2.5 sm:grid-cols-2">
+              {scenes.map((scene) => (
+                <li class="bento-image aspect-[4/3]">
+                  <img src={scene.src} alt={scene.alt} class="h-full w-full object-cover" loading="lazy" />
+                </li>
+              ))}
+            </ul>
+          </>
+        ) : (
+          <ul class="grid gap-5 sm:grid-cols-2 lg:grid-cols-3 lg:gap-6">
+            {experiences.map((entry) => (
+              <li>
+                <a href={`/experiences/${insightSlug(entry.id)}`} class="group flex h-full flex-col overflow-hidden rounded-[1.15rem] border border-amn-brown/10 bg-white">
+                  <div class="relative aspect-[4/3] overflow-hidden bg-[#f5f5f7]">
+                    <img
+                      src={entry.data.coverImage}
+                      alt=""
+                      class="absolute inset-0 h-full w-full object-cover transition duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.04]"
+                      loading="lazy"
+                    />
+                  </div>
+                  <div class="flex flex-1 flex-col px-4 py-4 md:px-5 md:py-5">
+                    {entry.data.place && (
+                      <p class="font-caption text-[10px] uppercase tracking-[0.2em] text-amn-blue">{entry.data.place}</p>
+                    )}
+                    <h2 class="mt-2 font-headline text-2xl font-light leading-tight text-amn-dark transition group-hover:text-amn-blue">
+                      {entry.data.title}
+                    </h2>
+                    <p class="mt-3 font-body-secondary text-sm leading-relaxed text-amn-brown/70">{entry.data.description}</p>
+                    <time
+                      class="mt-auto pt-4 font-caption text-[10px] uppercase tracking-[0.16em] text-amn-brown/45"
+                      datetime={entry.data.publishDate.toISOString()}
+                    >
+                      {formatDate(entry.data.publishDate)}
+                    </time>
+                  </div>
+                </a>
+              </li>
+            ))}
+          </ul>
+        )
+      }
+    </div>
+  </section>
+</PageLayout>

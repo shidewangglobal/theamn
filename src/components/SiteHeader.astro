@@ -40,7 +40,7 @@ const {
     </nav>
 
     <div class="hidden shrink-0 md:block">
-      <HeaderCtaGroup connectHref={connectHref} showInsights={showInsightsLink} />
+      <HeaderCtaGroup connectHref={connectHref} showInsights={showInsightsLink} showMarketing={showInsightsLink} insightsLabel="Insights" marketingLabel="Marketing services" />
     </div>
 
     <button
@@ -76,7 +76,7 @@ const {
     {
       !showInsightsLink && (
         <a href={connectHref} class="pill-nav-link btn-primary mt-1 w-full py-3 text-center text-xs">
-          Connect
+          Partner
         </a>
       )
     }

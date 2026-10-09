@@ -1,0 +1,107 @@
+---
+import { getCollection, render } from 'astro:content';
+import PageLayout from '../../layouts/PageLayout.astro';
+import { insightSlug } from '../../utils/insights';
+
+export async function getStaticPaths() {
+  const entries = await getCollection('experiences', ({ data }) => !data.draft);
+  return entries.map((entry) => ({
+    params: { slug: insightSlug(entry.id) },
+  }));
+}
+
+const { slug } = Astro.params;
+const entries = await getCollection('experiences', ({ data }) => !data.draft);
+const entry = entries.find((item) => insightSlug(item.id) === slug);
+
+if (!entry) {
+  throw new Error(`Missing experience: ${slug}`);
+}
+
+const { Content } = await render(entry);
+const { title, description, place, coverImage, publishDate } = entry.data;
+const pageUrl = `https://theamn.network/experiences/${slug}`;
+
+const formatDate = (date: Date) =>
+  date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+---
+
+<PageLayout
+  title={`${title} | The AMN`}
+  description={description}
+  ogImage={coverImage}
+  ogType="article"
+  canonicalUrl={pageUrl}
+  jsonLd={{
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: title,
+    description,
+    datePublished: publishDate.toISOString(),
+    image: coverImage.startsWith('http') ? coverImage : `https://theamn.network${coverImage}`,
+    url: pageUrl,
+    author: {
+      '@type': 'Organization',
+      name: 'The AMN Limited',
+    },
+    publisher: {
+      '@type': 'Organization',
+      name: 'The AMN Limited',
+      url: 'https://theamn.network',
+    },
+  }}
+>
+  <article class="tubik-section">
+    <div class="tubik-shell max-w-3xl">
+      <a
+        href="/experiences"
+        class="font-caption text-xs uppercase tracking-wider text-amn-brown/50 transition hover:text-amn-blue"
+      >
+        ← All experiences
+      </a>
+
+      <header class="mt-4">
+        {place && <p class="font-caption text-[10px] uppercase tracking-[0.2em] text-amn-blue">{place}</p>}
+        <h1 class="mt-2 font-headline text-4xl font-light leading-[1.05] tracking-tight text-amn-dark md:text-6xl">
+          {title}
+        </h1>
+        <time
+          class="mt-4 block font-caption text-[10px] uppercase tracking-wider text-amn-brown/45"
+          datetime={publishDate.toISOString()}
+        >
+          {formatDate(publishDate)}
+        </time>
+      </header>
+
+      <img
+        src={coverImage}
+        alt=""
+        class="mt-8 aspect-[16/9] w-full rounded-3xl object-cover"
+        width="1200"
+        height="675"
+      />
+
+      <div class="experience-prose mt-8 font-body-secondary text-amn-brown/85">
+        <Content />
+      </div>
+    </div>
+  </article>
+</PageLayout>
+
+<style>
+  .experience-prose :global(h2) {
+    @apply mb-3 mt-10 font-headline text-2xl font-light text-amn-dark md:text-3xl;
+  }
+
+  .experience-prose :global(p) {
+    @apply mb-4 text-base leading-relaxed md:text-lg;
+  }
+
+  .experience-prose :global(a) {
+    @apply text-amn-blue underline-offset-2 hover:underline;
+  }
+
+  .experience-prose :global(ul) {
+    @apply mb-4 list-disc space-y-2 pl-5;
+  }
+</style>

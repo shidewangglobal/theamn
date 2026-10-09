@@ -1,4 +1,13 @@
 ---
+interface Props {
+  connectHref?: string;
+  siteSwitch?: { href: string; label: string };
+}
+
+const {
+  connectHref = '/#contact',
+  siteSwitch = { href: '/marketing', label: 'Marketing services' },
+} = Astro.props;
 const year = new Date().getFullYear();
 ---
 
@@ -9,9 +18,14 @@ const year = new Date().getFullYear();
     </a>
 
     <nav class="footer-nav flex flex-wrap items-center gap-5 md:gap-6" aria-label="Footer navigation">
-      <a href="/" class="pill-nav-link font-caption text-xs uppercase tracking-wider text-amn-brown/55 transition hover:text-amn-dark">Home</a>
+      <a href="/#growth" class="pill-nav-link font-caption text-xs uppercase tracking-wider text-amn-brown/55 transition hover:text-amn-dark">Growth</a>
+      <a href="/#capabilities" class="pill-nav-link font-caption text-xs uppercase tracking-wider text-amn-brown/55 transition hover:text-amn-dark">Capabilities</a>
+      <a href="/#model" class="pill-nav-link font-caption text-xs uppercase tracking-wider text-amn-brown/55 transition hover:text-amn-dark">Model</a>
+      <a href="/#focus" class="pill-nav-link font-caption text-xs uppercase tracking-wider text-amn-brown/55 transition hover:text-amn-dark">Focus</a>
+      <a href="/#vision" class="pill-nav-link font-caption text-xs uppercase tracking-wider text-amn-brown/55 transition hover:text-amn-dark">Vision</a>
+      <a href={siteSwitch.href} class="pill-nav-link font-caption text-xs uppercase tracking-wider text-amn-brown/55 transition hover:text-amn-dark">{siteSwitch.label}</a>
       <a href="/insights" class="pill-nav-link font-caption text-xs uppercase tracking-wider text-amn-brown/55 transition hover:text-amn-dark">Insights</a>
-      <a href="/#contact" class="pill-nav-link font-caption text-xs uppercase tracking-wider text-amn-brown/55 transition hover:text-amn-dark">Connect</a>
+      <a href={connectHref} class="pill-nav-link font-caption text-xs uppercase tracking-wider text-amn-brown/55 transition hover:text-amn-dark">Partner</a>
     </nav>
 
     <div class="footer-meta flex flex-wrap items-center gap-x-3 gap-y-1 font-caption text-xs text-amn-brown/45">

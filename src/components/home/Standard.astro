@@ -1,0 +1,108 @@
+<section id="standard" class="standard-section tubik-section scroll-mt-28">
+  <div class="tubik-shell">
+    <figure class="standard-frame">
+      <img
+        src="/images/home/morocco.jpg"
+        alt="An earthen village above a palm grove, with desert mountains beyond"
+        loading="lazy"
+      />
+      <figcaption class="standard-copy">
+        <p class="standard-kicker font-caption">Our standard</p>
+        <h3 class="standard-title font-headline font-light">
+          We look closer.
+          <span class="headline-italic">We build a network of partners who share it.</span>
+        </h3>
+        <p class="standard-note font-body-secondary">
+          We value the details that distinguish exceptional brands, from the product itself to the smallest customer touchpoint.
+        </p>
+      </figcaption>
+    </figure>
+  </div>
+</section>
+
+<style>
+  .standard-section {
+    padding-top: 0.5rem;
+  }
+
+  .standard-frame {
+    position: relative;
+    min-height: 24rem;
+    overflow: hidden;
+    border-radius: 1.5rem;
+  }
+
+  .standard-frame img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 62%;
+  }
+
+  .standard-copy {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    min-height: 24rem;
+    max-width: 38rem;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 2.25rem 1.35rem 1.6rem;
+    line-height: 1.25;
+    background: linear-gradient(180deg, rgba(18, 12, 8, 0) 20%, rgba(18, 12, 8, 0.72) 100%);
+  }
+
+  .standard-kicker {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-size: 11px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.78);
+  }
+
+  .standard-kicker::before {
+    content: '';
+    width: 1.6rem;
+    height: 1px;
+    background: rgba(255, 255, 255, 0.7);
+  }
+
+  .standard-title {
+    margin-top: 0.75rem;
+    max-width: 16em;
+    font-size: clamp(1.85rem, 3.4vw, 3.15rem);
+    line-height: 1.12;
+    color: #fff;
+  }
+
+  .standard-title .headline-italic {
+    display: block;
+    margin-top: 0.15rem;
+    color: #f0e2c8;
+  }
+
+  .standard-note {
+    max-width: 34rem;
+    margin-top: 0.85rem;
+    font-size: 0.92rem;
+    line-height: 1.55;
+    color: rgba(255, 255, 255, 0.78);
+  }
+
+  @media (min-width: 1100px) {
+    .standard-frame,
+    .standard-copy {
+      min-height: 22rem;
+    }
+
+    .standard-copy {
+      justify-content: center;
+      padding: 2.5rem 3rem;
+      background: linear-gradient(90deg, rgba(22, 14, 10, 0.62) 0%, rgba(22, 14, 10, 0.28) 46%, rgba(22, 14, 10, 0) 72%);
+    }
+  }
+</style>

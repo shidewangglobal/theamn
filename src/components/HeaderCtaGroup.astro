@@ -1,27 +1,44 @@
 ---
 interface Props {
   insightsHref?: string;
+  insightsLabel?: string;
+  marketingHref?: string;
+  marketingLabel?: string;
   connectHref?: string;
+  connectLabel?: string;
   showInsights?: boolean;
+  showMarketing?: boolean;
 }
 
 const {
   insightsHref = '/insights',
+  insightsLabel = 'Insights',
+  marketingHref = '/marketing',
+  marketingLabel = 'Marketing services',
   connectHref = '/#contact',
+  connectLabel = 'Partner',
   showInsights = true,
+  showMarketing = false,
 } = Astro.props;
 ---
 
 <div class="header-cta-group">
   {
+    showMarketing && (
+      <a href={marketingHref} class="header-cta-insights pill-nav-link">
+        {marketingLabel}
+      </a>
+    )
+  }
+  {
     showInsights && (
       <a href={insightsHref} class="header-cta-insights pill-nav-link">
-        <span class="header-cta-insights-label">Insights</span>
+        <span class="header-cta-insights-label">{insightsLabel}</span>
       </a>
     )
   }
   <a href={connectHref} class="header-cta-connect pill-nav-link btn-primary">
-    Connect
+    {connectLabel}
   </a>
 </div>
 

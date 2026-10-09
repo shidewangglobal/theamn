@@ -29,4 +29,17 @@ const insights = defineCollection({
   }),
 });
 
-export const collections = { insights };
+const experiences = defineCollection({
+  type: 'content',
+  schema: z.object({
+    title: z.string(),
+    description: z.string(),
+    publishDate: z.coerce.date(),
+    place: z.string().optional(),
+    coverImage: z.string().default('/images/hero-cover.jpeg'),
+    featured: z.boolean().default(false),
+    draft: z.boolean().default(false),
+  }),
+});
+
+export const collections = { insights, experiences };

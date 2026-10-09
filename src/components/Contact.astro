@@ -1,4 +1,16 @@
 ---
+interface Props {
+  eyebrow?: string;
+  headline?: string;
+  lede?: string;
+}
+
+const {
+  eyebrow = 'Connect',
+  headline = "Let's elevate your brand",
+  lede = 'For more in-depth conversations about how THE AMN can elevate your premium hospitality brand, reach out to our team. We\'d love to explore how authentic storytelling, agile operations, and accelerated performance can transform your digital presence.',
+} = Astro.props;
+
 const formAction = import.meta.env.PUBLIC_FORMSPREE_URL || 'https://formspree.io/f/mqevznok';
 const successReturnUrl = `${Astro.url.origin}${Astro.url.pathname}?sent=1#contact`;
 const isSubmitted = Astro.url.searchParams.get('sent') === '1';
@@ -23,17 +35,15 @@ const timezones = [
   <div class="relative tubik-shell">
     <div class="contact-pair tubik-pair items-start">
       <div class="contact-info">
-        <p class="reveal section-label mb-2.5">Connect</p>
-        <h2 class="contact-headline reveal font-headline-bold mb-3 text-xl text-amn-dark md:mb-4 md:text-2xl lg:text-3xl">
-          Let's elevate your brand
+        <p class="section-label mb-2.5">{eyebrow}</p>
+        <h2 class="contact-headline font-headline-bold mb-3 text-xl text-amn-dark md:mb-4 md:text-2xl lg:text-3xl">
+          {headline}
         </h2>
-        <p class="reveal mb-5 font-body-secondary text-sm leading-relaxed text-amn-brown/75 md:mb-6 md:text-[0.9375rem]">
-          For more in-depth conversations about how THE AMN can elevate your premium hospitality brand,
-          reach out to our team. We'd love to explore how authentic storytelling, agile operations,
-          and accelerated performance can transform your digital presence.
+        <p class="mb-5 font-body-secondary text-sm leading-relaxed text-amn-brown/75 md:mb-6 md:text-[0.9375rem]">
+          {lede}
         </p>
 
-        <dl class="reveal contact-details grid gap-x-5 gap-y-3 font-body-secondary text-sm sm:grid-cols-2">
+        <dl class="contact-details grid gap-x-5 gap-y-3 font-body-secondary text-sm sm:grid-cols-2">
           <div>
             <dt class="font-caption text-[10px] uppercase tracking-wider text-amn-brown/55">Email</dt>
             <dd>
@@ -55,7 +65,7 @@ const timezones = [
         </dl>
       </div>
 
-      <div class="contact-form-wrap reveal">
+      <div class="contact-form-wrap">
         <div id="contact-form-panel" class:list={{ 'contact-panel-hidden': isSubmitted }}>
           <form
             class="contact-form space-y-2.5"

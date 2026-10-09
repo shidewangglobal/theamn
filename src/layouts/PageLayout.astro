@@ -3,6 +3,7 @@ import '../styles/global.css';
 import '../styles/theme-preview.css';
 import SiteHeader from '../components/SiteHeader.astro';
 import Footer from '../components/Footer.astro';
+import { siteGraph } from '../lib/seo/site';
 
 interface Props {
   title: string;
@@ -57,11 +58,21 @@ const robotsDirectives = [
   nofollow ? 'nofollow' : 'follow',
 ].join(', ');
 
+const structuredData = siteGraph(
+  {
+    url: resolvedCanonical,
+    name: documentTitle,
+    description,
+  },
+  jsonLd,
+);
+
 const pageNavLinks = [
-  { href: '/#about', label: 'About' },
-  { href: '/#services', label: 'Services' },
-  { href: '/#tech', label: 'Tech' },
-  { href: '/#collective', label: 'Collective' },
+  { href: '/#growth', label: 'Growth' },
+  { href: '/#capabilities', label: 'Capabilities' },
+  { href: '/#model', label: 'Model' },
+  { href: '/#focus', label: 'Focus' },
+  { href: '/#vision', label: 'Vision' },
 ];
 ---
 
@@ -94,14 +105,10 @@ const pageNavLinks = [
     <link rel="icon" type="image/png" sizes="512x512" href="/favicon.png" />
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
 
-    {
-      jsonLd && (
-        <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
-      )
-    }
+    <script type="application/ld+json" set:html={JSON.stringify(structuredData)} />
   </head>
   <body class="theme-preview min-h-screen overflow-x-hidden text-amn-brown">
-    <SiteHeader homeHref="/" navLinks={pageNavLinks} connectHref="/#contact" />
+    <SiteHeader homeHref="/" navLinks={pageNavLinks} connectHref="/#contact" showInsightsLink={true} />
 
     <main class="page-main">
       <slot />

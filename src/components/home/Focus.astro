@@ -1,0 +1,141 @@
+---
+const industries = [
+  {
+    name: 'Hospitality & Travel',
+    description: 'Distinctive destinations and hospitality experiences with the potential to reach more of the right guests through digital distribution.',
+    src: '/images/home/focus-hospitality.jpg',
+    alt: 'A resort pool at dusk, with lounge chairs and a lit dining terrace',
+    tile: 'travel',
+  },
+  {
+    name: 'Luxury Automotive',
+    description: 'Brands and experiences defined by craftsmanship, distinction and a strong relationship with their customers.',
+    src: '/images/home/focus-auto.jpg',
+    alt: 'A white convertible parked under trees on a brick street',
+    tile: 'auto',
+  },
+  {
+    name: 'Wellness & Lifestyle',
+    description: "Thoughtfully developed products and services that create meaningful value in people's lives.",
+    src: '/images/home/focus-wellness.jpg',
+    alt: 'A stone soaking tub in a quiet spa room',
+    tile: 'wellness',
+  },
+  {
+    name: 'Exclusive Experiences',
+    description: 'Rare and memorable experiences that deserve to reach people who appreciate their distinctiveness.',
+    src: '/images/home/focus-dining.jpg',
+    alt: 'A plated dish and wine glasses at a long dinner table',
+    tile: 'dining',
+  },
+  {
+    name: 'Premium Real Estate',
+    description: 'Distinctive properties and developments with compelling stories and opportunities for digital demand generation.',
+    src: '/images/home/villa.jpg',
+    alt: 'A modern house with a still pool in hard daylight',
+    tile: 'estate',
+  },
+  {
+    name: 'Luxury Products',
+    description: 'Original products built around quality, thoughtful design and a clear reason to be chosen.',
+    src: '/images/home/focus-pearls.jpg',
+    alt: 'A pearl necklace resting in an open box',
+    tile: 'product',
+  },
+];
+---
+
+<section id="focus" class="tubik-section scroll-mt-28">
+  <div class="tubik-shell">
+    <div class="tubik-intro">
+      <div>
+        <p class="section-label mb-2.5">Who we back</p>
+        <h2 class="max-w-xl font-headline text-3xl font-light leading-[1.12] tracking-tight text-amn-dark md:text-4xl">
+          Distinctive products. Exceptional experiences.
+          <span class="headline-italic">Ambitious founders.</span>
+        </h2>
+      </div>
+      <p class="max-w-md font-body-secondary text-sm leading-relaxed text-amn-brown/70 md:justify-self-end md:text-base md:pb-1">
+        We invest in original brands with proven products, a distinctive point of view and the ambition to unlock their next stage of digital growth.
+      </p>
+    </div>
+
+    <div class="focus-atlas">
+      {
+        industries.map((item) => (
+          <figure class:list={['focus-tile', 'bento-image', item.tile]}>
+            <img src={item.src} alt={item.alt} class="h-full w-full object-cover" loading="lazy" />
+            <figcaption class="focus-caption">
+              <span class="block font-headline text-xl font-light leading-tight text-white sm:text-2xl">{item.name}</span>
+              <span class="mt-1.5 block max-w-md font-body-secondary text-[0.8125rem] leading-snug text-white/80">{item.description}</span>
+            </figcaption>
+          </figure>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  .focus-atlas {
+    display: grid;
+    gap: 0.625rem;
+  }
+
+  .focus-tile {
+    position: relative;
+    min-height: 12rem;
+    overflow: hidden;
+  }
+
+  .focus-caption {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 1;
+    line-height: 1.25;
+    padding: 4.5rem 1.1rem 1rem;
+    background: linear-gradient(to top, rgba(8, 10, 12, 0.82) 0%, rgba(8, 10, 12, 0.35) 62%, transparent 100%);
+  }
+
+  .travel {
+    min-height: 16rem;
+  }
+
+  @media (min-width: 768px) {
+    .focus-atlas {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .travel,
+    .product {
+      grid-column: 1 / -1;
+    }
+  }
+
+  @media (min-width: 1100px) {
+    .focus-atlas {
+      grid-template-columns: repeat(12, minmax(0, 1fr));
+    }
+
+    .travel {
+      grid-column: span 7;
+      grid-row: span 2;
+      min-height: 22rem;
+    }
+
+    .auto,
+    .wellness {
+      grid-column: span 5;
+      min-height: 10.5rem;
+    }
+
+    .dining,
+    .estate,
+    .product {
+      grid-column: span 4;
+      min-height: 11rem;
+    }
+  }
+</style>

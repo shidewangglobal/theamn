@@ -15,12 +15,12 @@ const formatDate = (date: Date) =>
 ---
 
 <PageLayout
-  title="Insights | Luxury marketing & GEO"
-  description="Insights, guides, and Q&A on SEO, Generative Engine Optimization, and digital marketing for luxury hospitality brands."
+  title="SEO | Marketing | The AMN"
+  description="Articles on SEO and Generative Engine Optimization for premium brands. Filed under Marketing, then SEO."
   jsonLd={{
     '@context': 'https://schema.org',
     '@type': 'Blog',
-    name: 'THE AMN Insights',
+    name: 'THE AMN Marketing / SEO',
     url: 'https://theamn.network/insights',
     publisher: {
       '@type': 'Organization',
@@ -32,11 +32,14 @@ const formatDate = (date: Date) =>
   <section class="insights-page tubik-section">
     <div class="tubik-shell">
       <header class="insights-masthead">
-        <p class="section-label mb-3 text-accent-italic">Editorial</p>
-        <h1 class="insights-title font-headline font-light tracking-tight text-amn-dark">Insights</h1>
+        <p class="mb-3 font-caption text-[10px] uppercase tracking-[0.2em] text-amn-brown/45">
+          <a href="/marketing" class="transition hover:text-amn-blue">Marketing</a>
+          <span aria-hidden="true"> / </span>
+          <span class="text-amn-blue">SEO</span>
+        </p>
+        <h1 class="insights-title font-headline font-light tracking-tight text-amn-dark">SEO</h1>
         <p class="insights-lede mt-4 max-w-xl font-body-secondary text-base leading-relaxed text-amn-brown/70 md:text-lg">
-          Thought leadership on SEO, Generative Engine Optimization, and performance
-          marketing for premium hotels and resorts.
+          Articles on SEO, Generative Engine Optimization, and performance marketing for premium brands.
         </p>
       </header>
 
@@ -63,7 +66,7 @@ const formatDate = (date: Date) =>
                   </div>
                   <div class="insight-featured__body">
                     <p class="insight-card__category font-caption text-[10px] uppercase tracking-[0.2em] text-amn-blue">
-                      {featured.data.category}
+                      Marketing / SEO
                     </p>
                     <InsightTitle
                       title={featured.data.title}
@@ -103,7 +106,7 @@ const formatDate = (date: Date) =>
                         </div>
                         <div class="insight-card__body">
                           <p class="insight-card__category font-caption text-[10px] uppercase tracking-[0.2em] text-amn-blue">
-                            {entry.data.category}
+                            Marketing / SEO
                           </p>
                           <InsightTitle
                             title={entry.data.title}

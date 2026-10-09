@@ -1,24 +1,30 @@
 ---
 import PreviewLayout from '../layouts/PreviewLayout.astro';
 import Hero from '../components/Hero.astro';
-import About from '../components/About.astro';
-import Pillars from '../components/Pillars.astro';
-import HowWeWork from '../components/HowWeWork.astro';
-import TechEcosystem from '../components/TechEcosystem.astro';
-import Services from '../components/Services.astro';
-import Collective from '../components/Collective.astro';
+import Belief from '../components/home/Belief.astro';
+import Model from '../components/home/Model.astro';
+import Capabilities from '../components/home/Capabilities.astro';
+import Investment from '../components/home/Investment.astro';
+import Focus from '../components/home/Focus.astro';
+import Vision from '../components/home/Vision.astro';
+import Standard from '../components/home/Standard.astro';
 import Contact from '../components/Contact.astro';
 import Footer from '../components/Footer.astro';
 ---
 
 <PreviewLayout>
-  <Hero />
-  <About />
-  <Pillars />
-  <HowWeWork />
-  <TechEcosystem />
-  <Services />
-  <Collective />
-  <Contact />
+  <Hero variant="partner" />
+  <Belief />
+  <Model />
+  <Capabilities />
+  <Investment />
+  <Focus />
+  <Vision />
+  <Standard />
+  <Contact
+    eyebrow="Explore a partnership"
+    headline="Built something worth growing?"
+    lede="If your brand has a distinctive product, a commitment to exceptional experiences and the ambition to grow digitally, let's explore what we could build together."
+  />
   <Footer />
 </PreviewLayout>

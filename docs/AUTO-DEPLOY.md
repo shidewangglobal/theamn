@@ -8,33 +8,43 @@ Studio Publish  →  Sanity webhook  →  Render Deploy Hook  →  npm run build
 
 ## One-time setup
 
-### 1. Create a Render Deploy Hook
+### Option A — Sanity dashboard (recommended)
 
-1. Open [dashboard.render.com](https://dashboard.render.com)
-2. Select **theamn-website**
-3. **Settings** → scroll to **Deploy Hook**
-4. Click **Create Deploy Hook**
-5. Name: `Sanity Insights publish`
-6. Branch: `main`
-7. Copy the URL (looks like `https://api.render.com/deploy/srv-...?key=...`)
+1. Open https://sanity.io/manage → project **THE AMN**
+2. **API** → **Webhooks** → **Create webhook**
+3. Fill in:
 
-### 2. Add to `.env`
+| Field | Value |
+|-------|-------|
+| **Name** | `Render redeploy on Insight publish` |
+| **URL** | Your Render Deploy Hook (see below) |
+| **Dataset** | `production` |
+| **Trigger on** | Create, Update, Delete |
+| **Filter** | `_type == "insight"` |
+| **HTTP method** | `POST` |
+| **Include drafts** | Off |
 
-```env
-RENDER_DEPLOY_HOOK_URL=https://api.render.com/deploy/srv-...?key=...
-```
+4. **Save**
 
-Keep `SANITY_AUTH_TOKEN` (Developer token) in `.env` as well.
+### Where to find the Render Deploy Hook
 
-### 3. Run the setup script
+You already have one — no need to click "Create":
+
+1. [dashboard.render.com](https://dashboard.render.com) → **theamn-website**
+2. **Settings** (left sidebar, bottom)
+3. Right menu → **Deploy**
+4. Scroll to **Deploy hook** — copy the URL (`https://api.render.com/deploy/srv-...?key=...`)
+
+### Option B — CLI script
+
+If your Sanity token has webhook permissions:
 
 ```bash
+# Add to .env first:
+RENDER_DEPLOY_HOOK_URL=https://api.render.com/deploy/srv-...?key=...
+
 npm run setup:auto-deploy
 ```
-
-You should see: `✓ Created webhook "Render redeploy on Insight publish"`.
-
-### 4. Test
 
 1. Open https://theamn.sanity.studio
 2. Edit any Insight → **Publish**

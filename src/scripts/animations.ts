@@ -752,6 +752,7 @@ function refreshScrollTriggers(lenis: Lenis | null) {
 
 export function initAnimations() {
   const lenis = initSmoothScroll();
+  (window as Window & { __amnLenis?: Lenis | null }).__amnLenis = lenis;
   initPillNav(lenis);
   initHeroVideoRotator();
   initHeroEntrance();

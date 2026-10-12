@@ -2,15 +2,15 @@
 const terms = [
   {
     name: 'Partner',
-    description: 'Align on the opportunity and shared ambition.',
+    description: 'Align on the opportunity, and on what the next stage of growth should be.',
   },
   {
     name: 'Invest',
-    description: 'Commit expertise and build for growth.',
+    description: 'Media and expertise are committed before the revenue arrives, so the work can begin.',
   },
   {
     name: 'Share',
-    description: 'Grow through agreed revenue-sharing terms.',
+    description: 'When revenue grows, both sides share it on terms set in advance.',
   },
 ];
 ---
@@ -24,7 +24,7 @@ const terms = [
         <span class="model-revenue headline-italic text-amn-lime">The AMN grows through revenue.</span>
       </h2>
       <p class="mt-4 max-w-2xl font-body-secondary text-base leading-relaxed text-white/75 md:text-lg">
-        We back original brands with our expertise, capabilities and digital growth infrastructure. Our commercial model connects The AMN's return to the revenue generated through our partnership.
+        The brand brings the product and the point of view. The partnership brings media, expertise and the systems that put them to work. As revenue grows, it is shared.
       </p>
 
       <ol class="model-terms">
@@ -48,8 +48,16 @@ const terms = [
   .model-revenue {
     display: block;
     margin-top: 0.15em;
-    white-space: nowrap;
-    font-size: clamp(1.05rem, 2.55vw, 3rem);
+    max-width: 100%;
+    font-size: clamp(1.35rem, 6.4vw, 3rem);
+    text-wrap: balance;
+  }
+
+  @media (min-width: 640px) {
+    .model-revenue {
+      white-space: nowrap;
+      font-size: clamp(1.05rem, 2.55vw, 3rem);
+    }
   }
 
   .model-band {

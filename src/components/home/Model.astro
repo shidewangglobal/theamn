@@ -4,48 +4,47 @@ const steps = [
     name: 'Discover',
     line: 'See where the next stage of growth can come from.',
     description:
-      'We invest our expertise upfront to assess commercial opportunities, uncover overlooked potential and identify new growth avenues that build on existing sales.',
+      'A reading of where demand is being missed, which offers can travel, and what can be added to the sales the brand already makes.',
   },
   {
     name: 'Unlock',
     line: 'Turn the full brand story into customer desire.',
     description:
-      'Bring distinctive products, brand stories and exceptional experiences to life for digital audiences, giving the right customers compelling reasons to discover, engage and buy.',
+      'The product, the story and the experience are shaped into reasons to want the brand, and to take the next step toward it.',
   },
   {
     name: 'Build',
-    line: 'Grow without building every capability in-house.',
+    line: 'Grow without building every capability in\u2011house.',
     description:
-      'Access the expertise, technology and connected systems needed to grow digitally, while founders stay focused on their products, customers and core business.',
+      'Expertise, technology and the people to run them come with the partnership. Founders stay with the product, the customer and the core of the business.',
   },
   {
     name: 'Reach',
     line: 'Reach more of the customers who value the brand.',
     description:
-      'Expand digital reach across relevant audiences and markets, creating more opportunities for high-value customers to discover and engage with original brands.',
+      'The brand is introduced to more of the audiences and markets where it belongs, so the customers who would value it have a real chance to find it.',
   },
   {
     name: 'Convert',
     line: 'Turn customer interest into measurable revenue.',
     description:
-      'Create a seamless path from discovery to inquiry, direct booking or purchase, making it easier for customers to choose and buy from the brand.',
+      'Interest is given a clear path to an enquiry, a direct booking or a purchase, so choosing the brand is straightforward.',
   },
   {
     name: 'Grow Together',
     line: 'Build growth on aligned commercial interests.',
     description:
-      'Our revenue-sharing model aligns commercial interests around agreed results, creating a shared incentive to grow digital revenue over time.',
+      'Return follows the revenue the partnership creates. Both sides keep the same reason to grow it, season after season.',
   },
 ];
 ---
 
 <section id="growth" class="growth-section tubik-section scroll-mt-28">
   <div class="tubik-shell">
-    <h2 class="reveal max-w-3xl font-headline text-3xl font-light leading-[1.12] tracking-tight text-amn-dark md:text-4xl lg:text-5xl">
-      What we build into your growth.
-    </h2>
+    <div class="growth-band">
+      <h2 class="growth-title reveal font-headline font-light">What we build into your growth.</h2>
 
-    <div class="growth" data-growth>
+      <div class="growth" data-growth>
       <div class="growth-snap">
         <div class="growth-scroller" data-growth-scroller data-lenis-prevent>
           {
@@ -101,6 +100,7 @@ const steps = [
             ))
           }
         </div>
+      </div>
       </div>
     </div>
   </div>
@@ -251,29 +251,52 @@ const steps = [
 
 <style>
   .growth-section {
-    padding-top: 3rem;
-    padding-bottom: 3rem;
+    padding-top: 0.75rem;
+    padding-bottom: 0.75rem;
+  }
+
+  .growth-band {
+    border-radius: 1.5rem;
+    background:
+      radial-gradient(ellipse 80% 120% at 0% 100%, rgba(0, 130, 195, 0.28), transparent 55%),
+      #121816;
+    padding: 1.6rem 1.15rem 1.25rem;
+  }
+
+  .growth-title {
+    max-width: 18ch;
+    font-size: clamp(1.7rem, 4vw, 3rem);
+    line-height: 1.12;
+    letter-spacing: -0.02em;
+    color: #fff;
   }
 
   .growth {
     --step: 1;
-    margin-top: 1.5rem;
+    margin-top: 1.35rem;
   }
 
   .growth-desk {
     display: none;
   }
 
+  .growth-snap {
+    max-width: 100%;
+    min-width: 0;
+    overflow: hidden;
+  }
+
   .growth-scroller {
     display: flex;
     gap: 0.75rem;
-    margin-right: -1rem;
-    padding-right: 1rem;
+    max-width: 100%;
+    min-width: 0;
     overflow-x: auto;
     scroll-snap-type: x mandatory;
     scroll-padding-left: 0;
     overscroll-behavior-x: contain;
     scrollbar-width: none;
+    touch-action: pan-x pan-y;
   }
 
   .growth-scroller::-webkit-scrollbar {
@@ -281,16 +304,17 @@ const steps = [
   }
 
   .growth-slide {
-    border: 1px solid rgba(74, 66, 51, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 1.25rem;
-    background: #fff;
-    box-shadow: 0 10px 32px rgba(10, 10, 10, 0.045);
+    background: rgba(255, 255, 255, 0.05);
   }
 
   .growth-slide {
     display: flex;
     flex: 0 0 86%;
     flex-direction: column;
+    width: 86%;
+    min-width: 0;
     scroll-snap-align: start;
     padding: 1.2rem 1.2rem 1.3rem;
   }
@@ -324,14 +348,14 @@ const steps = [
     margin-top: 0.55rem;
     font-size: 1.35rem;
     line-height: 1.25;
-    color: #1c1915;
+    color: #fff;
   }
 
   .growth-copy {
     margin-top: 0.7rem;
     font-size: 0.92rem;
     line-height: 1.6;
-    color: rgba(74, 66, 51, 0.72);
+    color: rgba(255, 255, 255, 0.72);
   }
 
   .growth-meter {
@@ -339,7 +363,7 @@ const steps = [
     margin-top: 0.9rem;
     overflow: hidden;
     border-radius: 999px;
-    background: rgba(0, 160, 240, 0.16);
+    background: rgba(0, 160, 240, 0.2);
   }
 
   .growth-meter span {
@@ -398,7 +422,7 @@ const steps = [
 
   .growth-track::before {
     bottom: 0.95rem;
-    background: rgba(0, 160, 240, 0.16);
+    background: rgba(0, 160, 240, 0.22);
   }
 
   .growth-track::after {
@@ -433,8 +457,8 @@ const steps = [
     width: 0.55rem;
     height: 0.55rem;
     border-radius: 999px;
-    background: #f7f5f1;
-    box-shadow: inset 0 0 0 1.5px rgba(0, 160, 240, 0.4);
+    background: #121816;
+    box-shadow: inset 0 0 0 1.5px rgba(0, 160, 240, 0.55);
     transform: translateY(-50%);
     transition:
       background 0.55s cubic-bezier(0.22, 1, 0.36, 1),
@@ -442,13 +466,12 @@ const steps = [
   }
 
   .growth-tab.is-active {
-    background: #fff;
-    box-shadow: 0 6px 20px rgba(10, 10, 10, 0.06);
+    background: rgba(255, 255, 255, 0.08);
   }
 
   .growth-tab.is-active::before {
     background: #00a0f0;
-    box-shadow: 0 0 0 4px rgba(0, 160, 240, 0.16);
+    box-shadow: 0 0 0 4px rgba(0, 160, 240, 0.2);
   }
 
   .growth-tab-index {
@@ -467,12 +490,12 @@ const steps = [
     font-size: 1.15rem;
     font-weight: 300;
     line-height: 1.15;
-    color: rgba(74, 66, 51, 0.42);
+    color: rgba(255, 255, 255, 0.42);
     transition: color 0.55s cubic-bezier(0.22, 1, 0.36, 1);
   }
 
   .growth-tab.is-active .growth-tab-name {
-    color: #1c1915;
+    color: #fff;
   }
 
   .growth-tab:focus-visible {
@@ -492,13 +515,17 @@ const steps = [
   }
 
   @media (min-width: 900px) {
-    .growth-section {
-      padding-top: 4rem;
-      padding-bottom: 4.25rem;
+    .growth-band {
+      padding: 2.35rem 2.35rem 2rem;
+    }
+
+    .growth-title {
+      max-width: none;
+      font-size: clamp(2rem, 3vw, 3rem);
     }
 
     .growth {
-      margin-top: 2rem;
+      margin-top: 1.75rem;
     }
 
     .growth-snap {
@@ -507,18 +534,17 @@ const steps = [
 
     .growth-desk {
       display: grid;
-      grid-template-columns: minmax(13.5rem, 18rem) minmax(0, 1fr);
-      gap: 1.25rem 2.5rem;
+      grid-template-columns: minmax(13.5rem, 17rem) minmax(0, 1fr);
+      gap: 1.25rem 2rem;
       align-items: stretch;
     }
 
     .growth-detail {
       height: 100%;
       min-height: 0;
-      border: 1px solid rgba(74, 66, 51, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.1);
       border-radius: 1.25rem;
-      background: #fff;
-      box-shadow: 0 10px 32px rgba(10, 10, 10, 0.045);
+      background: rgba(255, 255, 255, 0.04);
     }
 
     .growth-panel {
@@ -528,8 +554,10 @@ const steps = [
     }
 
     .growth-panel .growth-line {
-      max-width: 18em;
-      font-size: clamp(1.45rem, 2vw, 1.85rem);
+      max-width: none;
+      font-size: clamp(1.2rem, 1.45vw, 1.7rem);
+      hyphens: none;
+      text-wrap: nowrap;
     }
 
     .growth-panel .growth-copy {

@@ -2,32 +2,38 @@
 const capabilities = [
   {
     name: 'Creative & Brand Experience',
-    description: 'Make the value of distinctive products unmistakable and give customers compelling reasons to choose them.',
+    description:
+      'Social media and the wider expression of the brand are upgraded with the expertise of the team. The offer becomes more attractive, and it catches attention from the first sight.',
   },
   {
     name: 'Technology & Automation',
-    description: 'Access connected digital infrastructure and automation without having to assemble every capability in-house.',
+    description:
+      'Founders do not have to fund a technology build of their own. The partnership covers the systems and the automation the brand needs to operate, learn and scale.',
   },
   {
     name: 'Performance & Acquisition',
-    description: 'Reach relevant customers and generate measurable demand across digital channels.',
+    description:
+      'Acquisition is planned around the customers worth reaching. Spend, creative and channel sit together, and the demand that comes back can be read in numbers.',
   },
   {
     name: 'Digital Commerce',
-    description: 'Turn customer interest into action through stronger websites, landing pages and conversion journeys.',
+    description:
+      'Websites, landing pages and the path to purchase are built as one journey, so interest has a natural place to become an enquiry, a booking or a sale.',
   },
   {
     name: 'CRM & Customer Lifecycle',
-    description: 'Encourage repeat business, deepen customer relationships and unlock more value over time.',
+    description:
+      'After the first purchase, the relationship is looked after. The brand stays present in the life of the customer, and more of the value in that relationship is unlocked over time.',
   },
   {
     name: 'Commercial Intelligence',
-    description: 'Understand what drives revenue and make informed decisions about where to invest next.',
+    description:
+      'The numbers are read for what they actually say about revenue. Founders can see what is working, and decide with more confidence where the next effort belongs.',
   },
 ];
 ---
 
-<section id="capabilities" class="cap-section tubik-section-alt scroll-mt-28">
+<section id="capabilities" class="cap-section tubik-section scroll-mt-28">
   <div class="tubik-shell">
     <div class="cap-layout">
       <div class="cap-intro">
@@ -36,14 +42,14 @@ const capabilities = [
           Everything digital growth needs, working as one.
         </h2>
         <p class="reveal mt-4 max-w-sm font-body-secondary text-sm leading-relaxed text-amn-brown/70 md:text-base">
-          One investment in expertise. Connected capabilities across the entire customer journey.
+          The expertise behind the partnership, from how the brand is expressed to how revenue is understood.
         </p>
       </div>
 
-      <ol class="cap-list">
+      <ol class="cap-grid">
         {
           capabilities.map((item, index) => (
-            <li class="cap-row">
+            <li class="cap-card reveal">
               <span class="cap-index font-caption">{String(index + 1).padStart(2, '0')}</span>
               <h3 class="cap-name font-headline">{item.name}</h3>
               <p class="cap-copy font-body-secondary">{item.description}</p>
@@ -57,35 +63,41 @@ const capabilities = [
 
 <style>
   .cap-section {
-    padding-top: 3.5rem;
-    padding-bottom: 3.5rem;
+    padding-top: 1.25rem;
+    padding-bottom: 1.25rem;
   }
 
   .cap-layout {
     display: grid;
-    gap: 2.25rem;
+    gap: 1.25rem;
   }
 
-  .cap-list {
-    border-top: 1px solid rgba(74, 66, 51, 0.14);
-  }
-
-  .cap-row {
+  .cap-grid {
     display: grid;
-    grid-template-columns: 2rem minmax(0, 1fr);
-    gap: 0.35rem 1rem;
-    align-items: baseline;
-    padding: 1.15rem 0 1.2rem;
-    border-bottom: 1px solid rgba(74, 66, 51, 0.14);
+    gap: 0.625rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .cap-card {
+    min-width: 0;
+    border: 1px solid rgba(74, 66, 51, 0.08);
+    border-radius: 1.25rem;
+    background: #fff;
+    box-shadow: 0 10px 32px rgba(10, 10, 10, 0.045);
+    padding: 1.15rem 1.15rem 1.25rem;
   }
 
   .cap-index {
+    display: block;
     font-size: 11px;
     letter-spacing: 0.16em;
-    color: rgba(74, 66, 51, 0.45);
+    color: #00a0f0;
   }
 
   .cap-name {
+    margin-top: 0.45rem;
     font-size: 1.2rem;
     font-weight: 400;
     line-height: 1.25;
@@ -93,42 +105,35 @@ const capabilities = [
   }
 
   .cap-copy {
-    grid-column: 2;
+    margin-top: 0.45rem;
     font-size: 0.92rem;
     line-height: 1.55;
-    color: rgba(74, 66, 51, 0.62);
+    color: rgba(74, 66, 51, 0.72);
   }
 
   @media (min-width: 900px) {
     .cap-section {
-      padding-top: 5rem;
-      padding-bottom: 5rem;
+      padding-top: 1.75rem;
+      padding-bottom: 1.75rem;
     }
 
     .cap-layout {
-      grid-template-columns: minmax(16rem, 0.78fr) minmax(0, 1.35fr);
-      gap: 4.5rem;
+      grid-template-columns: minmax(15rem, 0.72fr) minmax(0, 1.45fr);
+      gap: 1.75rem 2rem;
       align-items: start;
     }
 
     .cap-intro {
       position: sticky;
       top: 6.5rem;
-      padding-top: 0.35rem;
     }
 
-    .cap-row {
-      grid-template-columns: 2.25rem minmax(11rem, 0.85fr) minmax(0, 1.15fr);
-      column-gap: 1.5rem;
-      padding: 1.35rem 0;
-    }
-
-    .cap-copy {
-      grid-column: auto;
+    .cap-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 
     .cap-name {
-      font-size: 1.35rem;
+      font-size: 1.28rem;
     }
   }
 </style>

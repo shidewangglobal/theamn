@@ -88,20 +88,24 @@ const networkGroup = {
 
         {/* Desktop — two columns side by side */}
         <div class="how-boxes-row bento-grid hidden grid-cols-2 items-stretch sm:grid">
-          <div class="how-col-header bento-solid bento-p-sm flex flex-col justify-center">
+          <div class="how-col-header bento-solid bento-p-sm flex min-w-0 flex-col justify-center">
             <h3 class="how-col-title font-headline-bold text-sm font-bold uppercase leading-tight tracking-[0.12em] text-amn-dark md:text-base lg:text-lg">
-              THE CORE HUB,<br />HO CHI MINH
+              {hubGroup.titleLines.map((line) => (
+                <span class="block">{line}</span>
+              ))}
             </h3>
-            <p class="how-col-desc mt-2 font-body-secondary text-xs leading-snug text-amn-brown/70 md:text-sm lg:whitespace-nowrap">
+            <p class="how-col-desc mt-2 font-body-secondary text-xs leading-snug text-amn-brown/70 md:text-sm">
               {hubGroup.description}
             </p>
           </div>
 
-          <div class="how-col-header bento-solid bento-p-sm flex flex-col justify-center">
+          <div class="how-col-header bento-solid bento-p-sm flex min-w-0 flex-col justify-center">
             <h3 class="how-col-title font-headline-bold text-sm font-bold uppercase leading-tight tracking-[0.12em] text-amn-dark md:text-base lg:text-lg">
-              CROSS-CULTURAL EXPERT NETWORK
+              {networkGroup.titleLines.map((line) => (
+                <span class="block">{line}</span>
+              ))}
             </h3>
-            <p class="how-col-desc mt-2 font-body-secondary text-xs leading-snug text-amn-brown/70 md:text-sm lg:whitespace-nowrap">
+            <p class="how-col-desc mt-2 font-body-secondary text-xs leading-snug text-amn-brown/70 md:text-sm">
               {networkGroup.description}
             </p>
           </div>
@@ -144,6 +148,17 @@ const networkGroup = {
 </section>
 
 <style>
+  .how-col-header {
+    overflow: visible;
+    height: auto;
+  }
+
+  .how-col-desc {
+    white-space: normal;
+    overflow: visible;
+    text-wrap: pretty;
+  }
+
   .how-lists-sync {
     position: relative;
   }

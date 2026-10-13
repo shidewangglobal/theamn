@@ -2,37 +2,55 @@
 const steps = [
   {
     name: 'Discover',
-    line: 'See where the next stage of growth can come from.',
+    line1: 'See where the next stage',
+    line2before: 'of ',
+    key: 'growth',
+    line2after: ' can come from.',
     description:
       'A reading of where demand is being missed, which offers can travel, and what can be added to the sales the brand already makes.',
   },
   {
     name: 'Unlock',
-    line: 'Turn the full brand story into customer desire.',
+    line1: 'Turn the full brand story',
+    line2before: 'into ',
+    key: 'customer desire',
+    line2after: '.',
     description:
       'The product, the story and the experience are shaped into reasons to want the brand, and to take the next step toward it.',
   },
   {
     name: 'Build',
-    line: 'Grow without building every capability in\u2011house.',
+    line1: 'Grow without building',
+    line2before: 'every capability ',
+    key: 'in\u2011house',
+    line2after: '.',
     description:
       'Expertise, technology and the people to run them come with the partnership. Founders stay with the product, the customer and the core of the business.',
   },
   {
     name: 'Reach',
-    line: 'Reach more of the customers who value the brand.',
+    line1: 'Reach more of the customers',
+    line2before: 'who ',
+    key: 'value the brand',
+    line2after: '.',
     description:
       'The brand is introduced to more of the audiences and markets where it belongs, so the customers who would value it have a real chance to find it.',
   },
   {
     name: 'Convert',
-    line: 'Turn customer interest into measurable revenue.',
+    line1: 'Turn customer interest',
+    line2before: 'into ',
+    key: 'measurable revenue',
+    line2after: '.',
     description:
       'Interest is given a clear path to an enquiry, a direct booking or a purchase, so choosing the brand is straightforward.',
   },
   {
     name: 'Grow Together',
-    line: 'Build growth on aligned commercial interests.',
+    line1: 'Build growth on aligned',
+    line2before: '',
+    key: 'commercial interests',
+    line2after: '.',
     description:
       'Return follows the revenue the partnership creates. Both sides keep the same reason to grow it, season after season.',
   },
@@ -54,7 +72,10 @@ const steps = [
                   <span>{String(index + 1).padStart(2, '0')}</span>
                   {step.name}
                 </p>
-                <p class="growth-line font-headline font-light">{step.line}</p>
+                <p class="growth-line font-headline font-light">
+                  <span class="growth-line-row">{step.line1}</span>
+                  <span class="growth-line-row">{step.line2before}<span class="growth-key">{step.key}</span>{step.line2after}</span>
+                </p>
                 <p class="growth-copy">{step.description}</p>
               </article>
             ))
@@ -94,7 +115,10 @@ const steps = [
                 data-growth-panel={String(index)}
                 aria-hidden={index === 0 ? 'false' : 'true'}
               >
-                <p class="growth-line font-headline font-light">{step.line}</p>
+                <p class="growth-line font-headline font-light">
+                  <span class="growth-line-row">{step.line1}</span>
+                  <span class="growth-line-row">{step.line2before}<span class="growth-key">{step.key}</span>{step.line2after}</span>
+                </p>
                 <p class="growth-copy">{step.description}</p>
               </div>
             ))
@@ -188,13 +212,19 @@ const steps = [
       __amnLenis?: { stop: () => void; start: () => void; scroll: number; scrollTo: (value: number, opts?: { immediate?: boolean; force?: boolean }) => void } | null;
     }).__amnLenis;
 
-    const engaged = () => {
+    const engaged = (dir: number) => {
       if (!section || !desktop.matches || reduced.matches) return false;
       const rect = section.getBoundingClientRect();
-      const headerOffset = 112;
-      const reachedTop = rect.top <= headerOffset;
-      const fullBlockVisible = rect.bottom > headerOffset + Math.min(rect.height * 0.72, window.innerHeight * 0.55);
-      return reachedTop && fullBlockVisible;
+      const header = 112;
+      const room = window.innerHeight - header;
+      const fits = rect.height <= room + 36;
+      const topReached = rect.top <= header + 8;
+      const stillThere = fits
+        ? rect.bottom > header + rect.height * 0.72
+        : rect.bottom > window.innerHeight * 0.55;
+      if (!topReached || !stillThere) return false;
+      if (dir < 0) return rect.top >= header - 28 && rect.bottom <= window.innerHeight + 16;
+      return true;
     };
 
     const hold = () => {
@@ -212,12 +242,12 @@ const steps = [
     window.addEventListener(
       'wheel',
       (event) => {
-        if (!engaged()) {
+        const dir = Math.sign(event.deltaY);
+        if (!dir) return;
+        if (!engaged(dir)) {
           release();
           return;
         }
-        const dir = Math.sign(event.deltaY);
-        if (!dir) return;
         const next = index + dir;
         if (next < 0 || next >= tabs.length) {
           release();
@@ -349,6 +379,14 @@ const steps = [
     font-size: 1.35rem;
     line-height: 1.25;
     color: #fff;
+  }
+
+  .growth-line-row + .growth-line-row::before {
+    content: ' ';
+  }
+
+  .growth-key {
+    color: #5eb4ff;
   }
 
   .growth-copy {
@@ -548,21 +586,45 @@ const steps = [
     }
 
     .growth-panel {
+      justify-content: flex-start;
+      padding-top: 2.75rem;
       background: transparent;
       border: 0;
       box-shadow: none;
     }
 
+    .growth-panel::before {
+      order: 2;
+      margin-top: 1.05rem;
+      margin-bottom: 0;
+    }
+
     .growth-panel .growth-line {
+      order: 1;
+      margin-top: 0;
       max-width: none;
-      font-size: clamp(1.2rem, 1.45vw, 1.7rem);
+      font-family: Georgia, 'Times New Roman', serif;
+      font-style: italic;
+      font-weight: 400;
+      font-size: clamp(1.85rem, 2.35vw, 2.45rem);
+      line-height: 1.18;
       hyphens: none;
-      text-wrap: nowrap;
+      text-wrap: wrap;
+    }
+
+    .growth-panel .growth-line-row {
+      display: block;
+      white-space: nowrap;
+    }
+
+    .growth-panel .growth-line-row + .growth-line-row::before {
+      content: none;
     }
 
     .growth-panel .growth-copy {
+      order: 3;
       max-width: 40rem;
-      margin-top: 0.8rem;
+      margin-top: 1.05rem;
       font-size: 0.98rem;
     }
   }

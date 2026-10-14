@@ -81,6 +81,7 @@
 @layer base {
   html {
     scroll-behavior: auto; /* Lenis handles smooth scroll */
+    overscroll-behavior-x: none;
   }
 
   html.lenis,
@@ -103,10 +104,29 @@
   body {
     @apply font-body text-amn-brown antialiased;
     background-color: #f2f0eb;
+    overscroll-behavior-x: none;
   }
 
   ::selection {
     @apply bg-amn-blue/20 text-amn-dark;
+  }
+}
+
+/* Phone and tablet: a sideways swipe must not drag these sections.
+   The growth carousel is the one strip that still moves horizontally. */
+@media (max-width: 899px) {
+  #site-header,
+  #hero,
+  #opportunity,
+  #capabilities,
+  #model,
+  #focus,
+  #vision,
+  #standard,
+  #contact,
+  footer {
+    max-width: 100%;
+    touch-action: pan-y pinch-zoom;
   }
 }
 

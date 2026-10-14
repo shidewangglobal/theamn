@@ -30,8 +30,13 @@ const year = new Date().getFullYear();
 
     <div class="footer-meta flex flex-wrap items-center gap-x-3 gap-y-1 font-caption text-xs text-amn-brown/45">
       <span>&copy; {year} The AMN Limited</span>
-      <span class="hidden text-amn-brown/25 sm:inline" aria-hidden="true">·</span>
-      <a href="https://theamn.network" class="text-amn-brown/55 transition hover:text-amn-blue">theamn.network</a>
+      <span class="footer-identity">
+        Ho Chi Minh City, Vietnam
+        <span aria-hidden="true"> · </span>
+        <a href="https://theamn.network" class="text-amn-brown/55 transition hover:text-amn-blue">theamn.network</a>
+        <span aria-hidden="true"> . </span>
+        A Business Growth & Investment Network
+      </span>
     </div>
   </div>
 </footer>
@@ -39,6 +44,10 @@ const year = new Date().getFullYear();
 <style>
   .footer-bar {
     row-gap: 0.75rem;
+  }
+
+  .footer-identity {
+    min-width: 0;
   }
 
   @media (min-width: 768px) {

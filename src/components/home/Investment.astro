@@ -19,13 +19,18 @@ const terms = [
   <div class="tubik-shell">
     <div class="model-band">
       <p class="font-caption text-[10px] uppercase tracking-[0.22em] text-white/55">Expertise-led investment</p>
-      <h2 class="mt-3 font-headline font-light leading-tight text-white">
-        <span class="block text-3xl md:text-4xl lg:text-5xl">Brands get invested in.</span>
-        <span class="model-revenue headline-italic">The AMN grows through revenue.</span>
+      <h2 class="model-headline mt-3 font-headline font-light text-white">
+        <span class="model-line">Life is shaped by what&nbsp;we</span>
+        <span class="model-revenue headline-italic">bring into it.</span>
       </h2>
-      <p class="mt-4 max-w-2xl font-body-secondary text-base leading-relaxed text-white/75 md:text-lg">
-        The brand brings the product and the point of view. The partnership brings media, expertise and the systems that put them to work. As revenue grows, it is shared.
-      </p>
+      <div class="mt-4 flex max-w-2xl flex-col gap-4 font-body-secondary text-base leading-relaxed text-white/75 md:text-lg">
+        <p>
+          Our view of the world is shaped by the places we visit, the products and experiences we choose. Behind them are builders who see possibilities others may overlook, and commit themselves to bringing new ideas to life.
+        </p>
+        <p>
+          Backing the right brands means investing in their potential, helping brilliant ideas become experiences people value, businesses that thrive and opportunities that benefit everyone involved.
+        </p>
+      </div>
 
       <ol class="model-terms">
         {
@@ -45,19 +50,26 @@ const terms = [
 </section>
 
 <style>
+  .model-headline {
+    max-width: 12em;
+    font-size: clamp(1.85rem, 4.4vw, 3.15rem);
+    line-height: 1.08;
+  }
+
+  .model-line,
   .model-revenue {
     display: block;
-    margin-top: 0.15em;
-    max-width: 100%;
-    font-size: clamp(1.35rem, 6.4vw, 3rem);
+  }
+
+  .model-revenue {
+    margin-top: 0.08em;
     color: #5eb4ff;
-    text-wrap: balance;
+    white-space: nowrap;
   }
 
   @media (min-width: 640px) {
-    .model-revenue {
+    .model-line {
       white-space: nowrap;
-      font-size: clamp(1.05rem, 2.55vw, 3rem);
     }
   }
 

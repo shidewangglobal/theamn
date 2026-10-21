@@ -1,19 +1,6 @@
----
-const partnerLogos = Array.from({ length: 20 }, (_, i) => {
-  const num = String(i + 1).padStart(2, '0');
-  const ext = i === 3 || i === 4 ? 'jpeg' : 'png';
-  return {
-    src: `/images/partners/partner-${num}.${ext}`,
-    alt: `Partner logo ${num}`,
-  };
-});
-
-const allLogos = [...partnerLogos, ...partnerLogos];
----
-
-<section id="collective" class="tubik-section-alt overflow-hidden">
+<section id="collective" class="tubik-section-alt">
   <div class="tubik-shell">
-    <div class="bento-solid bento-p-md mb-2.5 text-center md:mb-3">
+    <div class="bento-solid bento-p-md text-center">
       <p class="reveal section-label mb-2.5">Our Collective</p>
       <h2 class="reveal font-headline-bold mx-auto text-[1.35rem] whitespace-nowrap text-amn-dark sm:text-2xl md:text-3xl lg:text-4xl">
         Trusted by <span class="headline-italic">iconic brands</span> across continents
@@ -22,93 +9,5 @@ const allLogos = [...partnerLogos, ...partnerLogos];
         A network of premium hospitality leaders. Our strong portfolio of iconic brands spans continents.
       </p>
     </div>
-
-    <div class="collective-marquee-viewport reveal relative overflow-hidden py-2">
-      <div class="pointer-events-none absolute left-0 top-0 z-10 h-full w-12 bg-gradient-to-r from-[#E0DACE] to-transparent sm:w-16 md:w-20"></div>
-      <div class="pointer-events-none absolute right-0 top-0 z-10 h-full w-12 bg-gradient-to-l from-[#E0DACE] to-transparent sm:w-16 md:w-20"></div>
-
-      <div class="marquee-track collective-marquee-track">
-        {allLogos.map((logo, i) => (
-          <div class="marquee-item">
-            <img
-              src={logo.src}
-              alt={logo.alt}
-              class="collective-logo max-h-10 w-full object-contain opacity-80 transition duration-[600ms] ease-[cubic-bezier(0.22,1,0.36,1)] hover:opacity-100"
-              loading="lazy"
-              width="120"
-              height="40"
-              data-logo-index={i % 20}
-            />
-          </div>
-        ))}
-      </div>
-    </div>
   </div>
 </section>
-
-<style>
-  .collective-marquee-viewport {
-    width: 100%;
-    overflow: hidden;
-    -webkit-mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
-    mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
-  }
-
-  .collective-marquee-track {
-    display: flex;
-    width: max-content;
-    gap: 0.625rem;
-    -webkit-animation: collective-marquee-ltr 36s linear infinite;
-    animation: collective-marquee-ltr 36s linear infinite;
-    -webkit-backface-visibility: hidden;
-    backface-visibility: hidden;
-  }
-
-  .collective-marquee-track .marquee-item {
-    height: 4rem;
-    width: 8.5rem;
-    flex-shrink: 0;
-    padding-left: 1.25rem;
-    padding-right: 1.25rem;
-  }
-
-  @media (min-width: 640px) {
-    .collective-marquee-track {
-      gap: 2rem;
-      animation-duration: 42s;
-    }
-
-    .collective-marquee-track .marquee-item {
-      height: 4rem;
-      width: 9rem;
-    }
-  }
-
-  @-webkit-keyframes collective-marquee-ltr {
-    from {
-      -webkit-transform: translate3d(-50%, 0, 0);
-      transform: translate3d(-50%, 0, 0);
-    }
-    to {
-      -webkit-transform: translate3d(0, 0, 0);
-      transform: translate3d(0, 0, 0);
-    }
-  }
-
-  @keyframes collective-marquee-ltr {
-    from {
-      -webkit-transform: translate3d(-50%, 0, 0);
-      transform: translate3d(-50%, 0, 0);
-    }
-    to {
-      -webkit-transform: translate3d(0, 0, 0);
-      transform: translate3d(0, 0, 0);
-    }
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .collective-marquee-track {
-      animation-duration: 100s;
-    }
-  }
-</style>

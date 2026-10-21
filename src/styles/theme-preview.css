@@ -160,15 +160,6 @@
   background-color: var(--preview-gray) !important;
 }
 
-/* Collective marquee fades → gray canvas */
-.theme-preview #collective .pointer-events-none.absolute.left-0 {
-  background: linear-gradient(to right, var(--preview-gray), transparent) !important;
-}
-
-.theme-preview #collective .pointer-events-none.absolute.right-0 {
-  background: linear-gradient(to left, var(--preview-gray), transparent) !important;
-}
-
 /* Tech partnership idle — keep white cards on dark (unchanged) */
 
 /* Preview chrome */

@@ -32,24 +32,38 @@ const formatDate = (date: Date) =>
   ogImage={coverImage}
   ogType="article"
   canonicalUrl={pageUrl}
-  jsonLd={{
-    '@context': 'https://schema.org',
-    '@type': 'Article',
-    headline: title,
-    description,
-    datePublished: publishDate.toISOString(),
-    image: coverImage.startsWith('http') ? coverImage : `https://theamn.network${coverImage}`,
-    url: pageUrl,
-    author: {
-      '@type': 'Organization',
-      name: 'The AMN Limited',
+  articlePublishedTime={publishDate.toISOString()}
+  articleModifiedTime={publishDate.toISOString()}
+  jsonLd={[
+    {
+      '@type': 'Article',
+      headline: title,
+      description,
+      datePublished: publishDate.toISOString(),
+      dateModified: publishDate.toISOString(),
+      image: coverImage.startsWith('http') ? coverImage : `https://theamn.network${coverImage}`,
+      url: pageUrl,
+      mainEntityOfPage: pageUrl,
+      author: {
+        '@type': 'Organization',
+        name: 'The AMN Limited',
+        url: 'https://theamn.network',
+      },
+      publisher: {
+        '@type': 'Organization',
+        name: 'The AMN Limited',
+        url: 'https://theamn.network',
+      },
     },
-    publisher: {
-      '@type': 'Organization',
-      name: 'The AMN Limited',
-      url: 'https://theamn.network',
+    {
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://theamn.network' },
+        { '@type': 'ListItem', position: 2, name: 'Experiences', item: 'https://theamn.network/experiences' },
+        { '@type': 'ListItem', position: 3, name: title, item: pageUrl },
+      ],
     },
-  }}
+  ]}
 >
   <article class="tubik-section">
     <div class="tubik-shell max-w-3xl">
@@ -75,7 +89,7 @@ const formatDate = (date: Date) =>
 
       <img
         src={coverImage}
-        alt=""
+        alt={title}
         class="mt-8 aspect-[16/9] w-full rounded-3xl object-cover"
         width="1200"
         height="675"

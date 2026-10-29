@@ -112,6 +112,7 @@ function mapSanityInsight(doc: SanityInsight): InsightRecord {
     publishDate: new Date(doc.publishDate),
     updatedDate: doc.updatedDate ? new Date(doc.updatedDate) : undefined,
     category: doc.category,
+    section: 'SEO',
     coverImage,
     featured: Boolean(doc.featured),
     author: doc.author || 'The AMN Limited',
@@ -167,10 +168,12 @@ function mapMarkdownInsight(entry: CollectionEntry<'insights'>): InsightRecord {
     publishDate: entry.data.publishDate,
     updatedDate: entry.data.updatedDate,
     category: entry.data.category,
+    section: entry.data.section,
     coverImage,
-        featured: entry.data.featured,
-        author: 'The AMN Limited',
-        closingTitle: entry.data.closingTitle,
+    coverAlt: entry.data.coverAlt,
+    featured: entry.data.featured,
+    author: 'The AMN Limited',
+    closingTitle: entry.data.closingTitle,
     closing: entry.data.closing,
     faqs: entry.data.faqs,
     seo,
@@ -190,15 +193,15 @@ async function getMarkdownInsights(): Promise<InsightRecord[]> {
 }
 
 export async function getPublishedInsights(): Promise<InsightRecord[]> {
+  const markdownInsights = await getMarkdownInsights();
+  const bySlug = new Map(markdownInsights.map((item) => [item.slug, item]));
+
   if (isSanityConfigured()) {
     const sanityInsights = await getSanityInsights();
-    if (sanityInsights.length > 0) {
-      return sanityInsights.sort((a, b) => b.data.publishDate.valueOf() - a.data.publishDate.valueOf());
-    }
+    for (const item of sanityInsights) bySlug.set(item.slug, item);
   }
 
-  const markdownInsights = await getMarkdownInsights();
-  return markdownInsights.sort((a, b) => b.data.publishDate.valueOf() - a.data.publishDate.valueOf());
+  return [...bySlug.values()].sort((a, b) => b.data.publishDate.valueOf() - a.data.publishDate.valueOf());
 }
 
 export async function getInsightBySlug(slug: string): Promise<InsightRecord | undefined> {

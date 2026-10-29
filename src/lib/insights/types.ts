@@ -1,4 +1,5 @@
 export type InsightCategory = 'Insights' | 'Q&A' | 'Guides';
+export type InsightSection = 'SEO' | 'Growing brands';
 
 export type InsightFaq = {
   question: string;
@@ -28,7 +29,9 @@ export type InsightData = {
   publishDate: Date;
   updatedDate?: Date;
   category: InsightCategory;
+  section: InsightSection;
   coverImage: string;
+  coverAlt?: string;
   featured: boolean;
   author: string;
   closingTitle: string;

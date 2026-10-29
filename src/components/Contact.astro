@@ -188,6 +188,13 @@ const timezones = [
     contactStatus.hidden = !message;
   };
 
+  const trackLead = () => {
+    window.fbq?.('track', 'Lead');
+    window.gtag?.('event', 'generate_lead', {
+      method: 'contact_form',
+    });
+  };
+
   const showThankYou = () => {
     contactFormPanel?.classList.add('contact-panel-hidden');
     contactThankYou?.classList.remove('contact-panel-hidden');
@@ -222,6 +229,7 @@ const timezones = [
 
   if (new URLSearchParams(window.location.search).get('sent') === '1') {
     showThankYou();
+    trackLead();
     history.replaceState(null, '', `${window.location.pathname}#contact`);
   }
 
@@ -274,6 +282,7 @@ const timezones = [
         }
 
         showThankYou();
+        trackLead();
       } catch (error) {
         const message =
           error instanceof Error ? error.message : 'Unable to submit your request right now.';

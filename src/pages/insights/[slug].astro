@@ -1,6 +1,7 @@
 ---
 import PageLayout from '../../layouts/PageLayout.astro';
 import InsightTitle from '../../components/InsightTitle.astro';
+import { organizationId } from '../../lib/seo/site';
 import { getPublishedInsights, getMarkdownInsightContent } from '../../lib/insights/repository';
 
 export async function getStaticPaths() {
@@ -20,7 +21,22 @@ const markdownContent =
 const Content = markdownContent?.Content;
 
 const allInsights = await getPublishedInsights();
-const relatedInsights = allInsights.filter((item) => item.slug !== slug).slice(0, 3);
+const sectionInsights = allInsights
+  .filter((item) => item.data.section === data.section)
+  .sort((a, b) =>
+    data.section === 'Growing brands'
+      ? a.data.publishDate.valueOf() - b.data.publishDate.valueOf()
+      : b.data.publishDate.valueOf() - a.data.publishDate.valueOf(),
+  );
+const relatedInsights = [
+  ...sectionInsights.filter((item) => item.slug !== slug),
+  ...allInsights.filter((item) => item.slug !== slug && item.data.section !== data.section),
+];
+
+const sectionLabel = data.section;
+const sectionHash = data.section === 'Growing brands' ? 'growing-brands' : 'seo';
+const sectionUrl = `https://theamn.network/insights#${sectionHash}`;
+const isGrowing = data.section === 'Growing brands';
 
 const formatDate = (date: Date) =>
   date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
@@ -43,22 +59,23 @@ const faqSchema = data.faqs.map((item) => ({
 
 const articleJsonLd = {
   '@type': 'Article',
+  '@id': `${insightUrl}#article`,
   headline: data.title,
   description: data.description,
+  articleSection: `Marketing / ${sectionLabel}`,
+  inLanguage: 'en',
+  isAccessibleForFree: true,
   datePublished: data.publishDate.toISOString(),
   dateModified: (data.updatedDate ?? data.publishDate).toISOString(),
   url: insightUrl,
   image: seo.ogImage,
-  author: {
-    '@type': 'Organization',
-    name: data.author,
+  author: { '@id': organizationId },
+  publisher: { '@id': organizationId },
+  mainEntityOfPage: { '@type': 'WebPage', '@id': `${insightUrl}#webpage` },
+  speakable: {
+    '@type': 'SpeakableSpecification',
+    cssSelector: ['.insight-deck', '.insight-prose h2', '.insight-faq__answer'],
   },
-  publisher: {
-    '@type': 'Organization',
-    name: 'The AMN Limited',
-    url: 'https://theamn.network',
-  },
-  mainEntityOfPage: insightUrl,
 };
 
 const breadcrumbJsonLd = {
@@ -79,8 +96,8 @@ const breadcrumbJsonLd = {
     {
       '@type': 'ListItem',
       position: 3,
-      name: 'SEO',
-      item: 'https://theamn.network/insights',
+      name: sectionLabel,
+      item: sectionUrl,
     },
     {
       '@type': 'ListItem',
@@ -118,18 +135,29 @@ const jsonLd = {
   noindex={seo.noindex}
   nofollow={seo.nofollow}
   ogType="article"
+  articlePublishedTime={data.publishDate.toISOString()}
+  articleModifiedTime={(data.updatedDate ?? data.publishDate).toISOString()}
   jsonLd={jsonLd}
 >
+  <script is:inline define:vars={{ articleSlug: slug, articleTitle: data.title, articleSection: sectionLabel }}>
+    window.gtag?.('event', 'article_view', {
+      article_slug: articleSlug,
+      article_title: articleTitle,
+      article_section: articleSection,
+    });
+    window.fbq?.('track', 'ViewContent', {
+      content_name: articleTitle,
+      content_category: articleSection,
+      content_type: 'article',
+    });
+  </script>
   <article class:list={['insight-article tubik-section', isQaArticle && 'insight-article--qa']}>
     <div class="tubik-shell insight-article__shell">
-      <a href="/insights" class="insight-back font-caption text-xs uppercase tracking-wider text-amn-brown/50 transition hover:text-amn-blue">
-        ← Marketing / SEO
+      <a href={`/insights#${sectionHash}`} class="insight-back font-caption text-xs uppercase tracking-wider text-amn-brown/50 transition hover:text-amn-blue">
+        ← Marketing / {sectionLabel}
       </a>
 
       <header class="insight-header mt-4 max-w-4xl">
-        <p class="font-caption mb-2 text-[10px] uppercase tracking-[0.2em] text-amn-blue">
-          Marketing / SEO
-        </p>
         <InsightTitle
           as="h1"
           title={data.title}
@@ -142,12 +170,15 @@ const jsonLd = {
         >
           {formatDate(data.publishDate)}
         </time>
+        <p class="mt-2 font-caption text-[10px] uppercase tracking-wider text-amn-brown/45">
+          Published by {data.author}
+        </p>
       </header>
 
       <div class="insight-cover mt-8 overflow-hidden rounded-[1.25rem] border border-amn-brown/10">
         <img
           src={data.coverImage}
-          alt=""
+          alt={data.coverAlt || data.title}
           class="insight-cover__image h-full w-full object-cover"
           width="1400"
           height="700"
@@ -201,17 +232,23 @@ const jsonLd = {
               {data.closing}
             </p>
             <p class="insight-closing__links mt-4 font-body-secondary text-sm leading-relaxed text-amn-brown/75">
-              <a
-                href="https://geoauditor.theamn.network/"
-                class="text-amn-blue underline-offset-2 transition hover:underline"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Run a free GEO audit
-              </a>
+              {isGrowing ? (
+                <a href="/#contact" class="text-amn-blue underline-offset-2 transition hover:underline">
+                  Explore a partnership
+                </a>
+              ) : (
+                <a
+                  href="https://geoauditor.theamn.network/"
+                  class="text-amn-blue underline-offset-2 transition hover:underline"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Run a free GEO audit
+                </a>
+              )}
               <span class="text-amn-brown/30" aria-hidden="true"> · </span>
-              <a href="/#contact" class="text-amn-blue underline-offset-2 transition hover:underline">
-                Connect with our team
+              <a href={`/insights#${sectionHash}`} class="text-amn-blue underline-offset-2 transition hover:underline">
+                Marketing / {sectionLabel}
               </a>
             </p>
           </section>
@@ -220,43 +257,65 @@ const jsonLd = {
         <aside class="insight-aside" aria-label="Article sidebar">
           <div class="insight-aside__inner">
             <div class="insight-aside-card insight-aside-card--cta">
-              <p class="font-caption text-[10px] uppercase tracking-[0.18em] text-amn-brown/45">
-                Free quick scan
-              </p>
-              <p class="mt-2 font-headline-bold text-lg leading-snug text-amn-dark">
-                See if AI recommends your hotel
-              </p>
-              <p class="mt-2 font-body-secondary text-sm leading-relaxed text-amn-brown/70">
-                Run a free GEO audit in about 30 seconds.
-              </p>
-              <a
-                href="https://geoauditor.theamn.network/"
-                class="pill-nav-link btn-primary mt-4 block px-5 py-3 text-center text-sm"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Check your brand performance in less than 30s.
-              </a>
-              <a href="/#contact" class="pill-nav-link btn-dark mt-2 block px-5 py-3 text-center text-sm">
-                Connect
-              </a>
+              {isGrowing ? (
+                <>
+                  <p class="font-caption text-[10px] uppercase tracking-[0.18em] text-amn-brown/45">
+                    Partnership
+                  </p>
+                  <p class="mt-2 font-headline-bold text-lg leading-snug text-amn-dark">
+                    Built something worth growing?
+                  </p>
+                  <p class="mt-2 font-body-secondary text-sm leading-relaxed text-amn-brown/70">
+                    The AMN backs selected brands with media and expertise, and shares the revenue that follows.
+                  </p>
+                  <a href="/#contact" class="pill-nav-link btn-primary mt-4 block px-5 py-3 text-center text-sm">
+                    Explore a partnership
+                  </a>
+                </>
+              ) : (
+                <>
+                  <p class="font-caption text-[10px] uppercase tracking-[0.18em] text-amn-brown/45">
+                    Free quick scan
+                  </p>
+                  <p class="mt-2 font-headline-bold text-lg leading-snug text-amn-dark">
+                    See if AI recommends your hotel
+                  </p>
+                  <p class="mt-2 font-body-secondary text-sm leading-relaxed text-amn-brown/70">
+                    Run a free GEO audit in about 30 seconds.
+                  </p>
+                  <a
+                    href="https://geoauditor.theamn.network/"
+                    class="pill-nav-link btn-primary mt-4 block px-5 py-3 text-center text-sm"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    Check your brand performance in less than 30s.
+                  </a>
+                  <a href="/#contact" class="pill-nav-link btn-dark mt-2 block px-5 py-3 text-center text-sm">
+                    Connect
+                  </a>
+                </>
+              )}
             </div>
 
             {
               relatedInsights.length > 0 && (
-                <div class="insight-aside-card">
+                <div class="insight-aside-card insight-aside-card--related">
                   <p class="font-caption text-[10px] uppercase tracking-[0.18em] text-amn-brown/45">
-                    More in SEO
+                    More articles
                   </p>
-                  <ul class="mt-3 space-y-3">
+                  <ul class="insight-related-grid mt-3">
                     {relatedInsights.map((item) => (
                       <li>
-                        <a
-                          href={`/insights/${item.slug}`}
-                          class="insight-related group block"
-                        >
-                          <span class="insight-related__category font-caption text-[10px] uppercase tracking-[0.14em] text-amn-blue">
-                            Marketing / SEO
+                        <a href={`/insights/${item.slug}`} class="insight-related-card group">
+                          <span class="insight-related-card__media">
+                            <img
+                              src={item.data.coverImage}
+                              alt=""
+                              width="80"
+                              height="80"
+                              loading="lazy"
+                            />
                           </span>
                           <InsightTitle
                             as="span"
@@ -269,9 +328,6 @@ const jsonLd = {
                       </li>
                     ))}
                   </ul>
-                  <a href="/insights" class="insight-aside-link mt-4 inline-block font-caption text-[10px] uppercase tracking-wider text-amn-brown/50 transition hover:text-amn-blue">
-                    View all SEO articles
-                  </a>
                 </div>
               )
             }
@@ -302,6 +358,30 @@ const jsonLd = {
   .insight-aside-card {
     @apply rounded-[1.15rem] border border-amn-brown/10 bg-white p-5;
     box-shadow: 0 8px 28px rgba(10, 10, 10, 0.04);
+  }
+
+  .insight-aside-card--related {
+    @apply px-3.5 py-3.5;
+  }
+
+  .insight-related-grid {
+    @apply grid gap-2.5;
+  }
+
+  .insight-related-card {
+    @apply flex items-center gap-2.5;
+  }
+
+  .insight-related-card__media {
+    @apply relative block h-9 w-9 shrink-0 overflow-hidden rounded-md bg-[#f5f5f7];
+  }
+
+  .insight-related-card__media img {
+    @apply h-full w-full object-cover;
+  }
+
+  .insight-related-card :global(.insight-title) {
+    @apply mt-0 text-[0.8125rem] leading-snug;
   }
 
   .insight-aside-card--cta {

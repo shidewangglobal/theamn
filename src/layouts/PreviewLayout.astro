@@ -3,6 +3,7 @@ import '../styles/global.css';
 import '../styles/theme-preview.css';
 import HeaderCtaGroup from '../components/HeaderCtaGroup.astro';
 import { siteGraph } from '../lib/seo/site';
+import SiteTracking from '../components/SiteTracking.astro';
 
 interface NavLink {
   href: string;
@@ -85,6 +86,7 @@ const structuredData = siteGraph({
     <meta name="twitter:image" content={ogImageUrl} />
 
     <script type="application/ld+json" set:html={JSON.stringify(structuredData)} />
+    <SiteTracking />
 
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
     <link rel="icon" type="image/png" sizes="512x512" href="/favicon.png" />

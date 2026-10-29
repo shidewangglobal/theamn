@@ -5,22 +5,48 @@ import { getPublishedInsights } from '../../lib/insights/repository';
 
 const insights = await getPublishedInsights();
 
-const featured = insights.find((entry) => entry.data.featured) ?? insights[0] ?? null;
-const gridInsights = featured
-  ? insights.filter((entry) => entry.slug !== featured.slug)
-  : insights;
+const growingBrands = insights
+  .filter((entry) => entry.data.section === 'Growing brands')
+  .sort((a, b) => a.data.publishDate.valueOf() - b.data.publishDate.valueOf());
+
+const seoInsights = insights.filter((entry) => entry.data.section !== 'Growing brands');
+
+const PAGE_SIZE = 9;
+
+const paginate = <T,>(items: T[]) => {
+  const pages: T[][] = [];
+  for (let index = 0; index < items.length; index += PAGE_SIZE) {
+    pages.push(items.slice(index, index + PAGE_SIZE));
+  }
+  return pages;
+};
+
+const sections = [
+  {
+    id: 'growing-brands',
+    label: 'Growing brands',
+    lede: 'For owners searching how to scale digital demand, bring more sales onto their own channel, and decide whether the budget should grow.',
+    pages: paginate(growingBrands),
+  },
+  {
+    id: 'seo',
+    label: 'SEO',
+    lede: 'SEO, Generative Engine Optimization, and how premium brands get named in search and AI answers.',
+    pages: paginate(seoInsights),
+  },
+].filter((section) => section.pages.length > 0);
 
 const formatDate = (date: Date) =>
   date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
 ---
 
 <PageLayout
-  title="SEO | Marketing | The AMN"
-  description="Articles on SEO and Generative Engine Optimization for premium brands. Filed under Marketing, then SEO."
+  title="Insights | Marketing | The AMN"
+  description="Articles for owners scaling a brand's digital demand, plus SEO and Generative Engine Optimization for premium brands."
   jsonLd={{
     '@context': 'https://schema.org',
     '@type': 'Blog',
-    name: 'THE AMN Marketing / SEO',
+    name: 'THE AMN Insights',
     url: 'https://theamn.network/insights',
     publisher: {
       '@type': 'Organization',
@@ -35,11 +61,11 @@ const formatDate = (date: Date) =>
         <p class="mb-3 font-caption text-[10px] uppercase tracking-[0.2em] text-amn-brown/45">
           <a href="/marketing" class="transition hover:text-amn-blue">Marketing</a>
           <span aria-hidden="true"> / </span>
-          <span class="text-amn-blue">SEO</span>
+          <span class="text-amn-blue">Insights</span>
         </p>
-        <h1 class="insights-title font-headline font-light tracking-tight text-amn-dark">SEO</h1>
+        <h1 class="insights-title font-headline font-light tracking-tight text-amn-dark">Insights</h1>
         <p class="insights-lede mt-4 max-w-xl font-body-secondary text-base leading-relaxed text-amn-brown/70 md:text-lg">
-          Articles on SEO, Generative Engine Optimization, and performance marketing for premium brands.
+          Writing for owners who are scaling a brand's digital demand, and for teams working on SEO and generative search.
         </p>
       </header>
 
@@ -48,85 +74,58 @@ const formatDate = (date: Date) =>
           <p class="font-body-secondary text-amn-brown/60">New insights coming soon.</p>
         ) : (
           <>
-            {
-              featured && (
-                <a
-                  href={`/insights/${featured.slug}`}
-                  class="insight-featured group"
-                >
-                  <div class="insight-featured__media">
-                    <img
-                      src={featured.data.coverImage}
-                      alt=""
-                      class="insight-featured__image"
-                      loading="eager"
-                      width="1200"
-                      height="800"
-                    />
+            {sections.map((section) => (
+              <section id={section.id} class="insights-group" data-insight-pages>
+                <h2 class="insights-group__title font-headline font-light tracking-tight text-amn-dark">{section.label}</h2>
+                <p class="max-w-xl font-body-secondary text-sm leading-relaxed text-amn-brown/70 md:text-base">
+                  {section.lede}
+                </p>
+                {section.pages.map((page, pageIndex) => (
+                  <ul class="insights-grid mt-6" data-page hidden={pageIndex !== 0}>
+                    {page.map((entry) => (
+                      <li>
+                        <a href={`/insights/${entry.slug}`} class="insight-card group">
+                          <div class="insight-card__media">
+                            <img
+                              src={entry.data.coverImage}
+                              alt={entry.data.coverAlt || entry.data.title}
+                              class="insight-card__image"
+                              loading={pageIndex === 0 ? 'eager' : 'lazy'}
+                              width="800"
+                              height="600"
+                            />
+                          </div>
+                          <div class="insight-card__body">
+                            <InsightTitle
+                              title={entry.data.title}
+                              titleEmphasis={entry.data.titleEmphasis}
+                              size="card"
+                              class="mb-3 flex-1 transition group-hover:text-amn-blue"
+                            />
+                            <time
+                              class="insight-card__date font-caption text-[10px] uppercase tracking-[0.16em] text-amn-brown/45"
+                              datetime={entry.data.publishDate.toISOString()}
+                            >
+                              {formatDate(entry.data.publishDate)}
+                            </time>
+                          </div>
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
+                ))}
+                {section.pages.length > 1 && (
+                  <div class="insight-pages__nav">
+                    <a href={`?${section.id}=1#${section.id}`} class="insight-pages__link" data-page-prev hidden>
+                      Previous page
+                    </a>
+                    <a href={`?${section.id}=2#${section.id}`} class="insight-pages__link" data-page-next>
+                      Next page
+                    </a>
                   </div>
-                  <div class="insight-featured__body">
-                    <p class="insight-card__category font-caption text-[10px] uppercase tracking-[0.2em] text-amn-blue">
-                      Marketing / SEO
-                    </p>
-                    <InsightTitle
-                      title={featured.data.title}
-                      titleEmphasis={featured.data.titleEmphasis}
-                      size="featured"
-                      class="transition group-hover:text-amn-blue"
-                    />
-                    <time
-                      class="insight-card__date mt-3 block font-caption text-[10px] uppercase tracking-[0.16em] text-amn-brown/45"
-                      datetime={featured.data.publishDate.toISOString()}
-                    >
-                      {formatDate(featured.data.publishDate)}
-                    </time>
-                  </div>
-                </a>
-              )
-            }
-
-            {
-              gridInsights.length > 0 && (
-                <ul class="insights-grid">
-                  {gridInsights.map((entry) => (
-                    <li>
-                      <a
-                        href={`/insights/${entry.slug}`}
-                        class="insight-card group"
-                      >
-                        <div class="insight-card__media">
-                          <img
-                            src={entry.data.coverImage}
-                            alt=""
-                            class="insight-card__image"
-                            loading="lazy"
-                            width="800"
-                            height="600"
-                          />
-                        </div>
-                        <div class="insight-card__body">
-                          <p class="insight-card__category font-caption text-[10px] uppercase tracking-[0.2em] text-amn-blue">
-                            Marketing / SEO
-                          </p>
-                          <InsightTitle
-                            title={entry.data.title}
-                            titleEmphasis={entry.data.titleEmphasis}
-                            size="card"
-                            class="mb-3 flex-1 transition group-hover:text-amn-blue"
-                          />
-                          <time
-                            class="insight-card__date font-caption text-[10px] uppercase tracking-[0.16em] text-amn-brown/45"
-                            datetime={entry.data.publishDate.toISOString()}
-                          >
-                            {formatDate(entry.data.publishDate)}
-                          </time>
-                        </div>
-                      </a>
-                    </li>
-                  ))}
-                </ul>
-              )
-            }
+                )}
+              </section>
+            ))}
           </>
         )
       }
@@ -156,6 +155,59 @@ const formatDate = (date: Date) =>
   </section>
 </PageLayout>
 
+<script>
+  const sections = [...document.querySelectorAll('[data-insight-pages]')].map((section) => {
+    const pages = [...section.querySelectorAll('[data-page]')];
+    const prev = section.querySelector('[data-page-prev]');
+    const next = section.querySelector('[data-page-next]');
+    const key = section.id;
+    let index = 0;
+
+    const readIndex = () => {
+      const requested = Number(new URLSearchParams(window.location.search).get(key) || '1');
+      if (!Number.isFinite(requested)) return 0;
+      return Math.min(Math.max(pages.length - 1, 0), Math.max(0, requested - 1));
+    };
+
+    const show = (nextIndex) => {
+      index = nextIndex;
+      pages.forEach((page, pageIndex) => {
+        page.hidden = pageIndex !== index;
+      });
+      if (prev) prev.hidden = index === 0;
+      if (next) next.hidden = index >= pages.length - 1;
+    };
+
+    const go = (nextIndex) => {
+      show(nextIndex);
+      const url = new URL(window.location.href);
+      if (index === 0) url.searchParams.delete(key);
+      else url.searchParams.set(key, String(index + 1));
+      url.hash = key;
+      history.pushState({}, '', url);
+      section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    };
+
+    prev?.addEventListener('click', (event) => {
+      event.preventDefault();
+      if (index > 0) go(index - 1);
+    });
+    next?.addEventListener('click', (event) => {
+      event.preventDefault();
+      if (index < pages.length - 1) go(index + 1);
+    });
+
+    show(readIndex());
+    return { show, readIndex, pages };
+  });
+
+  window.addEventListener('popstate', () => {
+    sections.forEach((section) => {
+      if (section.pages.length > 1) section.show(section.readIndex());
+    });
+  });
+</script>
+
 <style>
   .insights-page {
     @apply pb-8 md:pb-12;
@@ -165,48 +217,58 @@ const formatDate = (date: Date) =>
     @apply mb-8 md:mb-12;
   }
 
+  .insights-group + .insights-group {
+    @apply mt-14 md:mt-16;
+  }
+
+  .insights-group__title {
+    font-size: clamp(1.75rem, 3vw, 2.5rem);
+    line-height: 1.05;
+    margin-bottom: 0.75rem;
+  }
+
+  .insights-grid[hidden],
+  .insight-pages__link[hidden] {
+    display: none !important;
+  }
+
+  .insight-pages__nav {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.75rem;
+    margin-top: 1.25rem;
+  }
+
+  .insight-pages__link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 7.5rem;
+    border-radius: 999px;
+    border: 1px solid rgba(92, 64, 51, 0.22);
+    background: #fff;
+    padding: 0.7rem 1.4rem;
+    font-size: 0.875rem;
+    color: #1a1a1a;
+  }
+
+  .insight-pages__link:hover {
+    border-color: #00a0f0;
+    color: #00a0f0;
+  }
+
   .insights-title {
     font-size: clamp(2.75rem, 7vw, 4.5rem);
     line-height: 0.95;
     letter-spacing: -0.03em;
   }
 
-  .insight-featured {
-    @apply mb-8 grid overflow-hidden rounded-[1.25rem] border border-amn-brown/10 bg-white md:mb-10;
-    box-shadow: 0 12px 40px rgba(10, 10, 10, 0.05);
-    transition:
-      border-color 0.35s ease,
-      box-shadow 0.35s ease;
-  }
-
-  @media (min-width: 768px) {
-    .insight-featured {
-      grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
-      min-height: 22rem;
-    }
-  }
-
-  .insight-featured:hover {
-    @apply border-amn-blue/20;
-    box-shadow: 0 16px 48px rgba(10, 10, 10, 0.08);
-  }
-
-  .insight-featured__media {
-    @apply relative min-h-[14rem] overflow-hidden bg-[#f5f5f7];
-  }
-
-  .insight-featured__image,
   .insight-card__image {
     @apply absolute inset-0 h-full w-full object-cover transition duration-700 ease-[cubic-bezier(0.22,1,0.36,1)];
   }
 
-  .group:hover .insight-featured__image,
   .group:hover .insight-card__image {
     transform: scale(1.04);
-  }
-
-  .insight-featured__body {
-    @apply flex flex-col justify-center px-6 py-6 md:px-8 md:py-8;
   }
 
   .insights-grid {

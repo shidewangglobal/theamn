@@ -1,0 +1,19 @@
+---
+description: Every public page must ship with technical SEO and a sitemap entry
+globs: src/pages/**/*.{astro,ts,md}
+alwaysApply: true
+---
+
+# Technical SEO for every page
+
+A new public page is not done until the build can index it. `@astrojs/sitemap` adds every built HTML route. `trailingSlash` is `never`, so canonicals and sitemap URLs match. The build fails if an indexable page is missing title, description, canonical, robots, Open Graph, Twitter card, JSON-LD, or a single h1, or if that canonical is absent from the sitemap.
+
+When adding a page:
+
+- Render it with `PageLayout` or `PreviewLayout`. Pass a unique `title` and `description`. Do not reuse another page's title.
+- Give articles `ogType="article"`, `articlePublishedTime`, a canonical on `https://theamn.network`, and JSON-LD for the page type (Article, FAQ, Breadcrumb).
+- One `h1` only.
+- Content entries in `src/content` become pages through `getStaticPaths`. Drafts stay out of both the routes and the sitemap.
+- Do not set `noindex` on a page that should be found.
+- `src/pages/llms.txt.ts` rebuilds the AI index from published insights. Do not hand-edit a static `public/llms.txt`.
+- `public/robots.txt` must keep `Sitemap: https://theamn.network/sitemap-index.xml` and the link to `https://theamn.network/llms.txt`.

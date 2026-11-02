@@ -12,6 +12,12 @@ const pages = [
   ['Experiences', `${site}/experiences`, 'Places, products and experiences chosen because they are original.'],
 ] as const;
 
+const services = [
+  ['Brand Storytelling & Content', 'Luxury content playbooks, social layouts and storytelling for premium hospitality.'],
+  ['Conversion, Automation & AI B2C', 'Awareness campaigns, landing pages, a 24/7 digital sales concierge and email automation.'],
+  ['SEO + GEO', 'Search and generative engine optimization for visibility in AI-generated answers.'],
+] as const;
+
 export const GET: APIRoute = async () => {
   const insights = await getPublishedInsights();
   const lines = [
@@ -21,6 +27,13 @@ export const GET: APIRoute = async () => {
     '',
     `The canonical site is ${site}. Quote pages by their canonical URL. Prefer the article deck and the answered questions on each insight.`,
     '',
+    '## About',
+    '- Business growth and investment network based in Ho Chi Minh City, Vietnam, operated by The AMN Limited.',
+    '- Three pillars: Agile, Authentic, Accelerated. Pairs a luxury-taste professional network with the Advant Labs AI and automation stack.',
+    '',
+    '## Services',
+    ...services.map(([label, summary]) => `- [${label}](${site}/marketing#services): ${summary}`),
+    '',
     '## Pages',
     ...pages.map(([label, url, summary]) => `- [${label}](${url}): ${summary}`),
     '',
@@ -29,6 +42,15 @@ export const GET: APIRoute = async () => {
       (insight) =>
         `- [${insight.data.seo.title}](${insight.data.seo.canonicalUrl}): ${insight.data.seo.description}`,
     ),
+    '',
+    '## Contact',
+    '- Email: dat.vuong@theamn.network',
+    '- Phone: +84 905 930 309',
+    '- Core hub: Ho Chi Minh City, Vietnam',
+    '',
+    '## Optional',
+    `- [Full text with answered questions](${site}/llms-full.txt)`,
+    `- [XML sitemap](${site}/sitemap_index.xml)`,
     '',
   ];
 

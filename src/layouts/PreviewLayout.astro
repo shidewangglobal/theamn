@@ -4,6 +4,7 @@ import '../styles/theme-preview.css';
 import HeaderCtaGroup from '../components/HeaderCtaGroup.astro';
 import { siteGraph } from '../lib/seo/site';
 import SiteTracking from '../components/SiteTracking.astro';
+import SiteTrackingBody from '../components/SiteTrackingBody.astro';
 
 interface NavLink {
   href: string;
@@ -65,6 +66,7 @@ const structuredData = siteGraph({
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <SiteTracking />
     <meta name="generator" content={Astro.generator} />
 
     <title>{fullTitle}</title>
@@ -86,13 +88,13 @@ const structuredData = siteGraph({
     <meta name="twitter:image" content={ogImageUrl} />
 
     <script type="application/ld+json" set:html={JSON.stringify(structuredData)} />
-    <SiteTracking />
 
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
     <link rel="icon" type="image/png" sizes="512x512" href="/favicon.png" />
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
   </head>
   <body class="theme-preview min-h-screen overflow-x-hidden text-amn-brown">
+    <SiteTrackingBody />
     <header id="site-header" class="site-header is-scrolled fixed left-0 right-0 top-0 z-50 px-4 pt-3 transition-all duration-[600ms] ease-[cubic-bezier(0.22,1,0.36,1)] md:px-6">
       <div class="mx-auto flex max-w-7xl items-center justify-between gap-4">
         <a href={logoHref} class="shrink-0">

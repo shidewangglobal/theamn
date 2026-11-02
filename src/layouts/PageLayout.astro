@@ -5,6 +5,7 @@ import SiteHeader from '../components/SiteHeader.astro';
 import Footer from '../components/Footer.astro';
 import { siteGraph } from '../lib/seo/site';
 import SiteTracking from '../components/SiteTracking.astro';
+import SiteTrackingBody from '../components/SiteTrackingBody.astro';
 
 interface Props {
   title: string;
@@ -86,6 +87,7 @@ const pageNavLinks = [
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <SiteTracking />
     <meta name="generator" content={Astro.generator} />
 
     <title>{documentTitle}</title>
@@ -114,9 +116,9 @@ const pageNavLinks = [
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
 
     <script type="application/ld+json" set:html={JSON.stringify(structuredData)} />
-    <SiteTracking />
   </head>
   <body class="theme-preview min-h-screen overflow-x-hidden text-amn-brown">
+    <SiteTrackingBody />
     <SiteHeader homeHref="/" navLinks={pageNavLinks} connectHref="/#contact" showInsightsLink={true} />
 
     <main class="page-main">

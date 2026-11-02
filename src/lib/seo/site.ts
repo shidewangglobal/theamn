@@ -1,4 +1,4 @@
-const siteUrl = 'https://theamn.network';
+export const siteUrl = 'https://theamn.network';
 
 export const organizationId = `${siteUrl}/#organization`;
 export const websiteId = `${siteUrl}/#website`;

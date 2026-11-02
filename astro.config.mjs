@@ -1,5 +1,4 @@
 import { defineConfig } from 'astro/config';
-import sitemap from '@astrojs/sitemap';
 import tailwind from '@astrojs/tailwind';
 import { seoAudit } from './src/integrations/seo-audit.ts';
 
@@ -11,9 +10,6 @@ export default defineConfig({
   },
   integrations: [
     tailwind(),
-    sitemap({
-      filter: (page) => !page.includes('/llms.txt'),
-    }),
     seoAudit(),
   ],
   redirects: {

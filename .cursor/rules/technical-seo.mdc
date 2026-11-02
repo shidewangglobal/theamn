@@ -6,7 +6,7 @@ alwaysApply: true
 
 # Technical SEO for every page
 
-A new public page is not done until the build can index it. `@astrojs/sitemap` adds every built HTML route. `trailingSlash` is `never`, so canonicals and sitemap URLs match. The build fails if an indexable page is missing title, description, canonical, robots, Open Graph, Twitter card, JSON-LD, or a single h1, or if that canonical is absent from the sitemap.
+A new public page is not done until the build can index it. The Yoast-style sitemaps in `src/lib/seo/sitemaps.ts` (`/sitemap_index.xml` plus page, insight and experience sitemaps) list the routes; a new page type needs its URLs added there. `trailingSlash` is `never`, so canonicals and sitemap URLs match. The build fails if an indexable page is missing title, description, canonical, robots, Open Graph, Twitter card, JSON-LD, or a single h1, or if that canonical is absent from the sitemap.
 
 When adding a page:
 
@@ -16,4 +16,4 @@ When adding a page:
 - Content entries in `src/content` become pages through `getStaticPaths`. Drafts stay out of both the routes and the sitemap.
 - Do not set `noindex` on a page that should be found.
 - `src/pages/llms.txt.ts` rebuilds the AI index from published insights. Do not hand-edit a static `public/llms.txt`.
-- `public/robots.txt` must keep `Sitemap: https://theamn.network/sitemap-index.xml` and the link to `https://theamn.network/llms.txt`.
+- `public/robots.txt` must keep `Sitemap: https://theamn.network/sitemap_index.xml` and the link to `https://theamn.network/llms.txt`.

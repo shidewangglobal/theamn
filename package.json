@@ -19,7 +19,6 @@
     "docs:studio-pdf": "node scripts/build-studio-guide-pdf.mjs"
   },
   "dependencies": {
-    "@astrojs/sitemap": "^3.4.0",
     "@astrojs/tailwind": "^6.0.2",
     "@portabletext/to-html": "^2.0.17",
     "@sanity/client": "^7.23.0",

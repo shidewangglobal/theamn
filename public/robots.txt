@@ -22,6 +22,28 @@ Allow: /
 User-agent: anthropic-ai
 Allow: /
 
+User-agent: Claude-SearchBot
+Allow: /
+
+User-agent: Claude-User
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
+User-agent: CCBot
+Allow: /
+
+User-agent: Meta-ExternalAgent
+Allow: /
+
+User-agent: Amazonbot
+Allow: /
+
+User-agent: cohere-ai
+Allow: /
+
 # https://theamn.network/llms.txt
+# https://theamn.network/llms-full.txt
 
 Sitemap: https://theamn.network/sitemap_index.xml

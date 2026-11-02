@@ -31,7 +31,7 @@ export function seoAudit(): AstroIntegration {
         const root = fileURLToPath(dir);
         const htmlFiles = await walkHtml(root);
         const sitemapFiles = (await walkHtml(root).then(() => readdir(root))).filter((name) =>
-          name.startsWith('sitemap') && name.endsWith('.xml'),
+          name.includes('sitemap') && name.endsWith('.xml'),
         );
         const sitemapText = (
           await Promise.all(sitemapFiles.map((name) => readFile(path.join(root, name), 'utf8')))

@@ -21,6 +21,7 @@ const organization = (): JsonLdNode => ({
   image: `${siteUrl}/images/hero-cover.jpeg`,
   description:
     'The AMN is a digital investment partner for original brands, and a marketing services team for premium hospitality.',
+  sameAs: ['https://www.linkedin.com/company/theamn/'],
   email: 'dat.vuong@theamn.network',
   telephone: '+84905930309',
   address: {
